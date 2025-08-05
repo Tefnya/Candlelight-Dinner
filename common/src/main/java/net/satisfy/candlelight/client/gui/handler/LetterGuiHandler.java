@@ -18,6 +18,7 @@ import net.satisfy.candlelight.core.registry.ScreenHandlerTypeRegistry;
 public class LetterGuiHandler extends AbstractContainerMenu {
     private final Container inventory;
     public static String name = "";
+    private final Player player;
 
     public LetterGuiHandler(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, new SimpleContainer(3));
@@ -27,7 +28,8 @@ public class LetterGuiHandler extends AbstractContainerMenu {
         super(ScreenHandlerTypeRegistry.LETTER_SCREEN_HANDLER.get(), syncId);
         checkContainerSize(inventory, 3);
         this.inventory = inventory;
-        inventory.startOpen(playerInventory.player);
+        this.player = playerInventory.player;
+        inventory.startOpen(this.player);
 
         int m;
         int l;
@@ -49,38 +51,37 @@ public class LetterGuiHandler extends AbstractContainerMenu {
     @Override
     public void broadcastChanges() {
         super.broadcastChanges();
-        Item inputItem = this.inventory.getItem(0).getItem();
-        if ((inputItem == ObjectRegistry.LETTER_OPEN.get() || inputItem == ObjectRegistry.LOVE_LETTER_OPEN.get()) && this.inventory.getItem(1).getItem() == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
-            ItemStack stack = inputItem == ObjectRegistry.LETTER_OPEN.get() ? new ItemStack(ObjectRegistry.LETTER_CLOSED.get()) : new ItemStack(ObjectRegistry.LOVE_LETTER_CLOSED.get());
 
-            CompoundTag nbtCompound = this.inventory.getItem(1).getTag();
-            if (nbtCompound != null) {
-                stack.setTag(nbtCompound.copy());
-            }
+        Item inputItem = this.inventory.getItem(0).getItem();
+        Item secondItem = this.inventory.getItem(1).getItem();
+
+        if ((inputItem == ObjectRegistry.LETTER_OPEN.get() || inputItem == ObjectRegistry.LOVE_LETTER_OPEN.get()) && secondItem == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
+            ItemStack stack = inputItem == ObjectRegistry.LETTER_OPEN.get()
+                    ? new ItemStack(ObjectRegistry.LETTER_CLOSED.get())
+                    : new ItemStack(ObjectRegistry.LOVE_LETTER_CLOSED.get());
+
+            CompoundTag tag = this.inventory.getItem(1).getTag();
+            if (tag != null) stack.setTag(tag.copy());
 
             stack.addTagElement("letter_title", StringTag.valueOf(name));
+            stack.addTagElement("letter_sender", StringTag.valueOf(this.player.getName().getString()));
 
             this.inventory.setItem(2, stack);
-        } else if ((this.inventory.getItem(1).getItem() == ObjectRegistry.LETTER_OPEN.get() && this.inventory.getItem(0).getItem() == ObjectRegistry.NOTE_PAPER_WRITTEN.get())) {
+
+        } else if (secondItem == ObjectRegistry.LETTER_OPEN.get() && inputItem == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
             ItemStack stack = new ItemStack(ObjectRegistry.LETTER_CLOSED.get());
 
-            CompoundTag nbtCompound = this.inventory.getItem(0).getTag();
-            if (nbtCompound != null) {
-                stack.setTag(nbtCompound.copy());
-            }
+            CompoundTag tag = this.inventory.getItem(0).getTag();
+            if (tag != null) stack.setTag(tag.copy());
 
             stack.addTagElement("letter_title", StringTag.valueOf(name));
+            stack.addTagElement("letter_sender", StringTag.valueOf(this.player.getName().getString()));
 
             this.inventory.setItem(2, stack);
+
         } else {
             this.inventory.setItem(2, ItemStack.EMPTY);
         }
-    }
-
-    @Override
-    public void slotsChanged(Container inventory) {
-        super.slotsChanged(inventory);
-
     }
 
     @Override
@@ -88,17 +89,16 @@ public class LetterGuiHandler extends AbstractContainerMenu {
         super.removed(player);
         if (player instanceof ServerPlayer) {
             for (int i = 0; i < this.inventory.getContainerSize(); i++) {
-                ItemStack itemStack = this.inventory.getItem(i);
-                if (!itemStack.isEmpty()) {
+                ItemStack stack = this.inventory.getItem(i);
+                if (!stack.isEmpty()) {
                     if (player.isAlive() && !((ServerPlayer) player).hasDisconnected()) {
-                        player.getInventory().placeItemBackInInventory(itemStack);
+                        player.getInventory().placeItemBackInInventory(stack);
                     } else {
-                        player.drop(itemStack, false);
+                        player.drop(stack, false);
                     }
                 }
             }
         }
-
     }
 
     @Override
@@ -107,29 +107,30 @@ public class LetterGuiHandler extends AbstractContainerMenu {
     }
 
     @Override
-    public @NotNull ItemStack quickMoveStack(Player player, int invSlot) {
-        Slot slot = this.slots.get(invSlot);
-        if (slot instanceof OutputSlot) {
-            return ItemStack.EMPTY;
-        }
+    public @NotNull ItemStack quickMoveStack(Player player, int index) {
+        Slot slot = this.slots.get(index);
+        if (slot instanceof OutputSlot) return ItemStack.EMPTY;
 
         if (slot.hasItem()) {
-            ItemStack originalStack = slot.getItem();
-            ItemStack copyOfStack = originalStack.copy();
-            if (invSlot < this.inventory.getContainerSize()) {
-                if (!this.moveItemStackTo(originalStack, this.inventory.getContainerSize(), this.slots.size(), true)) {
+            ItemStack original = slot.getItem();
+            ItemStack copy = original.copy();
+
+            if (index < this.inventory.getContainerSize()) {
+                if (!this.moveItemStackTo(original, this.inventory.getContainerSize(), this.slots.size(), true))
                     return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(originalStack, 0, this.inventory.getContainerSize(), false)) {
+            } else if (!this.moveItemStackTo(original, 0, this.inventory.getContainerSize(), false)) {
                 return ItemStack.EMPTY;
             }
-            if (originalStack.isEmpty()) {
+
+            if (original.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-            return copyOfStack;
+
+            return copy;
         }
+
         return ItemStack.EMPTY;
     }
 
@@ -142,15 +143,15 @@ public class LetterGuiHandler extends AbstractContainerMenu {
         }
 
         @Override
-        public void onTake(Player player, ItemStack takenStack) {
+        public void onTake(Player player, ItemStack stack) {
             for (int i = 0; i <= 1; i++) {
-                ItemStack inputStack = this.container.inventory.getItem(i);
-                if (!inputStack.isEmpty()) {
-                    inputStack.shrink(1);
-                    this.container.inventory.setItem(i, inputStack.isEmpty() ? ItemStack.EMPTY : inputStack);
+                ItemStack input = this.container.inventory.getItem(i);
+                if (!input.isEmpty()) {
+                    input.shrink(1);
+                    this.container.inventory.setItem(i, input.isEmpty() ? ItemStack.EMPTY : input);
                 }
             }
-            super.onTake(player, takenStack);
+            super.onTake(player, stack);
         }
 
         @Override

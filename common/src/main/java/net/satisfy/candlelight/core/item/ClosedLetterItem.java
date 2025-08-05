@@ -24,27 +24,34 @@ public class ClosedLetterItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, @NotNull List<Component> tooltip, TooltipFlag context) {
-        CompoundTag nbtCompound = stack.getTag();
-        if (nbtCompound != null && nbtCompound.contains("letter_title")) {
-            String name = nbtCompound.getString("letter_title");
-            if (!name.isBlank()) {
-                tooltip.add(Component.literal("for " + name).withStyle(ChatFormatting.RED));
+        CompoundTag nbt = stack.getTag();
+        if (nbt != null) {
+            String title = nbt.getString("letter_title");
+            String sender = nbt.getString("letter_sender");
+
+            if (!title.isBlank() && !sender.isBlank()) {
+                tooltip.add(Component.translatable("tooltip.candlelight.letter.line", title, sender).withStyle(ChatFormatting.GRAY));
             }
         }
+
         tooltip.add(Component.translatable("item.candlelight.letter.tooltip").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 
+    @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
-        ItemStack itemStack = user.getItemInHand(hand);
+        ItemStack stack = user.getItemInHand(hand);
         ItemStack output = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
-        if (itemStack.hasTag()) {
-            assert itemStack.getTag() != null;
-            output.setTag(itemStack.getTag().copy());
-            assert output.getTag() != null;
-            output.getTag().remove("letter_title");
+
+        if (stack.hasTag()) {
+            assert stack.getTag() != null;
+            CompoundTag tag = stack.getTag().copy();
+            tag.remove("letter_title");
+            tag.remove("letter_sender");
+            output.setTag(tag);
         }
+
         user.setItemInHand(hand, output);
         user.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.sidedSuccess(itemStack, world.isClientSide());
+        return InteractionResultHolder.sidedSuccess(stack, world.isClientSide());
     }
 }

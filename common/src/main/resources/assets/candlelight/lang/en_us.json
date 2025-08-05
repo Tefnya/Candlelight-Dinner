@@ -238,6 +238,6 @@
   "sound.candlelight.cooking_pot_hit": "Clang!",
   "sound.candlelight.dinner_bell_ring": "Dinner Bell Rings",
   "sound.candlelight.typewriter": "Typewriter clatters",
-  "tooltip.farm_and_charm.bamboo_stove": "Use with Caution!"
-
+  "tooltip.farm_and_charm.bamboo_stove": "Use with Caution!",
+  "tooltip.candlelight.letter.line": "for %s from %s"
 }
