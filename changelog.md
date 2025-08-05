@@ -1,4 +1,10 @@
-[2.0.4] - 2025.02.13
+[2.0.5]
+
+**Fixed**
+* Baby Zombies wont spawn with oversized Cooking Clothing anymore
+* Fixed letter crafting consuming full stacks of envelopes and note paper instead of just one of each
+
+[2.0.4]
 
 **Added**
 * Zombies have a really low Chance to spawn wearing a Cooking Hat - Zombies wearing a Cooking Hat are immune to sunlight

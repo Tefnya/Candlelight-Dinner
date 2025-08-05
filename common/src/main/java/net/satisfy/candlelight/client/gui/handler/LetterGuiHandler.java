@@ -134,21 +134,27 @@ public class LetterGuiHandler extends AbstractContainerMenu {
     }
 
     public static class OutputSlot extends Slot {
-        LetterGuiHandler container;
+        private final LetterGuiHandler container;
 
-        public OutputSlot(Container itemHandler, int index, int xPosition, int yPosition, LetterGuiHandler container) {
-            super(itemHandler, index, xPosition, yPosition);
+        public OutputSlot(Container inventory, int index, int x, int y, LetterGuiHandler container) {
+            super(inventory, index, x, y);
             this.container = container;
         }
 
         @Override
-        public void onTake(Player p_190901_1_, ItemStack p_190901_2_) {
-            this.container.inventory.setItem(0, ItemStack.EMPTY);
-            this.container.inventory.setItem(1, ItemStack.EMPTY);
+        public void onTake(Player player, ItemStack takenStack) {
+            for (int i = 0; i <= 1; i++) {
+                ItemStack inputStack = this.container.inventory.getItem(i);
+                if (!inputStack.isEmpty()) {
+                    inputStack.shrink(1);
+                    this.container.inventory.setItem(i, inputStack.isEmpty() ? ItemStack.EMPTY : inputStack);
+                }
+            }
+            super.onTake(player, takenStack);
         }
 
         @Override
-        public boolean mayPlace(ItemStack p_75214_1_) {
+        public boolean mayPlace(ItemStack stack) {
             return false;
         }
     }
