@@ -1,5 +1,8 @@
 [2.0.5]
 
+**Added**
+* Japanese translation _(Thanks to PExPE3)_
+
 **Fixed**
 * Baby Zombies wont spawn with oversized Cooking Clothing anymore
 * Fixed letter crafting consuming full stacks of envelopes and note paper instead of just one of each
