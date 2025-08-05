@@ -1,7 +1,11 @@
 [2.0.5]
 
+**Changed**
+* Letters now show not only who they're for, but also who they're from
+
 **Added**
 * Japanese translation _(Thanks to PExPE3)_
+* Holding a closed Love Letter now emits trailing heart particles while walking – opening it triggers a heart burst
 
 **Fixed**
 * Baby Zombies wont spawn with oversized Cooking Clothing anymore

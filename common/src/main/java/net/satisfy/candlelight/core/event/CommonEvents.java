@@ -2,6 +2,8 @@ package net.satisfy.candlelight.core.event;
 
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.PlayerEvent;
+import dev.architectury.event.events.common.TickEvent;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -24,6 +26,27 @@ public class CommonEvents {
 
     public static void init() {
         PlayerEvent.ATTACK_ENTITY.register(CommonEvents::attack);
+
+        TickEvent.PLAYER_POST.register((player) -> {
+            ItemStack main = player.getMainHandItem();
+            ItemStack off = player.getOffhandItem();
+            boolean holdingLoveLetter = main.is(ObjectRegistry.LOVE_LETTER_CLOSED.get()) || off.is(ObjectRegistry.LOVE_LETTER_CLOSED.get());
+
+            if (holdingLoveLetter && player.level().isClientSide() && player.tickCount % 5 == 0) {
+                double dx = player.getX() - player.xOld;
+                double dz = player.getZ() - player.zOld;
+                boolean isMoving = dx * dx + dz * dz > 0.001;
+
+                if (isMoving && !player.isShiftKeyDown()) {
+                    double yaw = Math.toRadians(player.getYRot());
+                    double behindX = player.getX() - (Math.sin(yaw) * 0.5);
+                    double behindZ = player.getZ() + (Math.cos(yaw) * 0.5);
+                    double y = player.getY() + 0.1;
+
+                    player.level().addParticle(ParticleTypes.HEART, behindX, y, behindZ, 0, 0.02, 0);
+                }
+            }
+        });
     }
 
     public static EventResult attack(Player player, Level level, Entity target, InteractionHand hand, @Nullable EntityHitResult result) {
