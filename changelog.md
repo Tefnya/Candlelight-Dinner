@@ -1,5 +1,12 @@
 [2.0.5]
 
+**Fixed**
+* Normal letter triggering Heart-Burst
+
+
+
+[2.0.5]
+
 **Changed**
 * Letters now show not only who they're for, but also who they're from
 

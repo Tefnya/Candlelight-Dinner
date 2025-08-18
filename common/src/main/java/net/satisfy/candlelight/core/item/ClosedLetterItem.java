@@ -44,13 +44,14 @@ public class ClosedLetterItem extends Item {
         ItemStack output = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
 
         if (stack.hasTag()) {
+            assert stack.getTag() != null;
             CompoundTag tag = stack.getTag().copy();
             tag.remove("letter_title");
             tag.remove("letter_sender");
             output.setTag(tag);
         }
 
-        if (level.isClientSide()) {
+        if (this == ObjectRegistry.LOVE_LETTER_CLOSED.get() && level.isClientSide()) {
             for (int i = 0; i < 20; i++) {
                 double dx = player.getX() + (level.random.nextDouble() - 0.5) * 0.6;
                 double dy = player.getY() + 1.0 + level.random.nextDouble() * 0.3;
@@ -63,5 +64,4 @@ public class ClosedLetterItem extends Item {
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
-
 }
