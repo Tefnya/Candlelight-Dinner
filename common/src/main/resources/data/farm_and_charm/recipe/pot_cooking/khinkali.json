@@ -1,0 +1,22 @@
+{
+  "type": "farm_and_charm:pot_cooking",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:minced_beef"
+    },
+    {
+      "tag": "farm_and_charm:dough"
+    }
+  ],
+  "container": {
+    "required": true,
+    "item": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "id": "candlelight:khinkali",
+    "count": 4
+  },
+  "requiresLearning": false
+}

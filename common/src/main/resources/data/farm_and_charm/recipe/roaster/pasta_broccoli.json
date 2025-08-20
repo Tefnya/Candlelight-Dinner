@@ -1,0 +1,21 @@
+{
+  "type": "farm_and_charm:roaster",
+  "ingredients": [
+    {
+      "tag": "farm_and_charm:cabbage"
+    },
+    {
+      "tag": "farm_and_charm:pasta"
+    },
+    {
+      "tag": "candlelight:cheeses"
+    }
+  ],
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "id": "candlelight:pasta_with_lettuce"
+  },
+  "requiresLearning": false
+}
