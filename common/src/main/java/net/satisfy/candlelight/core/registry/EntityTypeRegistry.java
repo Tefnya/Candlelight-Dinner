@@ -31,7 +31,7 @@ public class EntityTypeRegistry {
     public static final RegistrySupplier<BlockEntityType<TableSetBlockEntity>> TABLE_SET_BLOCK_ENTITY = registerBlockEntity("table_set", () -> BlockEntityType.Builder.of(TableSetBlockEntity::new, ObjectRegistry.TABLE_SET.get()).build(null));
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String path, final Supplier<T> type) {
-        return BLOCK_ENTITY_TYPES.register(new CandlelightIdentifier(path), type);
+        return BLOCK_ENTITY_TYPES.register(CandlelightIdentifier.identifier(path), type);
     }
 
     public static void init() {

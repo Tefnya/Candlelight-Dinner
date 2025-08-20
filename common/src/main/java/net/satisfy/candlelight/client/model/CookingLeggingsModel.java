@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CookingLeggingsModel<T extends Entity> extends EntityModel<T> {
 
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new CandlelightIdentifier("cook_leggings"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("cook_leggings"), "main");
     private final ModelPart body;
     private final ModelPart right_leg;
     private final ModelPart left_leg;
@@ -42,11 +42,11 @@ public class CookingLeggingsModel<T extends Entity> extends EntityModel<T> {
 
 
     @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
         poseStack.pushPose();
-        body.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_leg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_leg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        body.render(poseStack, buffer, packedLight, packedOverlay, alpha);
+        right_leg.render(poseStack, buffer, packedLight, packedOverlay, alpha);
+        left_leg.render(poseStack, buffer, packedLight, packedOverlay, alpha);
         poseStack.popPose();
     }
 

@@ -1,5 +1,6 @@
 package net.satisfy.candlelight.client.gui.handler;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,6 +12,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import org.jetbrains.annotations.NotNull;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import net.satisfy.candlelight.core.registry.ScreenHandlerTypeRegistry;
@@ -60,23 +62,24 @@ public class LetterGuiHandler extends AbstractContainerMenu {
                     ? new ItemStack(ObjectRegistry.LETTER_CLOSED.get())
                     : new ItemStack(ObjectRegistry.LOVE_LETTER_CLOSED.get());
 
-            CompoundTag tag = this.inventory.getItem(1).getTag();
-            if (tag != null) stack.setTag(tag.copy());
+            CustomData data = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            CompoundTag tag = data.copyTag();
 
-            stack.addTagElement("letter_title", StringTag.valueOf(name));
-            stack.addTagElement("letter_sender", StringTag.valueOf(this.player.getName().getString()));
+            tag.put("letter_title", StringTag.valueOf(name));
+            tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
+            if (tag != null) stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
 
             this.inventory.setItem(2, stack);
 
         } else if (secondItem == ObjectRegistry.LETTER_OPEN.get() && inputItem == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
             ItemStack stack = new ItemStack(ObjectRegistry.LETTER_CLOSED.get());
 
-            CompoundTag tag = this.inventory.getItem(0).getTag();
-            if (tag != null) stack.setTag(tag.copy());
+            CustomData data = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            CompoundTag tag = data.copyTag();
 
-            stack.addTagElement("letter_title", StringTag.valueOf(name));
-            stack.addTagElement("letter_sender", StringTag.valueOf(this.player.getName().getString()));
-
+            tag.put("letter_title", StringTag.valueOf(name));
+            tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
+            if (tag != null) stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
             this.inventory.setItem(2, stack);
 
         } else {

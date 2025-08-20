@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class CookingHatModel<T extends Entity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new CandlelightIdentifier("cooking_hat"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("cooking_hat"), "main");
     private final ModelPart cooking_hat;
 
     public CookingHatModel(ModelPart root) {
@@ -29,7 +29,7 @@ public class CookingHatModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
         poseStack.pushPose();
         poseStack.scale(1.05F, 1.05F, 1.05F);
         cooking_hat.render(poseStack, buffer, packedLight, packedOverlay);

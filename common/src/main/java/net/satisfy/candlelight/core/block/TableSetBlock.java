@@ -1,10 +1,10 @@
 package net.satisfy.candlelight.core.block;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -45,6 +45,7 @@ import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
 import net.satisfy.candlelight.core.block.entity.TableSetBlockEntity;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import net.satisfy.candlelight.core.registry.StorageTypeRegistry;
+import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -60,7 +61,7 @@ public class TableSetBlock extends StorageBlock {
     public static final BooleanProperty NAPKIN = BooleanProperty.create("napkin");
     public static final BooleanProperty GLASS_DRINK = BooleanProperty.create("glass_drink");
     public static final BooleanProperty WINE_GLASS_DRINK = BooleanProperty.create("wine_glass_drink");
-    private static final TagKey<Item> ALL_EFFECTS = TagKey.create(Registries.ITEM, new ResourceLocation("candlelight", "all_effects"));
+    private static final TagKey<Item> ALL_EFFECTS = TagKey.create(Registries.ITEM, CandlelightIdentifier.identifier("all_effects"));
 
     public TableSetBlock(Properties settings) {
         super(settings);
@@ -112,7 +113,7 @@ public class TableSetBlock extends StorageBlock {
                         ItemStack effectStack = sbe.getEffectStack();
                         if (!effectStack.isEmpty()) {
                             int duration = sbe.getEffectDuration();
-                            List<MobEffectInstance> effects = PotionUtils.getMobEffects(effectStack);
+                            List<MobEffectInstance> effects = effectStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).customEffects();
                             for (MobEffectInstance effect : effects) {
                                 player.addEffect(new MobEffectInstance(effect.getEffect(), duration, effect.getAmplifier()));
                             }
@@ -130,8 +131,8 @@ public class TableSetBlock extends StorageBlock {
                     TableSetBlockEntity sbe = (TableSetBlockEntity) world.getBlockEntity(pos);
                     if (sbe != null) {
                         world.setBlockAndUpdate(pos, state.setValue(GLASS_DRINK, true));
-                        if (stack.hasTag()) {
-                            int duration = PotionUtils.getMobEffects(stack).stream()
+                        if (stack.has(DataComponents.CUSTOM_DATA)) {
+                            int duration = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).customEffects().stream()
                                     .mapToInt(MobEffectInstance::getDuration)
                                     .max()
                                     .orElse(6000);
@@ -148,8 +149,8 @@ public class TableSetBlock extends StorageBlock {
                     TableSetBlockEntity sbe = (TableSetBlockEntity) world.getBlockEntity(pos);
                     if (sbe != null) {
                         world.setBlockAndUpdate(pos, state.setValue(WINE_GLASS_DRINK, true));
-                        if (stack.hasTag()) {
-                            int duration = PotionUtils.getMobEffects(stack).stream()
+                        if (stack.has(DataComponents.CUSTOM_DATA)) {
+                            int duration =stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).customEffects().stream()
                                     .mapToInt(MobEffectInstance::getDuration)
                                     .max()
                                     .orElse(6000);
@@ -195,16 +196,12 @@ public class TableSetBlock extends StorageBlock {
             ItemStack itemStack = tsbe.removeStack(i);
             SoundEvent soundEvent = SoundEvents.GENERIC_EAT;
             world.playSound(null, blockPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (itemStack.isEdible()) {
-                FoodProperties foodComponent = itemStack.getItem().getFoodProperties();
-                assert foodComponent != null;
-                player.getFoodData().eat(Math.round(foodComponent.getNutrition() * 1.3f), foodComponent.getSaturationModifier() * 1.3f);
-                List<Pair<MobEffectInstance, Float>> list = foodComponent.getEffects();
-                for (Pair<MobEffectInstance, Float> pair : list) {
-                    if (pair.getFirst() == null || !(world.random.nextFloat() < pair.getSecond()))
-                        continue;
-                    player.addEffect(new MobEffectInstance(pair.getFirst()));
-                }
+            if (itemStack.has(DataComponents.FOOD)) {
+                FoodProperties foodComponent = itemStack.get(DataComponents.FOOD);
+                player.getFoodData().eat(Math.round(foodComponent.nutrition() * 1.3f), foodComponent.saturation() * 1.3f);
+                foodComponent.effects().forEach(possibleEffect -> {
+                    player.addEffect(new MobEffectInstance(possibleEffect.effect()));
+                });
             }
             world.gameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
         }
@@ -248,7 +245,7 @@ public class TableSetBlock extends StorageBlock {
 
     @Override
     public boolean canInsertStack(ItemStack stack) {
-        return stack.isEdible();
+        return stack.has(DataComponents.FOOD);
     }
 
     @Override
@@ -278,7 +275,7 @@ public class TableSetBlock extends StorageBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, BlockGetter world, List<Component> tooltip, TooltipFlag tooltipContext) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 

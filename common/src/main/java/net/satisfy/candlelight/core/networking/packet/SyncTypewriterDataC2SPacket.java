@@ -2,10 +2,12 @@ package net.satisfy.candlelight.core.networking.packet;
 
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,10 +15,10 @@ import net.satisfy.candlelight.core.block.TypeWriterBlock;
 import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 
-public class SyncTypewriterDataC2SPacket implements NetworkManager.NetworkReceiver {
+public class SyncTypewriterDataC2SPacket implements NetworkManager.NetworkReceiver<RegistryFriendlyByteBuf> {
 
     @Override
-    public void receive(FriendlyByteBuf buf, NetworkManager.PacketContext context) {
+    public void receive(RegistryFriendlyByteBuf buf, NetworkManager.PacketContext context) {
         Player player = context.getPlayer();
         CompoundTag nbt = buf.readNbt();
         BlockPos pos = buf.readBlockPos();
@@ -25,7 +27,7 @@ public class SyncTypewriterDataC2SPacket implements NetworkManager.NetworkReceiv
         context.queue(() -> {
             BlockEntity blockEntity = player.level().getBlockEntity(pos);
             if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
-                note.setTag(nbt);
+                note.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
                 typeWriterEntity.addPaper(note);
             }
             BlockState blockState = player.level().getBlockState(pos);

@@ -1,6 +1,7 @@
 package net.satisfy.candlelight.core.item;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class RingItem extends ArmorItem {
-    public RingItem(ArmorMaterial material, Type type, Properties settings) {
+    public RingItem(Holder<ArmorMaterial> material, Type type, Properties settings) {
         super(material, type, settings);
     }
 
@@ -54,7 +55,7 @@ public class RingItem extends ArmorItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level world, @NotNull List<Component> tooltip, TooltipFlag context) {
+    public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.candlelight.ring").withStyle(ChatFormatting.GREEN));
     }
 }

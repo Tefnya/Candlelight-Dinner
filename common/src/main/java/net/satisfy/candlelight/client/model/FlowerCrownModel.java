@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class FlowerCrownModel<T extends Entity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new CandlelightIdentifier("flower_crown"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("flower_crown"), "main");
     private final ModelPart flower_crown;
 
     public FlowerCrownModel(ModelPart root) {
@@ -29,7 +29,7 @@ public class FlowerCrownModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
         poseStack.pushPose();
         poseStack.scale(1.05F, 1.05F, 1.05F);
         flower_crown.render(poseStack, buffer, packedLight, packedOverlay);

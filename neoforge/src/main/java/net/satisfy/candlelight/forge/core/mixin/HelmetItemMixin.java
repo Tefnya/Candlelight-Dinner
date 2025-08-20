@@ -2,6 +2,7 @@ package net.satisfy.candlelight.forge.core.mixin;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,7 +11,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.satisfy.candlelight.core.item.CandlelightHatItem;
 import net.satisfy.candlelight.core.registry.ArmorRegistry;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
@@ -45,11 +46,11 @@ public abstract class HelmetItemMixin extends ArmorItem {
     }
 
     @Override
-    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return hatTexture.toString();
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return hatTexture;
     }
 
-    private HelmetItemMixin(ArmorMaterial armorMaterial, Type armorType, Properties itemProperties) {
+    private HelmetItemMixin(Holder<ArmorMaterial> armorMaterial, Type armorType, Properties itemProperties) {
         super(armorMaterial, armorType, itemProperties);
     }
 }

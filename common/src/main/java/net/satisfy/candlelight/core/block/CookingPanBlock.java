@@ -1,5 +1,6 @@
 package net.satisfy.candlelight.core.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -16,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -80,6 +82,13 @@ public class CookingPanBlock extends BaseEntityBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(COOKING, false).setValue(NEEDS_SUPPORT, false));
     }
 
+    public static final MapCodec<CookingPanBlock> CODEC = simpleCodec(CookingPanBlock::new);
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, LIT, COOKING, NEEDS_SUPPORT, DAMAGE);
     }
@@ -137,13 +146,13 @@ public class CookingPanBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void playerWillDestroy(@NotNull Level level, BlockPos blockPos, @NotNull BlockState blockState, @NotNull Player player) {
+    public BlockState playerWillDestroy(@NotNull Level level, BlockPos blockPos, @NotNull BlockState blockState, @NotNull Player player) {
         ItemStack stack = new ItemStack(this);
         stack.setDamageValue(blockState.getValue(DAMAGE));
         ItemEntity itemEntity = new ItemEntity(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
         itemEntity.setDefaultPickUpDelay();
         level.addFreshEntity(itemEntity);
-        super.playerWillDestroy(level, blockPos, blockState, player);
+        return super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
     @Override
@@ -157,7 +166,7 @@ public class CookingPanBlock extends BaseEntityBlock {
 
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
         if (!world.isClientSide) {
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof MenuProvider) {
@@ -223,7 +232,7 @@ public class CookingPanBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
     }
 }

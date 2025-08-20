@@ -44,7 +44,7 @@ public class JewelryBoxBlock extends StorageBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     private static final VoxelShape SHAPE = Block.box(5, 0, 5, 11, 5, 11);
-    public static final TagKey<Item> RINGS = TagKey.create(Registries.ITEM, new CandlelightIdentifier("rings"));
+    public static final TagKey<Item> RINGS = TagKey.create(Registries.ITEM, CandlelightIdentifier.identifier("rings"));
 
     public JewelryBoxBlock(Properties settings) {
         super(settings);
@@ -145,7 +145,7 @@ public class JewelryBoxBlock extends StorageBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, BlockGetter world, List<Component> tooltip, TooltipFlag tooltipContext) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 }

@@ -3,12 +3,14 @@ package net.satisfy.candlelight.core.util;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.satisfy.candlelight.client.gui.NotePaperGui;
 import net.satisfy.candlelight.client.gui.SignedPaperGui;
 import net.satisfy.candlelight.client.gui.TypeWriterGui;
@@ -34,7 +36,7 @@ public class CandlelightUtil {
     }
 
     static int getColor(ItemStack itemStack, int defaultColor) {
-        CompoundTag displayTag = itemStack.getTagElement("display");
+        CompoundTag displayTag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getCompound("display");
         if (null != displayTag && displayTag.contains("color", Tag.TAG_ANY_NUMERIC))
             return displayTag.getInt("color");
         return defaultColor;

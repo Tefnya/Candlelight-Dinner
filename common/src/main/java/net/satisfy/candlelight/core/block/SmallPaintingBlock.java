@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings({"unused", "deprecation"})
 public class SmallPaintingBlock extends WallDecorationBlock {
@@ -28,19 +27,17 @@ public class SmallPaintingBlock extends WallDecorationBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isDiscrete()) return InteractionResult.PASS;
-        ItemStack itemStack = player.getItemInHand(hand);
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        if (player.isDiscrete()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (world.isClientSide) {
             if (switchPaintings(world, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             }
         }
         return switchPaintings(world, pos, state, player);
     }
 
-
-    private InteractionResult switchPaintings(LevelAccessor world, BlockPos pos, BlockState state, Player player) {
+    private ItemInteractionResult switchPaintings(LevelAccessor world, BlockPos pos, BlockState state, Player player) {
         world.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 0.5f, world.getRandom().nextFloat() * 0.1f + 0.9f);
         int i = state.getValue(PAINTING);
         world.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
@@ -51,7 +48,7 @@ public class SmallPaintingBlock extends WallDecorationBlock {
             world.setBlock(pos, state.setValue(PAINTING, 0), Block.UPDATE_ALL);
         }
 
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
 

@@ -59,15 +59,12 @@ public class LampBlock extends LanternBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.getItemInHand(hand).isEmpty()) {
-            if (!world.isClientSide()) {
-                BlockState newState = state.setValue(LUMINANCE, !state.getValue(LUMINANCE));
-                world.setBlockAndUpdate(pos, newState);
-                world.playSound(null, pos, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
-            return InteractionResult.sidedSuccess(world.isClientSide());
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
+        if (!world.isClientSide()) {
+            BlockState newState = state.setValue(LUMINANCE, !state.getValue(LUMINANCE));
+            world.setBlockAndUpdate(pos, newState);
+            world.playSound(null, pos, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
-        return InteractionResult.PASS;
+        return InteractionResult.sidedSuccess(world.isClientSide());
     }
 }

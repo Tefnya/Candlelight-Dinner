@@ -4,10 +4,13 @@ import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.satisfy.candlelight.core.networking.CandlelightMessages;
 
 @Environment(EnvType.CLIENT)
@@ -25,8 +28,8 @@ public class NotePaperGui extends NoteGui {
             this.removeEmptyPages();
             this.writeNbtData(signNote);
             int slot = this.hand == InteractionHand.MAIN_HAND ? this.player.getInventory().selected : 40;
-            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-            buf.writeNbt(itemStack.getTag());
+            RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), this.player.registryAccess());
+            buf.writeNbt(itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
             buf.writeInt(slot);
             buf.writeBoolean(signNote);
             NetworkManager.sendToServer(CandlelightMessages.SIGN_NOTE, buf);

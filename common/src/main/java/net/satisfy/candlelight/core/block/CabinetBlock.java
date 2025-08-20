@@ -1,7 +1,10 @@
 package net.satisfy.candlelight.core.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -37,13 +40,17 @@ public class CabinetBlock extends BaseEntityBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, false));
     }
 
+    public CabinetBlock(Properties properties) {
+        this(properties, null, null);
+    }
+
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CabinetBlockEntity(pos, state);
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
         if (world.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
@@ -73,6 +80,13 @@ public class CabinetBlock extends BaseEntityBlock {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
+    public static final MapCodec<CabinetBlock> CODEC = simpleCodec(CabinetBlock::new);
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
     @Override
     public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
@@ -92,10 +106,10 @@ public class CabinetBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (itemStack.hasCustomHoverName()) {
+        if (itemStack.has(DataComponents.CUSTOM_NAME)) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CabinetBlockEntity cabinetBlockEntity) {
-                cabinetBlockEntity.setCustomName(itemStack.getHoverName());
+                cabinetBlockEntity.setComponents(DataComponentMap.builder().set(DataComponents.CUSTOM_NAME, itemStack.getHoverName()).build());
             }
         }
     }

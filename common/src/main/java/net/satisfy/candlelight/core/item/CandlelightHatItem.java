@@ -1,5 +1,6 @@
 package net.satisfy.candlelight.core.item;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class CandlelightHatItem extends ArmorItem {
     private final ResourceLocation hatTexture;
 
-    public CandlelightHatItem(ArmorMaterial armorMaterial, Type type, Properties properties, ResourceLocation hatTexture) {
+    public CandlelightHatItem(Holder<ArmorMaterial> armorMaterial, Type type, Properties properties, ResourceLocation hatTexture) {
         super(armorMaterial, type, properties);
         this.hatTexture = hatTexture;
     }

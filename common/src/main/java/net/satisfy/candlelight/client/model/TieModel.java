@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class TieModel<T extends Entity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new CandlelightIdentifier("tie"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("tie"), "main");
     private final ModelPart body;
 
     public TieModel(ModelPart root) {
@@ -30,7 +30,7 @@ public class TieModel<T extends Entity> extends EntityModel<T> {
 
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
         poseStack.pushPose();
         poseStack.scale(1.024F, 1.024F, 1.024F);
         body.render(poseStack, buffer, packedLight, packedOverlay);

@@ -1,17 +1,22 @@
 package net.satisfy.candlelight.core.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -77,7 +82,15 @@ public class TypeWriterBlock extends BaseEntityBlock {
         super(settings);
     }
 
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public static final MapCodec<TypeWriterBlock> CODEC = simpleCodec(TypeWriterBlock::new);
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() == ObjectRegistry.NOTE_PAPER.get() && state.getValue(FULL) == 0) {
             world.setBlock(pos, state.setValue(FULL, 1), 2);
@@ -86,14 +99,14 @@ public class TypeWriterBlock extends BaseEntityBlock {
                 typeWriterEntity.addPaper(new ItemStack(ObjectRegistry.NOTE_PAPER_WRITEABLE.get()));
                 stack.setCount(stack.getCount() - 1);
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else if (state.getValue(FULL) == 1) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
                 if (world.isClientSide)
                     CandlelightUtil.setTypeWriterScreen(player, typeWriterEntity);
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         } else if (state.getValue(FULL) == 2) {
             world.setBlock(pos, state.setValue(FULL, 0), 2);
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -101,16 +114,16 @@ public class TypeWriterBlock extends BaseEntityBlock {
                 ItemStack paper = typeWriterEntity.getPaper();
                 ItemStack result = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
 
-                if (paper.getTag() != null)
-                    result.setTag(paper.getTag().copy());
-                result.addTagElement("author", StringTag.valueOf(player.getName().getString()));
+                if (paper.has(DataComponents.CUSTOM_DATA))
+                    result.set(DataComponents.CUSTOM_DATA, paper.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY));
+                result.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().put("author", StringTag.valueOf(player.getName().getString()));
                 player.addItem(result);
 
                 typeWriterEntity.removePaper();
             }
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return super.useItemOn(itemStack, state, world, pos, player, hand, hit);
     }
 
     @Override
@@ -142,7 +155,7 @@ public class TypeWriterBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, BlockGetter world, List<Component> tooltip, TooltipFlag tooltipContext) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 

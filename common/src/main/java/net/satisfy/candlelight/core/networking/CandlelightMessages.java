@@ -8,8 +8,8 @@ import net.satisfy.candlelight.core.networking.packet.SyncTypewriterDataC2SPacke
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class CandlelightMessages {
-    public static final ResourceLocation TYPEWRITER_SYNC = new CandlelightIdentifier("typewriter_sync");
-    public static final ResourceLocation SIGN_NOTE = new CandlelightIdentifier("sign_note");
+    public static final ResourceLocation TYPEWRITER_SYNC = CandlelightIdentifier.identifier("typewriter_sync");
+    public static final ResourceLocation SIGN_NOTE = CandlelightIdentifier.identifier("sign_note");
 
     public static void registerC2SPackets() {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, TYPEWRITER_SYNC, new SyncTypewriterDataC2SPacket());

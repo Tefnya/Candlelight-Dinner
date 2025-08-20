@@ -1,6 +1,7 @@
 package net.satisfy.candlelight.core.item;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +26,8 @@ public class ClosedLetterItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level world, @NotNull List<Component> tooltip, TooltipFlag context) {
-        CompoundTag nbt = stack.getTag();
+    public void appendHoverText(ItemStack stack, TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
+        CompoundTag nbt = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         if (nbt != null) {
             String title = nbt.getString("letter_title");
             String sender = nbt.getString("letter_sender");
@@ -43,12 +45,13 @@ public class ClosedLetterItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         ItemStack output = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
 
-        if (stack.hasTag()) {
-            assert stack.getTag() != null;
-            CompoundTag tag = stack.getTag().copy();
+        if (stack.has(DataComponents.CUSTOM_DATA)) {
+            CustomData data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            assert data.copyTag() != null;
+            CompoundTag tag = data.copyTag().copy();
             tag.remove("letter_title");
             tag.remove("letter_sender");
-            output.setTag(tag);
+            output.set(DataComponents.CUSTOM_DATA, data);
         }
 
         if (this == ObjectRegistry.LOVE_LETTER_CLOSED.get() && level.isClientSide()) {

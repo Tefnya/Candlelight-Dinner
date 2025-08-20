@@ -1,6 +1,7 @@
 package net.satisfy.candlelight.core.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -38,31 +39,31 @@ public class TypeWriterEntity extends BlockEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        writePaper(nbt, paper);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
+        writePaper(compoundTag, paper, provider);
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        paper = readPaper(nbt);
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
+        paper = readPaper(compoundTag, provider);
     }
 
-    public void writePaper(CompoundTag nbt, ItemStack flower) {
+    public void writePaper(CompoundTag nbt, ItemStack flower, HolderLookup.Provider provider) {
         CompoundTag nbtCompound = new CompoundTag();
         if (flower != null) {
-            flower.save(nbtCompound);
+            flower.save(provider, nbtCompound);
         }
         nbt.put(PAPER_KEY, nbtCompound);
     }
 
-    public ItemStack readPaper(CompoundTag nbt) {
-        super.load(nbt);
+    public ItemStack readPaper(CompoundTag nbt, HolderLookup.Provider provider) {
+        super.loadAdditional(nbt, provider);
         if (nbt.contains(PAPER_KEY)) {
             CompoundTag nbtCompound = nbt.getCompound(PAPER_KEY);
             if (!nbtCompound.isEmpty()) {
-                return ItemStack.of(nbtCompound);
+                return ItemStack.parseOptional(provider, nbtCompound);
             }
         }
         return null;
@@ -73,8 +74,8 @@ public class TypeWriterEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public CompoundTag toInitialChunkDataNbt() {
-        return saveWithoutMetadata();
+    public CompoundTag toInitialChunkDataNbt(HolderLookup.Provider provider) {
+        return saveWithoutMetadata(provider);
     }
 }
 

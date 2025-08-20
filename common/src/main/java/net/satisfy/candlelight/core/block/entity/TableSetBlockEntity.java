@@ -1,6 +1,7 @@
 package net.satisfy.candlelight.core.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,16 +33,16 @@ public class TableSetBlockEntity extends StorageBlockEntity {
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        this.effectStack = ItemStack.of(nbt.getCompound("EffectStack"));
-        this.effectDuration = nbt.getInt("EffectDuration");
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
+        this.effectStack = ItemStack.parseOptional(this.level.registryAccess(), compoundTag.getCompound("EffectStack"));
+        this.effectDuration = compoundTag.getInt("EffectDuration");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        nbt.put("EffectStack", this.effectStack.save(new CompoundTag()));
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
+        super.saveAdditional(nbt, provider);
+        nbt.put("EffectStack", this.effectStack.save(this.level.registryAccess(), new CompoundTag()));
         nbt.putInt("EffectDuration", this.effectDuration);
     }
 }

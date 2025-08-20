@@ -6,9 +6,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.CustomData;
 import net.satisfy.candlelight.core.registry.SoundEventRegistry;
 import org.lwjgl.glfw.GLFW;
 import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
@@ -38,8 +41,8 @@ public class TypeWriterGui extends NoteGui {
             this.removeEmptyPages();
             this.writeNbtData(signNote);
         }
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeNbt(this.itemStack.getTag());
+        RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), this.player.registryAccess());
+        buf.writeNbt(this.itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
         buf.writeBlockPos(typeWriterEntity.getBlockPos());
         buf.writeBoolean(signNote);
         NetworkManager.sendToServer(CandlelightMessages.TYPEWRITER_SYNC, buf);

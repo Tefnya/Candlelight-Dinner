@@ -16,6 +16,7 @@ import net.minecraft.client.gui.font.TextFieldHelper;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -24,8 +25,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -39,7 +42,7 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
 public abstract class NoteGui extends Screen {
-    public static final ResourceLocation NOTE_TEXTURE = new CandlelightIdentifier("textures/gui/note_paper_gui.png");
+    public static final ResourceLocation NOTE_TEXTURE = CandlelightIdentifier.identifier("textures/gui/note_paper_gui.png");
     private static final Component EDIT_TITLE_TEXT = Component.literal("Enter Note Title");
     private static final Component FINALIZE_WARNING_TEXT = Component.translatable("book.finalizeWarning");
     private static final FormattedCharSequence BLACK_CURSOR_TEXT;
@@ -74,7 +77,8 @@ public abstract class NoteGui extends Screen {
         this.pageContent = NoteGui.DisplayCache.EMPTY;
         this.player = player;
         this.itemStack = itemStack;
-        CompoundTag nbtCompound = itemStack.getTag();
+        CustomData data = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        CompoundTag nbtCompound = data.copyTag();
         if (nbtCompound != null) {
             List<String> string = this.text;
             Objects.requireNonNull(string);
@@ -161,14 +165,16 @@ public abstract class NoteGui extends Screen {
         Stream<StringTag> nbts = this.text.stream().map(StringTag::valueOf);
         Objects.requireNonNull(nbtList);
         nbts.forEach(nbtList::add);
+        CustomData data = this.itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (!this.text.isEmpty()) {
-            this.itemStack.addTagElement("text", nbtList);
+            data.copyTag().put("text", nbtList);
         }
 
         if (signNote) {
-            this.itemStack.addTagElement("author", StringTag.valueOf(this.player.getGameProfile().getName()));
-            this.itemStack.addTagElement("title", StringTag.valueOf(this.title.trim()));
+            data.copyTag().put("author", StringTag.valueOf(this.player.getGameProfile().getName()));
+            data.copyTag().put("title", StringTag.valueOf(this.title.trim()));
         }
+        this.itemStack.set(DataComponents.CUSTOM_DATA, data);
     }
 
     private String getClipboard() {
@@ -222,7 +228,7 @@ public abstract class NoteGui extends Screen {
             } else {
                 return false;
             }
-        } else if (SharedConstants.isAllowedChatCharacter(chr)) {
+        } else if (StringUtil.isAllowedChatCharacter(chr)) {
             this.currentPageSelectionManager.insertText(Character.toString(chr));
             this.invalidateDisplayCache();
             return true;
@@ -367,7 +373,7 @@ public abstract class NoteGui extends Screen {
     }
 
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, delta);
         this.setFocused(null);
         int x = (this.width - 192) / 2;
         guiGraphics.blit(NOTE_TEXTURE, x, 2, 0, 0, 192, 192);

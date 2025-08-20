@@ -1,63 +1,51 @@
 package net.satisfy.candlelight.core.registry;
 
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.jetbrains.annotations.NotNull;
+import net.satisfy.candlelight.core.util.CandlelightIdentifier;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class ArmorMaterialRegistry {
-    public static final ArmorMaterial COOK_ARMOR = new SimpleArmorMaterial(ArmorMaterials.LEATHER, 1, "cook");
-    public static final ArmorMaterial RING_ARMOR = new SimpleArmorMaterial(ArmorMaterials.LEATHER, 0, "gold_ring", 15, Ingredient.of(new ItemStack(Items.GOLD_INGOT)));
 
-    private static class SimpleArmorMaterial implements ArmorMaterial {
-        private final ArmorMaterial base;
-        private final int defense;
-        private final String name;
-        private final int enchantability;
-        private final Ingredient repairIngredient;
+    private static final int ENCHANTMENT_VALUE = 15;
+    private static final Holder<SoundEvent> EQUIP_SOUND = SoundEvents.ARMOR_EQUIP_LEATHER;
+    private static final float TOUGHNESS = 0.0F;
+    private static final float KNOCKBACK_RESISTANCE = 0.0F;
 
-        SimpleArmorMaterial(ArmorMaterial base, int defense, String name) {
-            this(base, defense, name, base.getEnchantmentValue(), base.getRepairIngredient());
-        }
+    public static final Holder<ArmorMaterial> COOK_ARMOR =
+            createMaterial("cook", Ingredient.of(Items.LEATHER), true);
+    public static final Holder<ArmorMaterial> RING_ARMOR =
+            createMaterial("gold_ring", Ingredient.of(Items.GOLD_INGOT), true);
 
-        SimpleArmorMaterial(ArmorMaterial base, int defense, String name, int enchantability, Ingredient repairIngredient) {
-            this.base = base;
-            this.defense = defense;
-            this.name = name;
-            this.enchantability = enchantability;
-            this.repairIngredient = repairIngredient;
-        }
-
-        public int getDurabilityForType(ArmorItem.Type type) {
-            return base.getDurabilityForType(type);
-        }
-
-        public int getDefenseForType(ArmorItem.Type type) {
-            return defense;
-        }
-
-        public int getEnchantmentValue() {
-            return enchantability;
-        }
-
-        public @NotNull SoundEvent getEquipSound() {
-            return base.getEquipSound();
-        }
-
-        public @NotNull Ingredient getRepairIngredient() {
+    private static Holder<ArmorMaterial> createMaterial(String name, Ingredient repairIngredient, boolean dyeable) {
+        ArmorMaterial armorMaterial = register(name, Util.make(new EnumMap(ArmorItem.Type.class), (enumMap) -> {
+            enumMap.put(ArmorItem.Type.BOOTS, 112);
+            enumMap.put(ArmorItem.Type.LEGGINGS, 136);
+            enumMap.put(ArmorItem.Type.CHESTPLATE, 144);
+            enumMap.put(ArmorItem.Type.HELMET, 128);
+            enumMap.put(ArmorItem.Type.BODY, 3);
+        }), ENCHANTMENT_VALUE, EQUIP_SOUND, TOUGHNESS, KNOCKBACK_RESISTANCE, () -> {
             return repairIngredient;
+        }, List.of(new ArmorMaterial.Layer(CandlelightIdentifier.identifier(name), "", true), new ArmorMaterial.Layer(CandlelightIdentifier.identifier(name), "_overlay", dyeable)));
+        return BuiltInRegistries.ARMOR_MATERIAL.wrapAsHolder(armorMaterial);
+    }
+
+    private static ArmorMaterial register(String string, EnumMap<ArmorItem.Type, Integer> enumMap, int i, Holder<SoundEvent> arg, float f, float g, Supplier<Ingredient> supplier, List<ArmorMaterial.Layer> list) {
+        EnumMap<ArmorItem.Type, Integer> enumMap2 = new EnumMap<>(ArmorItem.Type.class);
+        ArmorItem.Type[] var9 = ArmorItem.Type.values();
+
+        for (ArmorItem.Type type : var9) {
+            enumMap2.put(type, enumMap.get(type));
         }
 
-        public @NotNull String getName() {
-            return name;
-        }
-
-        public float getToughness() {
-            return base.getToughness();
-        }
-
-        public float getKnockbackResistance() {
-            return base.getKnockbackResistance();
-        }
+        return new ArmorMaterial(enumMap2, i, arg, supplier, list, f, g);
     }
 }

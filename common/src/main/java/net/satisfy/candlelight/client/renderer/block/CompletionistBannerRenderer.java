@@ -20,9 +20,10 @@ import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.CompletionistBannerBlock;
 import net.satisfy.candlelight.core.block.CompletionistWallBannerBlock;
 import net.satisfy.candlelight.core.block.entity.CompletionistBannerEntity;
+import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class CompletionistBannerRenderer implements BlockEntityRenderer<CompletionistBannerEntity> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Candlelight.MOD_ID, "banner"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("banner"), "main");
 
     public static final String FLAG = "flag";
     private static final String POLE = "pole";

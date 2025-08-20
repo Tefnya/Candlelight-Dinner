@@ -12,7 +12,7 @@ import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.jetbrains.annotations.NotNull;
 
 public class CookingChestplateModel<T extends Entity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new CandlelightIdentifier("cooking_chest"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("cooking_chest"), "main");
     private final ModelPart body;
     private final ModelPart left_arm;
     private final ModelPart right_arm;
@@ -46,13 +46,13 @@ public class CookingChestplateModel<T extends Entity> extends EntityModel<T> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
     @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
         poseStack.pushPose();
-        body.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_arm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_arm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_leg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_leg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        body.render(poseStack, buffer, packedLight, packedOverlay, alpha);
+        right_arm.render(poseStack, buffer, packedLight, packedOverlay, alpha);
+        left_arm.render(poseStack, buffer, packedLight, packedOverlay, alpha);
+        right_leg.render(poseStack, buffer, packedLight, packedOverlay, alpha);
+        left_leg.render(poseStack, buffer, packedLight, packedOverlay, alpha);
         poseStack.popPose();
     }
 
