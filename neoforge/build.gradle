@@ -1,13 +1,13 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.github.johnrengelman.shadow" version "8.0.0"
 }
 
 architectury {
     platformSetupLoomIde()
-    forge()
+    neoForge()
 }
 
-def jarFileName = 'letsdo-candlelight-forge'
+def jarFileName = 'letsdo-candlelight-neoforge'
 
 archivesBaseName = jarFileName
 
@@ -15,13 +15,7 @@ archivesBaseName = jarFileName
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
 
-    forge {
-        convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-
-        mixinConfig "candlelight-common.mixins.json"
-        mixinConfig "candlelight.mixins.json"
-
+    neoForge {
     }
 }
 
@@ -30,24 +24,24 @@ configurations {
     shadowCommon
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
-    developmentForge.extendsFrom common
+    developmentNeoForge.extendsFrom common
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
-    modImplementation("top.theillusivec4.curios:curios-forge:${rootProject.curios_version}")
-    modImplementation "maven.modrinth:lets-do-farm-charm:${project.farm_and_charm_version}-forge"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-forge:$rei_version"
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    modApi "dev.architectury:architectury-neoforge:${rootProject.architectury_version}"
+    modImplementation("top.theillusivec4.curios:curios-neoforge:${rootProject.curios_version}")
+    modImplementation "net.satisfy.farm_and_charm:farm_and_charm-neoforge:${project.farm_and_charm_version}"
+    modImplementation "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive false }
 }
 
 
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("META-INF/mods.toml") {
+    filesMatching("META-INF/neoforge.mods.toml") {
         expand "version": project.version
     }
 }
@@ -64,6 +58,7 @@ remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
     archiveClassifier.set(null)
+    atAccessWideners.add(loom.accessWidenerPath.get().asFile.getName())
 }
 
 jar {

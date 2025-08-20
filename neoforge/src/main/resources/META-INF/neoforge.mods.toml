@@ -1,6 +1,13 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
+loaderVersion = "[4,)"
 license = "Custom"
+issueTrackerURL = "https://github.com/satisfyu/Let-s-Do-Hub"
+
+[[mixins]]
+config = [
+    "candlelight-common.mixins.json",
+    "candlelight.mixins.json"
+]
 
 [[mods]]
 modId = "candlelight"
@@ -13,22 +20,22 @@ Ever dreamed of the perfect dinner? Prepare mouth-watering meals, transform your
 logoFile = "pack.png"
 
 [[dependencies.candlelight]]
-modId = "forge"
-mandatory = true
-versionRange = "[47,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.candlelight]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20,)"
+type = "required"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.candlelight]]
 modId = "architectury"
-mandatory = true
+type = "required"
 versionRange = "[9.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
