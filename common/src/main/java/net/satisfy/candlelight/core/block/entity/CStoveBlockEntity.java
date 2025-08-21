@@ -13,6 +13,11 @@ public class CStoveBlockEntity extends StoveBlockEntity {
     }
 
     @Override
+    public boolean isValidBlockState(BlockState blockState) {
+        return getType().isValid(blockState);
+    }
+
+    @Override
     public @NotNull BlockEntityType<?> getType() {
         return EntityTypeRegistry.STOVE_BLOCK_ENTITY.get();
     }
