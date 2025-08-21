@@ -9,25 +9,31 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.DyedItemColor;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3i;
 
 public class DyeableCandlelightArmorItem extends ArmorItem {
-    private final ResourceLocation getTexture;
+    private final ResourceLocation texture;
     private final int defaultColor;
 
-    public DyeableCandlelightArmorItem(Holder<ArmorMaterial> armorMaterial, Type type, int color, Properties properties, ResourceLocation getTexture) {
+    public DyeableCandlelightArmorItem(Holder<ArmorMaterial> armorMaterial, Type type, int color, Properties properties, ResourceLocation texture) {
         super(armorMaterial, type, properties);
         this.defaultColor = color;
-        this.getTexture = getTexture;
+        this.texture = texture;
     }
 
     public int getColor(ItemStack itemStack) {
-        CompoundTag compoundTag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getCompound("display");
-        return (compoundTag != null && compoundTag.contains("color", 99)) ? compoundTag.getInt("color") : this.defaultColor;
+        DyedItemColor dyed = itemStack.get(DataComponents.DYED_COLOR);
+        if (dyed != null) return dyed.rgb();
+        CompoundTag tag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getCompound("display");
+        if (tag.contains("color", 99)) return tag.getInt("color");
+        Vector3i rgb = new Vector3i((defaultColor >> 16) & 255, (defaultColor >> 8) & 255, defaultColor & 255);
+        return (rgb.x() << 16) | (rgb.y() << 8) | rgb.z();
     }
 
     public ResourceLocation getTexture() {
-        return getTexture;
+        return texture;
     }
 
     @Override

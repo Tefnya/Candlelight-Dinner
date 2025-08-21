@@ -35,7 +35,6 @@ import net.satisfy.farm_and_charm.core.item.food.EffectItem;
 import net.satisfy.farm_and_charm.core.registry.MobEffectRegistry;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
