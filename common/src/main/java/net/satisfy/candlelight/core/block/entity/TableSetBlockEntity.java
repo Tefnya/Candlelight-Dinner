@@ -3,6 +3,7 @@ package net.satisfy.candlelight.core.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,14 +48,22 @@ public class TableSetBlockEntity extends StorageBlockEntity {
     @Override
     protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
         super.loadAdditional(compoundTag, provider);
-        this.effectStack = ItemStack.parseOptional(this.level.registryAccess(), compoundTag.getCompound("EffectStack"));
-        this.effectDuration = compoundTag.getInt("EffectDuration");
+        if (!this.effectStack.isEmpty()) {
+            if (this.level != null) {
+                this.effectStack = ItemStack.parseOptional(this.level.registryAccess(), compoundTag.getCompound("EffectStack"));
+                this.effectDuration = compoundTag.getInt("EffectDuration");
+            }
+        }
     }
 
     @Override
     protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
         super.saveAdditional(nbt, provider);
-        nbt.put("EffectStack", this.effectStack.save(this.level.registryAccess(), new CompoundTag()));
-        nbt.putInt("EffectDuration", this.effectDuration);
+        if (!this.effectStack.isEmpty()) {
+            if (this.level != null) {
+                nbt.put("EffectStack", this.effectStack.save(this.level.registryAccess(), new CompoundTag()));
+                nbt.putInt("EffectDuration", this.effectDuration);
+            }
+        }
     }
 }
