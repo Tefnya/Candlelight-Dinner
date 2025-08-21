@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -175,22 +176,24 @@ public class CookingPanBlockEntity extends BlockEntity implements BlockEntityTic
             return;
         }
 
-        RecipeManager recipeManager = this.level.getRecipeManager();
-        List<RecipeHolder<RoasterRecipe>> recipes = recipeManager.getAllRecipesFor((RecipeType)RecipeTypeRegistry.ROASTER_RECIPE_TYPE.get());
-        Optional<RoasterRecipe> recipe = Optional.ofNullable(this.getRecipe(recipes, this.inventory));        if (level == null) throw new IllegalStateException("Null world not allowed");
-        RegistryAccess access = level.registryAccess();
-        if (recipe.isPresent() && canCraft(recipe.get(), access)) {
-            if (++cookingTime >= MAX_COOKING_TIME) {
+        if (this.level instanceof ServerLevel serverLevel) {
+            RecipeManager recipeManager = serverLevel.getRecipeManager();
+            List<RecipeHolder<RoasterRecipe>> recipes = recipeManager.getAllRecipesFor(RecipeTypeRegistry.ROASTER_RECIPE_TYPE.get());
+            Optional<RoasterRecipe> recipe = Optional.ofNullable(this.getRecipe(recipes, this.inventory));        if (level == null) throw new IllegalStateException("Null world not allowed");
+            RegistryAccess access = level.registryAccess();
+            if (recipe.isPresent() && canCraft(recipe.get(), access)) {
+                if (++cookingTime >= MAX_COOKING_TIME) {
+                    cookingTime = 0;
+                    craft(recipe.get(), access);
+                }
+                if (!state.getValue(CookingPanBlock.COOKING)) {
+                    world.setBlock(pos, state.setValue(CookingPanBlock.COOKING, true), Block.UPDATE_ALL);
+                }
+            } else {
                 cookingTime = 0;
-                craft(recipe.get(), access);
-            }
-            if (!state.getValue(CookingPanBlock.COOKING)) {
-                world.setBlock(pos, state.setValue(CookingPanBlock.COOKING, true), Block.UPDATE_ALL);
-            }
-        } else {
-            cookingTime = 0;
-            if (state.getValue(CookingPanBlock.COOKING)) {
-                world.setBlock(pos, state.setValue(CookingPanBlock.COOKING, false), Block.UPDATE_ALL);
+                if (state.getValue(CookingPanBlock.COOKING)) {
+                    world.setBlock(pos, state.setValue(CookingPanBlock.COOKING, false), Block.UPDATE_ALL);
+                }
             }
         }
     }
@@ -234,7 +237,7 @@ public class CookingPanBlockEntity extends BlockEntity implements BlockEntityTic
     }
 
     private RoasterRecipe getRecipe(List<RecipeHolder<RoasterRecipe>> recipes, NonNullList<ItemStack> inventory) {
-        Iterator var3 = recipes.iterator();
+        Iterator<RecipeHolder<RoasterRecipe>> var3 = recipes.iterator();
 
         label34:
         while(var3.hasNext()) {
