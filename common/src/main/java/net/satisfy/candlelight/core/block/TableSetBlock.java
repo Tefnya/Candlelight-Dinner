@@ -17,6 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -96,7 +97,7 @@ public class TableSetBlock extends StorageBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (stack.isEmpty()) {
@@ -121,7 +122,7 @@ public class TableSetBlock extends StorageBlock {
                         }
                     }
                 }
-                return InteractionResult.sidedSuccess(world.isClientSide());
+                return ItemInteractionResult.sidedSuccess(world.isClientSide());
             }
         }
 
@@ -143,7 +144,7 @@ public class TableSetBlock extends StorageBlock {
                         }
                     }
                 }
-                return InteractionResult.sidedSuccess(world.isClientSide());
+                return ItemInteractionResult.sidedSuccess(world.isClientSide());
             } else if (state.getValue(WINE_GLASS) && !state.getValue(WINE_GLASS_DRINK)) {
                 if (!world.isClientSide()) {
                     TableSetBlockEntity sbe = (TableSetBlockEntity) world.getBlockEntity(pos);
@@ -161,7 +162,7 @@ public class TableSetBlock extends StorageBlock {
                         }
                     }
                 }
-                return InteractionResult.sidedSuccess(world.isClientSide());
+                return ItemInteractionResult.sidedSuccess(world.isClientSide());
             }
         }
 
@@ -174,18 +175,18 @@ public class TableSetBlock extends StorageBlock {
                     player.drop(clocheItem, false);
                 }
             }
-            return InteractionResult.sidedSuccess(world.isClientSide());
+            return ItemInteractionResult.sidedSuccess(world.isClientSide());
         }
 
         Item item = stack.getItem();
-        if (!items.containsKey(item)) return super.use(state, world, pos, player, hand, hit);
+        if (!items.containsKey(item)) return super.useItemOn(itemStack, state, world, pos, player, hand, hit);
         BooleanProperty property = items.get(item);
-        if (state.getValue(property)) return InteractionResult.PASS;
+        if (state.getValue(property)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (!world.isClientSide()) {
             world.setBlockAndUpdate(pos, state.setValue(property, true));
             if (!player.isCreative()) stack.shrink(1);
         }
-        return InteractionResult.sidedSuccess(world.isClientSide());
+        return ItemInteractionResult.sidedSuccess(world.isClientSide());
     }
 
     @Override
