@@ -4,7 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 
 public class TableSetBlockEntity extends StorageBlockEntity {
     private ItemStack effectStack = ItemStack.EMPTY;
@@ -16,6 +18,16 @@ public class TableSetBlockEntity extends StorageBlockEntity {
 
     public TableSetBlockEntity(BlockPos pos, BlockState state, int size) {
         super(pos, state, size);
+    }
+
+    @Override
+    public BlockEntityType<?> getType() {
+        return EntityTypeRegistry.TABLE_SET_BLOCK_ENTITY.get();
+    }
+
+    @Override
+    public boolean isValidBlockState(BlockState blockState) {
+        return getType().isValid(blockState);
     }
 
     public ItemStack getEffectStack() {
