@@ -1,40 +1,34 @@
 package net.satisfy.candlelight.core.networking.packet;
 
-import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.satisfy.candlelight.core.block.TypeWriterBlock;
-import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
-import net.satisfy.candlelight.core.registry.ObjectRegistry;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.satisfy.candlelight.core.networking.CandlelightMessages;
 
-public class SyncTypewriterDataC2SPacket implements NetworkManager.NetworkReceiver<RegistryFriendlyByteBuf> {
+public record SyncTypewriterDataC2SPacket(CompoundTag nbt, BlockPos pos, boolean sign) implements CustomPacketPayload {
 
-    @Override
-    public void receive(RegistryFriendlyByteBuf buf, NetworkManager.PacketContext context) {
-        Player player = context.getPlayer();
+    public static final Type<SyncTypewriterDataC2SPacket> TYPE = new Type<>(CandlelightMessages.TYPEWRITER_SYNC);
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncTypewriterDataC2SPacket> STREAM_CODEC =
+            StreamCodec.of(SyncTypewriterDataC2SPacket::toNetwork, SyncTypewriterDataC2SPacket::fromNetwork);
+
+    public static void toNetwork(RegistryFriendlyByteBuf buf, SyncTypewriterDataC2SPacket msg) {
+        buf.writeNbt(msg.nbt());
+        buf.writeBlockPos(msg.pos());
+        buf.writeBoolean(msg.sign());
+    }
+
+    public static SyncTypewriterDataC2SPacket fromNetwork(RegistryFriendlyByteBuf buf) {
         CompoundTag nbt = buf.readNbt();
         BlockPos pos = buf.readBlockPos();
         boolean sign = buf.readBoolean();
-        ItemStack note = sign ? ObjectRegistry.NOTE_PAPER_WRITTEN.get().getDefaultInstance() : ObjectRegistry.NOTE_PAPER_WRITEABLE.get().getDefaultInstance();
-        context.queue(() -> {
-            BlockEntity blockEntity = player.level().getBlockEntity(pos);
-            if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
-                note.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
-                typeWriterEntity.addPaper(note);
-            }
-            BlockState blockState = player.level().getBlockState(pos);
-            if (sign) {
-                player.level().setBlock(pos, blockState.setValue(TypeWriterBlock.FULL, 2), 2);
-                player.level().sendBlockUpdated(pos, blockState, blockState.setValue(TypeWriterBlock.FULL, 2), Block.UPDATE_CLIENTS);
-            }
-        });
+        return new SyncTypewriterDataC2SPacket(nbt, pos, sign);
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

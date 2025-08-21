@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.satisfy.candlelight.core.networking.CandlelightMessages;
+import net.satisfy.candlelight.core.networking.packet.SignNoteC2SPacket;
 
 @Environment(EnvType.CLIENT)
 public class NotePaperGui extends NoteGui {
@@ -28,11 +30,8 @@ public class NotePaperGui extends NoteGui {
             this.removeEmptyPages();
             this.writeNbtData(signNote);
             int slot = this.hand == InteractionHand.MAIN_HAND ? this.player.getInventory().selected : 40;
-            RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), this.player.registryAccess());
-            buf.writeNbt(itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
-            buf.writeInt(slot);
-            buf.writeBoolean(signNote);
-            NetworkManager.sendToServer(CandlelightMessages.SIGN_NOTE, buf);
+            CompoundTag tag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+            NetworkManager.sendToServer(new SignNoteC2SPacket(tag, slot, signNote));
         }
     }
 }

@@ -1,17 +1,17 @@
 package net.satisfy.candlelight.client.gui;
 
 import dev.architectury.networking.NetworkManager;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.CustomData;
+import net.satisfy.candlelight.core.networking.packet.SyncTypewriterDataC2SPacket;
 import net.satisfy.candlelight.core.registry.SoundEventRegistry;
 import org.lwjgl.glfw.GLFW;
 import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
@@ -41,11 +41,9 @@ public class TypeWriterGui extends NoteGui {
             this.removeEmptyPages();
             this.writeNbtData(signNote);
         }
-        RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), this.player.registryAccess());
-        buf.writeNbt(this.itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
-        buf.writeBlockPos(typeWriterEntity.getBlockPos());
-        buf.writeBoolean(signNote);
-        NetworkManager.sendToServer(CandlelightMessages.TYPEWRITER_SYNC, buf);
+        CompoundTag nbt = this.itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        BlockPos pos = typeWriterEntity.getBlockPos();
+        NetworkManager.sendToServer(new SyncTypewriterDataC2SPacket(nbt, pos, signNote));
     }
 
     @Override
