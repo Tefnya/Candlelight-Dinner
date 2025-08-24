@@ -11,16 +11,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.CustomData;
-import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
+import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
 import net.satisfy.candlelight.core.networking.packet.SyncTypewriterDataC2SPacket;
 import net.satisfy.candlelight.core.registry.SoundEventRegistry;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
 public class TypeWriterGui extends NoteGui {
-    private final TypeWriterEntity typeWriterEntity;
+    private final TypewriterEntity typeWriterEntity;
 
-    public TypeWriterGui(Player player, TypeWriterEntity typeWriterEntity) {
+    public TypeWriterGui(Player player, TypewriterEntity typeWriterEntity) {
         super(player, typeWriterEntity.getPaper());
         this.typeWriterEntity = typeWriterEntity;
     }

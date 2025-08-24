@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
+import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import net.satisfy.candlelight.core.util.CandlelightUtil;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
@@ -45,8 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
-public class TypeWriterBlock extends BaseEntityBlock {
+public class TypewriterBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING;
 
     public static final IntegerProperty FULL = IntegerProperty.create("full", 0, 2);
@@ -77,31 +76,31 @@ public class TypeWriterBlock extends BaseEntityBlock {
         });
     }
 
-    public TypeWriterBlock(Properties settings) {
+    public TypewriterBlock(Properties settings) {
         super(settings);
     }
 
-    public static final MapCodec<TypeWriterBlock> CODEC = simpleCodec(TypeWriterBlock::new);
+    public static final MapCodec<TypewriterBlock> CODEC = simpleCodec(TypewriterBlock::new);
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() == ObjectRegistry.NOTE_PAPER.get() && state.getValue(FULL) == 0) {
             world.setBlock(pos, state.setValue(FULL, 1), 2);
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
+            if (blockEntity instanceof TypewriterEntity typeWriterEntity) {
                 typeWriterEntity.addPaper(new ItemStack(ObjectRegistry.NOTE_PAPER_WRITEABLE.get()));
                 stack.setCount(stack.getCount() - 1);
             }
             return ItemInteractionResult.SUCCESS;
         } else if (state.getValue(FULL) == 1) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
+            if (blockEntity instanceof TypewriterEntity typeWriterEntity) {
                 if (world.isClientSide)
                     CandlelightUtil.setTypeWriterScreen(player, typeWriterEntity);
             }
@@ -109,7 +108,7 @@ public class TypeWriterBlock extends BaseEntityBlock {
         } else if (state.getValue(FULL) == 2) {
             world.setBlock(pos, state.setValue(FULL, 0), 2);
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
+            if (blockEntity instanceof TypewriterEntity typeWriterEntity) {
                 ItemStack paper = typeWriterEntity.getPaper();
                 ItemStack result = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
 
@@ -140,7 +139,7 @@ public class TypeWriterBlock extends BaseEntityBlock {
     public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
         if (!blockState.is(blockState2.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof TypeWriterEntity typeWriterEntity) {
+            if (blockEntity instanceof TypewriterEntity typeWriterEntity) {
                 ItemStack dropStack = typeWriterEntity.getPaper();
                 Containers.dropItemStack(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), dropStack);
             }
@@ -165,11 +164,11 @@ public class TypeWriterBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TypeWriterEntity(pos, state);
+        return new TypewriterEntity(pos, state);
     }
 
     @Override
     public @NotNull RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 }

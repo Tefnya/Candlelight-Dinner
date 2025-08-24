@@ -15,7 +15,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.satisfy.candlelight.client.gui.NotePaperGui;
 import net.satisfy.candlelight.client.gui.SignedPaperGui;
 import net.satisfy.candlelight.client.gui.TypeWriterGui;
-import net.satisfy.candlelight.core.block.entity.TypeWriterEntity;
+import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
 import org.joml.Vector3i;
 
 public class CandlelightUtil {
@@ -24,7 +24,7 @@ public class CandlelightUtil {
     }
 
 
-    public static void setTypeWriterScreen(Player user, TypeWriterEntity typeWriterEntity) {
+    public static void setTypeWriterScreen(Player user, TypewriterEntity typeWriterEntity) {
         if (user instanceof LocalPlayer)
             Minecraft.getInstance().setScreen(new TypeWriterGui(user, typeWriterEntity));
     }

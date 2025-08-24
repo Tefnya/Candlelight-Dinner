@@ -39,6 +39,7 @@ public class CandlelightClient {
         BlockEntityRendererRegistry.register(EntityTypeRegistry.CANDLELIGHT_BANNER.get(), CompletionistBannerRenderer::new);
         BlockEntityRendererRegistry.register(EntityTypeRegistry.STORAGE_BLOCK_ENTITY.get(), context -> new StorageBlockEntityRenderer());
         BlockEntityRendererRegistry.register(EntityTypeRegistry.DINNER_BELL_BLOCK_ENTITY.get(), DinnerBellRenderer::new);
+        BlockEntityRendererRegistry.register(EntityTypeRegistry.TYPE_WRITER_BLOCK_ENTITY.get(), TypewriterRenderer::new);
         MenuRegistry.registerScreenFactory(ScreenHandlerTypeRegistry.LETTER_SCREEN_HANDLER.get(), LetterGui::new);
         registerStorageType();
 
@@ -61,6 +62,7 @@ public class CandlelightClient {
     }
 
     public static void registerEntityModelLayers() {
+        EntityModelLayerRegistry.register(TypewriterModel.LAYER_LOCATION, TypewriterModel::getTexturedModelData);
         EntityModelLayerRegistry.register(DinnerBellModel.LAYER_LOCATION, DinnerBellModel::getTexturedModelData);
         EntityModelLayerRegistry.register(CompletionistBannerRenderer.LAYER_LOCATION, CompletionistBannerRenderer::createBodyLayer);
         EntityModelLayerRegistry.register(FlowerCrownModel.LAYER_LOCATION, FlowerCrownModel::createBodyLayer);

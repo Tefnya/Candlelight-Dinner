@@ -13,13 +13,13 @@ import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("unused")
-public class TypeWriterEntity extends BlockEntity {
+public class TypewriterEntity extends BlockEntity {
 
     public static final String PAPER_KEY = "paper";
 
     ItemStack paper = ItemStack.EMPTY;
 
-    public TypeWriterEntity(BlockPos pos, BlockState state) {
+    public TypewriterEntity(BlockPos pos, BlockState state) {
         super(EntityTypeRegistry.TYPE_WRITER_BLOCK_ENTITY.get(), pos, state);
     }
 
