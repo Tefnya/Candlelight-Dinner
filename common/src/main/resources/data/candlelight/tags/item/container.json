@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:container",
+    "#neoforge:container",
     "#c:container"
   ]
 }

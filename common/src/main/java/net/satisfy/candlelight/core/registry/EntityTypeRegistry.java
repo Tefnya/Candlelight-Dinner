@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.satisfy.candlelight.Candlelight;
-import net.satisfy.candlelight.core.block.CabinetBlock;
 import net.satisfy.candlelight.core.block.entity.*;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import net.satisfy.farm_and_charm.core.block.entity.EffectFoodBlockEntity;

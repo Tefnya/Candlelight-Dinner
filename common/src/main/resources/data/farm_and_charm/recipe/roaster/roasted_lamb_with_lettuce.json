@@ -12,7 +12,9 @@
     }
   ],
   "container": {
-    "item": "minecraft:bowl"
+    "id": "minecraft:bowl",
+    "count": 1,
+    "consume": true
   },
   "result": {
     "id": "candlelight:roasted_lamb_with_lettuce",

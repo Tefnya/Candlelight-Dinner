@@ -29,6 +29,11 @@ public class LetterGui extends AbstractContainerScreen<LetterGuiHandler> {
     }
 
     @Override
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        this.renderMenuBackground(graphics);
+    }
+
+    @Override
     protected void renderBg(GuiGraphics guiGraphics, float delta, int mouseX, int mouseY) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:water_bottles",
+    "#neoforge:water_bottles",
     "#c:water_bottles",
     "minecraft:water_bucket"
   ]

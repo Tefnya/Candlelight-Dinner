@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -31,11 +30,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
+import net.satisfy.candlelight.core.registry.StorageTypeRegistry;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.satisfy.candlelight.core.registry.StorageTypeRegistry;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +52,7 @@ public class JewelryBoxBlock extends StorageBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (world.isClientSide) return ItemInteractionResult.SUCCESS;
         if (player.isShiftKeyDown() && blockEntity instanceof StorageBlockEntity) {

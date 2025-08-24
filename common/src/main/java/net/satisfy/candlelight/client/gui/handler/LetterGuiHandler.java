@@ -13,9 +13,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import org.jetbrains.annotations.NotNull;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import net.satisfy.candlelight.core.registry.ScreenHandlerTypeRegistry;
+import org.jetbrains.annotations.NotNull;
 
 public class LetterGuiHandler extends AbstractContainerMenu {
     private final Container inventory;

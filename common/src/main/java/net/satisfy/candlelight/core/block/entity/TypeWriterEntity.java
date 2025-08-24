@@ -12,12 +12,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class TypeWriterEntity extends BlockEntity {
 
     public static final String PAPER_KEY = "paper";
 
-    @Nullable
     ItemStack paper = ItemStack.EMPTY;
 
     public TypeWriterEntity(BlockPos pos, BlockState state) {
@@ -25,23 +24,25 @@ public class TypeWriterEntity extends BlockEntity {
     }
 
     public ItemStack getPaper() {
-        return paper != null ? paper : ItemStack.EMPTY;
+        return paper;
     }
 
     public void addPaper(ItemStack itemStack) {
         paper = itemStack;
+        setChanged();
     }
 
     public void removePaper() {
-        assert paper != null;
-        ItemStack returnStack = paper.copy();
-        this.paper = ItemStack.EMPTY;
+        paper = ItemStack.EMPTY;
+        setChanged();
     }
 
     @Override
     protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
         super.saveAdditional(compoundTag, provider);
-        writePaper(compoundTag, paper, provider);
+        if (!paper.isEmpty()) {
+            writePaper(compoundTag, paper, provider);
+        }
     }
 
     @Override
@@ -50,23 +51,21 @@ public class TypeWriterEntity extends BlockEntity {
         paper = readPaper(compoundTag, provider);
     }
 
-    public void writePaper(CompoundTag nbt, ItemStack flower, HolderLookup.Provider provider) {
-        CompoundTag nbtCompound = new CompoundTag();
-        if (flower != null) {
-            flower.save(provider, nbtCompound);
-        }
-        nbt.put(PAPER_KEY, nbtCompound);
+    public void writePaper(CompoundTag nbt, ItemStack stack, HolderLookup.Provider provider) {
+        if (stack == null || stack.isEmpty()) return;
+        CompoundTag tag = new CompoundTag();
+        stack.save(provider, tag);
+        nbt.put(PAPER_KEY, tag);
     }
 
     public ItemStack readPaper(CompoundTag nbt, HolderLookup.Provider provider) {
-        super.loadAdditional(nbt, provider);
         if (nbt.contains(PAPER_KEY)) {
-            CompoundTag nbtCompound = nbt.getCompound(PAPER_KEY);
-            if (!nbtCompound.isEmpty()) {
-                return ItemStack.parseOptional(provider, nbtCompound);
+            CompoundTag tag = nbt.getCompound(PAPER_KEY);
+            if (!tag.isEmpty()) {
+                return ItemStack.parseOptional(provider, tag);
             }
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Nullable
@@ -78,4 +77,3 @@ public class TypeWriterEntity extends BlockEntity {
         return saveWithoutMetadata(provider);
     }
 }
-

@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.PushReaction;
 import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.*;
-import net.satisfy.candlelight.core.block.CStoveBlock;
 import net.satisfy.candlelight.core.item.*;
 import net.satisfy.candlelight.core.util.CandlelightFoods;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;

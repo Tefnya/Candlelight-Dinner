@@ -1,18 +1,14 @@
 package net.satisfy.candlelight.client.gui;
 
 import dev.architectury.networking.NetworkManager;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.satisfy.candlelight.core.networking.CandlelightMessages;
 import net.satisfy.candlelight.core.networking.packet.SignNoteC2SPacket;
 
 @Environment(EnvType.CLIENT)

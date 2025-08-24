@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:cooked_pork",
+    "#neoforge:cooked_pork",
     "#c:cooked_pork"
   ]
 }

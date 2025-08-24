@@ -14,11 +14,9 @@
       "item": "candlelight:mozzarella"
     }
   ],
+  "requireContainer": true,
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "candlelight:pasta_with_mozzarella",

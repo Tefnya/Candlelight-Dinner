@@ -11,11 +11,9 @@
       "tag": "farm_and_charm:butter"
     }
   ],
+  "requireContainer": true,
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "candlelight:salmon_on_white_wine",

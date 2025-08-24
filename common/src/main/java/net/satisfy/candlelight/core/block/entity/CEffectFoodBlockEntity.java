@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import net.satisfy.farm_and_charm.core.block.entity.EffectFoodBlockEntity;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

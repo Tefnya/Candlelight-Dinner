@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#forge:cheeses",
+    "#neoforge:cheeses",
     "#c:cheeses"
   ]
 }

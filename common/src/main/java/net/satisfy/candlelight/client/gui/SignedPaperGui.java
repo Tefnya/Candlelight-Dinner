@@ -14,14 +14,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.jetbrains.annotations.Nullable;
-import net.satisfy.candlelight.core.registry.ObjectRegistry;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,6 +89,11 @@ public class SignedPaperGui extends Screen {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        this.renderMenuBackground(graphics);
     }
 
     protected boolean jumpToPage(int page) {

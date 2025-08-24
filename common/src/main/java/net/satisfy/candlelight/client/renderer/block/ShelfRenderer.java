@@ -2,13 +2,13 @@ package net.satisfy.candlelight.client.renderer.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
-import net.satisfy.farm_and_charm.client.util.ClientUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
+import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
+import net.satisfy.farm_and_charm.client.util.ClientUtil;
 
 @Environment(EnvType.CLIENT)
 public class ShelfRenderer implements StorageTypeRenderer {

@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
-import net.minecraft.SharedConstants;
 import net.minecraft.Util;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
@@ -404,6 +403,11 @@ public abstract class NoteGui extends Screen {
         }
 
         super.render(guiGraphics, mouseX, mouseY, delta);
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        this.renderMenuBackground(graphics);
     }
 
     private void renderCursor(GuiGraphics guiGraphics, Pos2i pos2i, boolean bl) {

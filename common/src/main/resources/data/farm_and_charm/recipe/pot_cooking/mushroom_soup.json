@@ -14,11 +14,9 @@
       "tag": "farm_and_charm:milk"
     }
   ],
+  "requireContainer": true,
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "candlelight:mushroom_soup",

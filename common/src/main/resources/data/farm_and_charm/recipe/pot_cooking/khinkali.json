@@ -8,11 +8,9 @@
       "tag": "farm_and_charm:dough"
     }
   ],
+  "requireContainer": true,
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "candlelight:khinkali",

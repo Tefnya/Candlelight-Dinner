@@ -1,8 +1,8 @@
 package net.satisfy.candlelight;
 
-import net.satisfy.candlelight.core.registry.*;
 import net.satisfy.candlelight.core.event.CommonEvents;
 import net.satisfy.candlelight.core.networking.CandlelightMessages;
+import net.satisfy.candlelight.core.registry.*;
 
 public class Candlelight {
     public static final String MOD_ID = "candlelight";

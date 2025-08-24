@@ -11,11 +11,9 @@
       "tag": "candlelight:red_effect"
     }
   ],
+  "requireContainer": true,
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "candlelight:tomato_soup",
