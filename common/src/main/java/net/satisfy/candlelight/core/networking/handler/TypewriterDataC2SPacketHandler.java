@@ -15,7 +15,7 @@ import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
 import net.satisfy.candlelight.core.networking.packet.SyncTypewriterDataC2SPacket;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 
-public class TypewriterDataC2SPacketHandler implements NetworkManager.NetworkReceiver<SyncTypewriterDataC2SPacket>{
+public class TypewriterDataC2SPacketHandler implements NetworkManager.NetworkReceiver<SyncTypewriterDataC2SPacket> {
 
     @Override
     public void receive(SyncTypewriterDataC2SPacket packet, NetworkManager.PacketContext context) {
@@ -29,11 +29,15 @@ public class TypewriterDataC2SPacketHandler implements NetworkManager.NetworkRec
             if (blockEntity instanceof TypewriterEntity typeWriterEntity) {
                 note.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
                 typeWriterEntity.addPaper(note);
+                typeWriterEntity.setChanged();
             }
-            BlockState blockState = player.level().getBlockState(pos);
+            BlockState oldState = player.level().getBlockState(pos);
             if (sign) {
-                player.level().setBlock(pos, blockState.setValue(TypewriterBlock.FULL, 2), 2);
-                player.level().sendBlockUpdated(pos, blockState, blockState.setValue(TypewriterBlock.FULL, 2), Block.UPDATE_CLIENTS);
+                BlockState newState = oldState.setValue(TypewriterBlock.FULL, 2);
+                player.level().setBlock(pos, newState, Block.UPDATE_CLIENTS);
+                player.level().sendBlockUpdated(pos, oldState, newState, Block.UPDATE_CLIENTS);
+            } else {
+                player.level().sendBlockUpdated(pos, oldState, oldState, Block.UPDATE_CLIENTS);
             }
         });
     }

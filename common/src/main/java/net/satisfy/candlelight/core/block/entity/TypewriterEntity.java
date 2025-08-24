@@ -10,14 +10,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("unused")
 public class TypewriterEntity extends BlockEntity {
-
     public static final String PAPER_KEY = "paper";
-
     ItemStack paper = ItemStack.EMPTY;
+    private int spaceTicks;
+    private int enterTicks;
+    private int keyBounceTicks;
+    private float lineProgress;
+    private int rollerSnapTicks;
+    private int bouncingKeyIndex = -1;
 
     public TypewriterEntity(BlockPos pos, BlockState state) {
         super(EntityTypeRegistry.TYPE_WRITER_BLOCK_ENTITY.get(), pos, state);
@@ -25,16 +29,6 @@ public class TypewriterEntity extends BlockEntity {
 
     public ItemStack getPaper() {
         return paper;
-    }
-
-    public void addPaper(ItemStack itemStack) {
-        paper = itemStack;
-        setChanged();
-    }
-
-    public void removePaper() {
-        paper = ItemStack.EMPTY;
-        setChanged();
     }
 
     @Override
@@ -68,12 +62,90 @@ public class TypewriterEntity extends BlockEntity {
         return ItemStack.EMPTY;
     }
 
+    @Override
     @Nullable
-    public Packet<ClientGamePacketListener> toUpdatePacket() {
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public CompoundTag toInitialChunkDataNbt(HolderLookup.Provider provider) {
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         return saveWithoutMetadata(provider);
+    }
+
+    public void addPaper(ItemStack itemStack) {
+        this.paper = itemStack;
+        sync();
+    }
+
+    public void removePaper() {
+        this.paper = ItemStack.EMPTY;
+        sync();
+    }
+
+    private void sync() {
+        setChanged();
+        if (this.level != null) {
+            BlockState s = getBlockState();
+            this.level.sendBlockUpdated(this.worldPosition, s, s, 3);
+        }
+    }
+
+    public void triggerSpace() {
+        this.spaceTicks = 3;
+    }
+
+    public void triggerEnter() {
+        this.enterTicks = 3;
+    }
+
+    public void triggerKeyBounce() {
+        this.keyBounceTicks = 2;
+        this.bouncingKeyIndex = -1;
+    }
+
+    public int getSpaceTicks() {
+        return spaceTicks;
+    }
+
+    public int getEnterTicks() {
+        return enterTicks;
+    }
+
+    public int getKeyBounceTicks() {
+        return keyBounceTicks;
+    }
+
+    public void tickAnimations() {
+        if (this.spaceTicks > 0) this.spaceTicks--;
+        if (this.enterTicks > 0) this.enterTicks--;
+        if (this.keyBounceTicks > 0) this.keyBounceTicks--;
+        if (this.rollerSnapTicks > 0) this.rollerSnapTicks--;
+        if (this.keyBounceTicks == 0) this.bouncingKeyIndex = -1;
+    }
+
+    public void setLineProgress(float v) {
+        this.lineProgress = v;
+    }
+
+    public float getLineProgress() {
+        return lineProgress;
+    }
+
+    public void snapRoller() {
+        this.rollerSnapTicks = 4;
+        this.lineProgress = 0f;
+    }
+
+    public int getRollerSnapTicks() {
+        return rollerSnapTicks;
+    }
+
+    public int getBouncingKeyIndex() {
+        return bouncingKeyIndex;
+    }
+
+    public void setBouncingKeyIndex(int idx) {
+        this.bouncingKeyIndex = idx;
     }
 }
