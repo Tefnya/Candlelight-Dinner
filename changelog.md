@@ -1,9 +1,15 @@
+[2.1.0]
+
+**Welcome to 1.21.1**
+
+*** 
+
 [2.0.5]
 
 **Fixed**
 * Normal letter triggering Heart-Burst
 
-
+*** 
 
 [2.0.5]
 
@@ -17,6 +23,8 @@
 **Fixed**
 * Baby Zombies wont spawn with oversized Cooking Clothing anymore
 * Fixed letter crafting consuming full stacks of envelopes and note paper instead of just one of each
+
+***
 
 [2.0.4]
 

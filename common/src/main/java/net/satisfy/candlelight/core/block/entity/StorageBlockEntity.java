@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class StorageBlockEntity extends BlockEntity {
     private int size;
@@ -77,7 +78,7 @@ public class StorageBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         return this.saveWithoutMetadata(provider);
     }
 

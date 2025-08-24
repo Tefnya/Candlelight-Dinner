@@ -37,7 +37,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
-import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
 public abstract class NoteGui extends Screen {
@@ -78,18 +77,16 @@ public abstract class NoteGui extends Screen {
         this.itemStack = itemStack;
         CustomData data = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         CompoundTag nbtCompound = data.copyTag();
-        if (nbtCompound != null) {
-            List<String> string = this.text;
-            Objects.requireNonNull(string);
-            this.loadPages(nbtCompound, string::add);
-        }
+        List<String> string = this.text;
+        Objects.requireNonNull(string);
+        this.loadPages(nbtCompound, string::add);
 
         if (this.text.isEmpty()) {
             this.text.add("");
         }
 
-        this.signedByText = Component.translatable("book.byAuthor", player.getName()).withStyle(ChatFormatting.DARK_GRAY);
-
+        this.signedByText = Component.translatable("book.byAuthor", player.getName())
+                .withStyle(style -> style.withItalic(true).withColor(0xF2E1B3));
     }
 
     static int getLineFromOffset(int[] lineStarts, int position) {
@@ -146,7 +143,7 @@ public abstract class NoteGui extends Screen {
         }
         for (int i2 = 0; i2 < listTag.size(); ++i2) {
             consumer.accept(intFunction.apply(i2));
-        }//CURSOR?
+        }
     }
 
     protected void removeEmptyPages() {
@@ -161,19 +158,29 @@ public abstract class NoteGui extends Screen {
 
     protected void writeNbtData(boolean signNote) {
         ListTag nbtList = new ListTag();
-        Stream<StringTag> nbts = this.text.stream().map(StringTag::valueOf);
-        Objects.requireNonNull(nbtList);
-        nbts.forEach(nbtList::add);
-        CustomData data = this.itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        if (!this.text.isEmpty()) {
-            data.copyTag().put("text", nbtList);
+        for (String page : this.text) {
+            nbtList.add(StringTag.valueOf(page));
         }
 
+        CompoundTag tag = new CompoundTag();
+        tag.put("text", nbtList);
+
         if (signNote) {
-            data.copyTag().put("author", StringTag.valueOf(this.player.getGameProfile().getName()));
-            data.copyTag().put("title", StringTag.valueOf(this.title.trim()));
+            tag.putString("author", this.player.getGameProfile().getName());
+            tag.putString("title", this.title.trim());
         }
-        this.itemStack.set(DataComponents.CUSTOM_DATA, data);
+
+        this.itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    }
+
+    private static boolean makeSureTagIsValid(@Nullable CompoundTag tag) {
+        if (tag == null || !tag.contains("text", 9)) return false;
+        ListTag pages = tag.getList("text", 8);
+        for (int i = 0; i < pages.size(); i++) {
+            if (!(pages.get(i) instanceof StringTag)) return false;
+            if (pages.getString(i).length() > Short.MAX_VALUE) return false;
+        }
+        return true;
     }
 
     private String getClipboard() {
@@ -371,31 +378,42 @@ public abstract class NoteGui extends Screen {
         return !this.text.isEmpty() ? this.text.get(0) : "";
     }
 
+    @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         this.renderBackground(guiGraphics, mouseX, mouseY, delta);
         this.setFocused(null);
         int x = (this.width - 192) / 2;
         guiGraphics.blit(NOTE_TEXTURE, x, 2, 0, 0, 192, 192);
-        int l;
-        int m;
+
         if (this.signing) {
             boolean bl = this.frameTick / 6 % 2 == 0;
-            FormattedCharSequence orderedText = FormattedCharSequence.composite(FormattedCharSequence.forward(this.title, Style.EMPTY), bl ? BLACK_CURSOR_TEXT : GRAY_CURSOR_TEXT);
-            int k = this.font.width(EDIT_TITLE_TEXT);
-            guiGraphics.drawString(this.font, EDIT_TITLE_TEXT, x + 36 + (114 - k) / 2, 34, 0, false);
-            l = this.font.width(orderedText);
-            guiGraphics.drawString(this.font, orderedText, x + 36 + (114 - l) / 2, 50, 0);
-            m = this.font.width(this.signedByText);
-            guiGraphics.drawString(this.font, this.signedByText, x + 36 + (114 - m) / 2, 60, 0);
-            guiGraphics.drawWordWrap(this.font, FINALIZE_WARNING_TEXT, x + 36, 82, 114, 0);
+
+            FormattedCharSequence orderedText = FormattedCharSequence.composite(
+                    FormattedCharSequence.forward(this.title, Style.EMPTY.withColor(0xF0DEB0)),
+                    bl ? BLACK_CURSOR_TEXT : GRAY_CURSOR_TEXT
+            );
+
+            int titleLabelWidth = this.font.width(EDIT_TITLE_TEXT);
+            guiGraphics.drawString(this.font, EDIT_TITLE_TEXT, x + 36 + (114 - titleLabelWidth) / 2, 34, 0xF2E1B3);
+
+            int titleWidth = this.font.width(orderedText);
+            guiGraphics.drawString(this.font, orderedText, x + 36 + (114 - titleWidth) / 2, 50, 0xDCC9A3);
+
+            int authorWidth = this.font.width(this.signedByText);
+            guiGraphics.drawString(this.font, this.signedByText, x + 36 + (114 - authorWidth) / 2, 60, 0xC6A567);
+
+            List<FormattedCharSequence> lines = this.font.split(FINALIZE_WARNING_TEXT, 114);
+            for (int i = 0; i < lines.size(); i++) {
+                FormattedCharSequence line = lines.get(i);
+                int lineWidth = this.font.width(line);
+                int lineX = x + 36 + (114 - lineWidth) / 2;
+                int lineY = 82 + i * 9;
+                guiGraphics.drawString(this.font, line, lineX, lineY, 0x5A5A5A, false);
+            }
         } else {
             DisplayCache displayCache = this.getDisplayCache();
-            LineInfo[] var15 = displayCache.lines;
-            l = var15.length;
-
-            for (m = 0; m < l; ++m) {
-                NoteGui.LineInfo line = var15[m];
-                guiGraphics.drawString(this.font, line.asComponent, line.x, line.y, -16777216, false);
+            for (LineInfo line : displayCache.lines) {
+                guiGraphics.drawString(this.font, line.asComponent, line.x, line.y, 0x000000, false);
             }
 
             this.renderHighlight(guiGraphics, displayCache.selection);

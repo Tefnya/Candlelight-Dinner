@@ -150,7 +150,7 @@ public class TableSetBlock extends StorageBlock {
                     if (sbe != null) {
                         world.setBlockAndUpdate(pos, state.setValue(WINE_GLASS_DRINK, true));
                         if (stack.has(DataComponents.CUSTOM_DATA)) {
-                            int duration =stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).customEffects().stream()
+                            int duration = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).customEffects().stream()
                                     .mapToInt(MobEffectInstance::getDuration)
                                     .max()
                                     .orElse(6000);
@@ -338,9 +338,11 @@ public class TableSetBlock extends StorageBlock {
         PLATE("plate"),
         BOWL("bowl");
         private final String name;
+
         PlateType(String name) {
             this.name = name;
         }
+
         @Override
         public @NotNull String getSerializedName() {
             return this.name;

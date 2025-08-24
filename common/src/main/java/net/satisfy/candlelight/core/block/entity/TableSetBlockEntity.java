@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
+import org.jetbrains.annotations.NotNull;
 
 public class TableSetBlockEntity extends StorageBlockEntity {
     private ItemStack effectStack = ItemStack.EMPTY;
@@ -21,7 +22,7 @@ public class TableSetBlockEntity extends StorageBlockEntity {
     }
 
     @Override
-    public BlockEntityType<?> getType() {
+    public @NotNull BlockEntityType<?> getType() {
         return EntityTypeRegistry.TABLE_SET_BLOCK_ENTITY.get();
     }
 

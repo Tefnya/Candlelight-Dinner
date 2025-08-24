@@ -185,33 +185,21 @@ public class SignedPaperGui extends Screen {
 
     @Nullable
     public Style getTextStyleAt(double x, double y) {
-        if (this.cachedPage.isEmpty()) {
-            return null;
-        } else {
-            int i = Mth.floor(x - (double) ((this.width - 192) / 2) - 36.0);
-            int j = Mth.floor(y - 2.0 - 30.0);
-            if (i >= 0 && j >= 0) {
-                Objects.requireNonNull(this.font);
-                int k = Math.min(128 / 9, this.cachedPage.size());
-                if (i <= 114) {
-                    Objects.requireNonNull(this.minecraft.font);
-                    if (j < 9 * k + k) {
-                        Objects.requireNonNull(this.minecraft.font);
-                        int l = j / 9;
-                        if (l < this.cachedPage.size()) {
-                            FormattedCharSequence orderedText = this.cachedPage.get(l);
-                            return this.minecraft.font.getSplitter().componentStyleAtWidth(orderedText, i);
-                        }
+        if (this.cachedPage.isEmpty()) return null;
 
-                        return null;
-                    }
-                }
+        int i = Mth.floor(x - (this.width - 192) / 2.0 - 36.0);
+        int j = Mth.floor(y - 32.0);
+        if (i < 0 || j < 0 || i > 114) return null;
 
-                return null;
-            } else {
-                return null;
-            }
-        }
+        int k = Math.min(128 / 9, this.cachedPage.size());
+        if (j >= 9 * k + k) return null;
+
+        int l = j / 9;
+        if (l >= this.cachedPage.size()) return null;
+
+        FormattedCharSequence line = this.cachedPage.get(l);
+        assert this.minecraft != null;
+        return this.minecraft.font.getSplitter().componentStyleAtWidth(line, i);
     }
 
     @Environment(EnvType.CLIENT)
@@ -244,7 +232,7 @@ public class SignedPaperGui extends Screen {
         private static List<String> getPages(ItemStack stack) {
             CustomData data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
             CompoundTag nbtCompound = data.copyTag();
-            return nbtCompound != null ? readPages(nbtCompound) : ImmutableList.of();
+            return readPages(nbtCompound);
         }
 
         public int getPageCount() {
@@ -267,7 +255,15 @@ public class SignedPaperGui extends Screen {
         private static List<String> getPages(ItemStack stack) {
             CustomData data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
             CompoundTag nbtCompound = data.copyTag();
-            return makeSureTagIsValid(nbtCompound) ? readPages(nbtCompound) : ImmutableList.of(Component.Serializer.toJson(Component.translatable("book.invalid.tag").withStyle(ChatFormatting.DARK_RED), null));// TODO Current is null
+            if (makeSureTagIsValid(nbtCompound)) {
+                return readPages(nbtCompound);
+            } else {
+                assert Minecraft.getInstance().level != null;
+                return ImmutableList.of(Component.Serializer.toJson(
+                        Component.translatable("book.invalid.tag").withStyle(ChatFormatting.DARK_RED),
+                        Minecraft.getInstance().level.registryAccess()
+                ));
+            }
         }
 
         private static boolean makeSureTagIsValid(CompoundTag nbtCompound) {
@@ -294,7 +290,11 @@ public class SignedPaperGui extends Screen {
             String string = this.pages.get(index);
 
             try {
-                FormattedText stringVisitable = Component.Serializer.fromJson(string, null);// TODO Current is null
+                assert Minecraft.getInstance().level != null;
+                FormattedText stringVisitable = Component.Serializer.fromJson(
+                        string,
+                        Minecraft.getInstance().level.registryAccess()
+                );
                 if (stringVisitable != null) {
                     return stringVisitable;
                 }
