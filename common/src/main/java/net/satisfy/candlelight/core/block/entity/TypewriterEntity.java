@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TypewriterEntity extends BlockEntity {
@@ -62,33 +61,25 @@ public class TypewriterEntity extends BlockEntity {
         return ItemStack.EMPTY;
     }
 
-    @Override
     @Nullable
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
+    @SuppressWarnings("unused")
+    public Packet<ClientGamePacketListener> toUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+    @SuppressWarnings("unused")
+    public CompoundTag toInitialChunkDataNbt(HolderLookup.Provider provider) {
         return saveWithoutMetadata(provider);
     }
 
     public void addPaper(ItemStack itemStack) {
-        this.paper = itemStack;
-        sync();
+        paper = itemStack;
+        setChanged();
     }
 
     public void removePaper() {
-        this.paper = ItemStack.EMPTY;
-        sync();
-    }
-
-    private void sync() {
+        paper = ItemStack.EMPTY;
         setChanged();
-        if (this.level != null) {
-            BlockState s = getBlockState();
-            this.level.sendBlockUpdated(this.worldPosition, s, s, 3);
-        }
     }
 
     public void triggerSpace() {
