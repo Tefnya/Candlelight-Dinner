@@ -2,7 +2,7 @@
 	"credit": "Made by Satisfy",
 	"textures": {
 		"1": "candlelight:block/plate",
-		"2": "candlelight:block/cooking_pot_inside",
+		"2": "candlelight:block/cooking_pot_parts",
 		"particle": "candlelight:block/plate"
 	},
 	"elements": [

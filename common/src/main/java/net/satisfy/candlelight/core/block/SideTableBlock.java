@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class SideTableBlock extends LineConnectingBlock {
     public static final BooleanProperty HAS_LANTERN = BooleanProperty.create("has_lantern");
     public static final BooleanProperty HAS_BOOK = BooleanProperty.create("has_book");
@@ -72,7 +71,7 @@ public class SideTableBlock extends LineConnectingBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         if (!world.isClientSide) {
             boolean isSneaking = player.isCrouching();
             if (player.getItemInHand(hand).is(Items.LANTERN) && !state.getValue(HAS_LANTERN) && !isSneaking) {

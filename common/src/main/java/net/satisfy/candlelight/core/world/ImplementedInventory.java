@@ -14,9 +14,7 @@ public interface ImplementedInventory extends WorldlyContainer {
     NonNullList<ItemStack> getItems();
 
     static ImplementedInventory of(NonNullList<ItemStack> items) {
-        return () -> {
-            return items;
-        };
+        return () -> items;
     }
 
     static ImplementedInventory ofSize(int size) {
@@ -42,7 +40,7 @@ public interface ImplementedInventory extends WorldlyContainer {
     }
 
     default @NotNull ItemStack getItem(int slot) {
-        return (ItemStack)this.getItems().get(slot);
+        return this.getItems().get(slot);
     }
 
     default @NotNull ItemStack removeItem(int slot, int count) {

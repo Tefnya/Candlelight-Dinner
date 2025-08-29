@@ -198,10 +198,9 @@ public class TableSetBlock extends StorageBlock {
             world.playSound(null, blockPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (itemStack.has(DataComponents.FOOD)) {
                 FoodProperties foodComponent = itemStack.get(DataComponents.FOOD);
+                assert foodComponent != null;
                 player.getFoodData().eat(Math.round(foodComponent.nutrition() * 1.3f), foodComponent.saturation() * 1.3f);
-                foodComponent.effects().forEach(possibleEffect -> {
-                    player.addEffect(new MobEffectInstance(possibleEffect.effect()));
-                });
+                foodComponent.effects().forEach(possibleEffect -> player.addEffect(new MobEffectInstance(possibleEffect.effect())));
             }
             world.gameEvent(player, GameEvent.BLOCK_CHANGE, blockPos);
         }

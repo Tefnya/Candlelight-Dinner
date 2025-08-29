@@ -27,13 +27,11 @@ public class ClosedLetterItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         CompoundTag nbt = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        if (nbt != null) {
-            String title = nbt.getString("letter_title");
-            String sender = nbt.getString("letter_sender");
+        String title = nbt.getString("letter_title");
+        String sender = nbt.getString("letter_sender");
 
-            if (!title.isBlank() && !sender.isBlank()) {
-                tooltip.add(Component.translatable("tooltip.candlelight.letter.line", title, sender).withStyle(ChatFormatting.GRAY));
-            }
+        if (!title.isBlank() && !sender.isBlank()) {
+            tooltip.add(Component.translatable("tooltip.candlelight.letter.line", title, sender).withStyle(ChatFormatting.GRAY));
         }
 
         tooltip.add(Component.translatable("item.candlelight.letter.tooltip").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
@@ -46,7 +44,6 @@ public class ClosedLetterItem extends Item {
 
         if (stack.has(DataComponents.CUSTOM_DATA)) {
             CustomData data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-            assert data.copyTag() != null;
             CompoundTag tag = data.copyTag().copy();
             tag.remove("letter_title");
             tag.remove("letter_sender");

@@ -3,7 +3,6 @@
   "values": [
     "#candlelight:stoves",
     "#c:allows_cooking",
-    "#neoforge:allows_cooking",
     {
       "id": "farmersdelight:stove",
       "required": false

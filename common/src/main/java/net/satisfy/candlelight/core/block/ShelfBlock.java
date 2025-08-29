@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class ShelfBlock extends StorageBlock {
 
     private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {

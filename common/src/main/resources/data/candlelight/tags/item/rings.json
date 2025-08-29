@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#neoforge:rings",
     "#c:rings",
     "candlelight:gold_ring",
     "candlelight:chocolate_mousse"

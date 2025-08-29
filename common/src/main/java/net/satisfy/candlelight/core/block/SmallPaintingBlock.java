@@ -15,8 +15,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings({"unused", "deprecation"})
+@SuppressWarnings({"unused"})
 public class SmallPaintingBlock extends WallDecorationBlock {
     public static final IntegerProperty PAINTING = IntegerProperty.create("painting", 0, 6);
 
@@ -27,7 +28,7 @@ public class SmallPaintingBlock extends WallDecorationBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.isDiscrete()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (world.isClientSide) {
             if (switchPaintings(world, pos, state, player).consumesAction()) {

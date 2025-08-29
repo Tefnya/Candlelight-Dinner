@@ -35,7 +35,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -48,37 +47,18 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class LargeCookingPotBlock extends BaseEntityBlock {
+    public static final MapCodec<LargeCookingPotBlock> CODEC = simpleCodec(LargeCookingPotBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
     public static final BooleanProperty COOKING = BooleanProperty.create("cooking");
     public static final BooleanProperty NEEDS_SUPPORT = BooleanProperty.create("needs_support");
-    private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
-        VoxelShape shape = Shapes.empty();
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.0625, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0.625, 0.1875, 0.8125, 0.75, 0.25), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0.625, 0.75, 0.8125, 0.75, 0.8125), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0, 0.1875, 0.8125, 0.625, 0.25), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0, 0.75, 0.8125, 0.625, 0.8125), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0, 0.25, 0.25, 0.625, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.75, 0, 0.25, 0.8125, 0.625, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0.625, 0.25, 0.25, 0.75, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.75, 0.625, 0.25, 0.8125, 0.75, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.1875, 0.625, 0.25, 0.25, 0.75, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.0625, 0.5625, 0.6875, 0.1875, 0.6875, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.8125, 0.5625, 0.25, 0.9375, 0.6875, 0.3125), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.0625, 0.5625, 0.25, 0.1875, 0.6875, 0.3125), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.8125, 0.5625, 0.6875, 0.9375, 0.6875, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.0625, 0.5625, 0.3125, 0.125, 0.6875, 0.6875), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.875, 0.5625, 0.3125, 0.9375, 0.6875, 0.6875), BooleanOp.OR);
-        return shape;
-    };
-    public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
-        for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+    private static final Map<Direction, VoxelShape> SHAPES = Util.make(new HashMap<>(), map -> {
+        VoxelShape base = Shapes.or(Shapes.box(0.1875, 0.0, 0.1875, 0.8125, 0.75, 0.8125), Shapes.box(0.0625, 0.5625, 0.25, 0.1875, 0.6875, 0.75), Shapes.box(0.8125, 0.5625, 0.25, 0.9375, 0.6875, 0.75)
+        );
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, base));
         }
     });
 
@@ -87,10 +67,8 @@ public class LargeCookingPotBlock extends BaseEntityBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(COOKING, false).setValue(NEEDS_SUPPORT, false));
     }
 
-    public static final MapCodec<LargeCookingPotBlock> CODEC = simpleCodec(LargeCookingPotBlock::new);
-
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
@@ -100,7 +78,7 @@ public class LargeCookingPotBlock extends BaseEntityBlock {
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE.getOrDefault(state.getValue(FACING), Shapes.empty());
+        return SHAPES.getOrDefault(state.getValue(FACING), Shapes.empty());
     }
 
     @Override
@@ -159,11 +137,11 @@ public class LargeCookingPotBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState blockState, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
-        if (!world.isClientSide) {
-            BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof MenuProvider) {
-                player.openMenu((MenuProvider) entity);
+    protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+        if (!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(blockPos);
+            if (blockEntity instanceof MenuProvider) {
+                player.openMenu((MenuProvider) blockEntity);
                 return InteractionResult.CONSUME;
             }
         }
@@ -179,6 +157,7 @@ public class LargeCookingPotBlock extends BaseEntityBlock {
         double f = pos.getZ() + 0.5;
 
         world.playLocalSound(d, e, f, SoundEventRegistry.COOKING_POT_BOILING.get(), SoundSource.BLOCKS, 0.05f, 1.0f, false);
+
 
         double h = random.nextDouble() * 0.6 - 0.3;
         double i = h * (random.nextBoolean() ? 1 : -1);
@@ -218,8 +197,8 @@ public class LargeCookingPotBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
         if (!world.isClientSide) {
             return (lvl, pos, blkState, t) -> {
-                if (t instanceof LargeCookingPotBlockEntity largecookingPot) {
-                    largecookingPot.tick(lvl, pos, blkState, largecookingPot);
+                if (t instanceof LargeCookingPotBlockEntity cookingPot) {
+                    cookingPot.tick(lvl, pos, blkState, cookingPot);
                 }
             };
         }
@@ -227,7 +206,7 @@ public class LargeCookingPotBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        list.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
     }
 }

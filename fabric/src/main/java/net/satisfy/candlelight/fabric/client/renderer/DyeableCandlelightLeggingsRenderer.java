@@ -22,14 +22,14 @@ public class DyeableCandlelightLeggingsRenderer implements ArmorRenderer {
     public void render(PoseStack matrices, MultiBufferSource vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
         if (!(stack.getItem() instanceof DyeableCandlelightArmorItem armorItem)) return;
         CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        if (tag != null && tag.contains("Visible") && !tag.getBoolean("Visible")) return;
+
+        if (tag.contains("Visible") && !tag.getBoolean("Visible")) return;
         Model model = ArmorRegistry.getSuitModel(armorItem, contextModel.rightLeg, contextModel.leftLeg);
-        int color = armorItem.getColor(stack);
-        float red = (color >> 16 & 255) / 255.0F;
-        float green = (color >> 8 & 255) / 255.0F;
-        float blue = (color & 255) / 255.0F;
-        model.renderToBuffer(matrices, vertexConsumers.getBuffer(model.renderType(armorItem.getTexture())), light, OverlayTexture.NO_OVERLAY);
+
+        int packedColor = 0xFF000000 | armorItem.getColor(stack);
+
+        model.renderToBuffer(matrices, vertexConsumers.getBuffer(model.renderType(armorItem.getTexture())), light, OverlayTexture.NO_OVERLAY, packedColor);
         ResourceLocation overlayTexture = CandlelightIdentifier.identifier("textures/models/armor/dress_overlay.png");
-        model.renderToBuffer(matrices, vertexConsumers.getBuffer(model.renderType(overlayTexture)), light, OverlayTexture.NO_OVERLAY);
+        model.renderToBuffer(matrices, vertexConsumers.getBuffer(model.renderType(overlayTexture)), light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
     }
 }

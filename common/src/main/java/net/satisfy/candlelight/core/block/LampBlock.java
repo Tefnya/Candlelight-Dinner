@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings({"deprecation", "unused"})
+@SuppressWarnings({"unused"})
 public class LampBlock extends LanternBlock {
     public static final BooleanProperty LUMINANCE = BooleanProperty.create("luminance");
     protected static final VoxelShape HANGING_SHAPE = makeShapeHS();
@@ -58,7 +58,7 @@ public class LampBlock extends LanternBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
         if (!world.isClientSide()) {
             BlockState newState = state.setValue(LUMINANCE, !state.getValue(LUMINANCE));
             world.setBlockAndUpdate(pos, newState);

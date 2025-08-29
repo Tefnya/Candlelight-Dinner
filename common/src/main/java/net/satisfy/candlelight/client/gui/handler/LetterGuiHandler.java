@@ -67,7 +67,7 @@ public class LetterGuiHandler extends AbstractContainerMenu {
 
             tag.put("letter_title", StringTag.valueOf(name));
             tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
-            if (tag != null) stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
 
             this.inventory.setItem(2, stack);
 
@@ -79,7 +79,7 @@ public class LetterGuiHandler extends AbstractContainerMenu {
 
             tag.put("letter_title", StringTag.valueOf(name));
             tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
-            if (tag != null) stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
             this.inventory.setItem(2, stack);
 
         } else {

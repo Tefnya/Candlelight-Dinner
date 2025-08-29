@@ -7,8 +7,9 @@
   "authors": [
     "satisfy"
   ],
-  "credits": [
-    "MissLilitu, CR-055"
+  "contributors": [
+    "MissLilitu",
+    "CR-055"
   ],
   "contact": {
     "issues": "https://github.com/satisfyu/Let-s-Do-Hub",
@@ -29,9 +30,10 @@
     "candlelight-common.mixins.json"
   ],
   "depends": {
+    "fabricloader": ">=0.16.14",
     "fabric": "*",
-    "minecraft": ">=1.21",
-    "architectury": ">=9.0.8",
-    "farm_and_charm": ">=1.0.6"
+    "minecraft": ">=1.21.1",
+    "architectury": ">=13.0.8",
+    "farm_and_charm": ">=1.1.0"
   }
 }

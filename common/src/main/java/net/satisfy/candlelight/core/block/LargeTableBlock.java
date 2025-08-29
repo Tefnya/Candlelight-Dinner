@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class LargeTableBlock extends HorizontalDirectionalBlock {
 	public static final EnumProperty<BedPart> PART = BlockStateProperties.BED_PART;
 
@@ -63,7 +62,7 @@ public class LargeTableBlock extends HorizontalDirectionalBlock {
 	public static final MapCodec<LargeTableBlock> CODEC = simpleCodec(LargeTableBlock::new);
 
 	@Override
-	protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+	protected @NotNull MapCodec<? extends HorizontalDirectionalBlock> codec() {
 		return CODEC;
 	}
 
@@ -79,7 +78,7 @@ public class LargeTableBlock extends HorizontalDirectionalBlock {
 		return part == BedPart.FOOT ? direction : direction.getOpposite();
 	}
 
-	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public @NotNull BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (!world.isClientSide && player.isCreative()) {
 			removeOtherPart(world, pos, state, player);
 		}
