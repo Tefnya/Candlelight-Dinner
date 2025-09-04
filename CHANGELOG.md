@@ -1,3 +1,14 @@
+[2.1.1]
+
+**Fixed**
+* Added missing FlowerCrown handling and prevented client crash when equipping
+* Unified dyeable armor rendering between Fabric and NeoForge
+* Corrected resource locations for all armor textures to avoid missing texture warnings
+* Fixed distorted rendering on custom models (Dress, Suit) by ensuring proper layer definitions
+* Ensured Gold Ring can be equipped without rendering any armor texture
+
+***
+
 [2.1.0]
 
 **Welcome to 1.21.1**

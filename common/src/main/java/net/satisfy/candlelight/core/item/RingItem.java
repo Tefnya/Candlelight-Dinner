@@ -9,7 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.satisfy.candlelight.core.registry.ArmorMaterialRegistry;
+import net.satisfy.farm_and_charm.core.registry.ArmorMaterialRegistry;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class RingItem extends ArmorItem {
         if (player.getInventory().getArmor(2).isEmpty()) return false;
         Item item = player.getInventory().getArmor(2).getItem();
         if (item instanceof ArmorItem armorItem) {
-            return armorItem.getMaterial() == ArmorMaterialRegistry.RING_ARMOR;
+            return armorItem.getMaterial() == ArmorMaterialRegistry.JEWELRY;
         }
         return false;
     }

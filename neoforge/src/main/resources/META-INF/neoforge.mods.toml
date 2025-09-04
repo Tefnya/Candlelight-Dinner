@@ -4,10 +4,7 @@ license = "Custom"
 issueTrackerURL = "https://github.com/satisfyu/Let-s-Do-Hub"
 
 [[mixins]]
-config = [
-    "candlelight-common.mixins.json",
-    "candlelight.mixins.json"
-]
+config = "candlelight-common.mixins.json"
 
 [[mods]]
 modId = "candlelight"
