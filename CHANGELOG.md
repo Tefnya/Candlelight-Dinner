@@ -6,6 +6,7 @@
 * Corrected resource locations for all armor textures to avoid missing texture warnings
 * Fixed distorted rendering on custom models (Dress, Suit) by ensuring proper layer definitions
 * Ensured Gold Ring can be equipped without rendering any armor texture
+* Corrected mismatched sound subtitle keys (`candlelight.sound.*` → `sound.candlelight.*`) causing missing subtitle warnings
 
 ***
 
