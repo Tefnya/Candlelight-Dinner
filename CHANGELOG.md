@@ -6,7 +6,9 @@
 * Corrected resource locations for all armor textures to avoid missing texture warnings
 * Fixed distorted rendering on custom models (Dress, Suit) by ensuring proper layer definitions
 * Ensured Gold Ring can be equipped without rendering any armor texture
-* Corrected mismatched sound subtitle keys (`candlelight.sound.*` → `sound.candlelight.*`) causing missing subtitle warnings
+* Corrected mismatched sound subtitle keys (`candlelight.sound.*` → `sound.candlelight.*`) 
+* Crash when placing Candlelight food blocks (lasagne, beef wellington, pork ribs, salad, tomato mozzarella) due to wrong block entity mapping.
+  → All food blocks now use `CEffectFoodBlockEntity` instead of Farm & Charm’s `EffectFoodBlockEntity`.
 
 ***
 

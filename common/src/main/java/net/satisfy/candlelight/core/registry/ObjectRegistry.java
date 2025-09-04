@@ -58,15 +58,14 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> CHICKEN_ALFREDO = registerItem("chicken_alfredo", () -> new EffectFoodItem(getSettings().food(CandlelightFoods.HARVEST_PLATE), 1));
     public static final RegistrySupplier<Item> SALMON_ON_WHITE_WINE = registerItem("salmon_on_white_wine", () -> new EffectFoodItem(getSettings().food(CandlelightFoods.SALMON_ON_WHITE_WINE), 2));
     public static final RegistrySupplier<Item> CHICKEN_WITH_VEGETABLES = registerItem("chicken_with_vegetables", () -> new EffectFoodItem(getSettings().food(Foods.GOLDEN_CARROT), 2));
-
-    public static final RegistrySupplier<Block> PORK_RIBS_BLOCK = registerWithoutItem("pork_ribs_block", () -> new EffectFoodBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 2, CandlelightFoods.PORK_RIBS));
+    public static final RegistrySupplier<Block> FRESH_GARDEN_SALAD_BLOCK = registerWithoutItem("fresh_garden_salad_block", () -> new EffectFoodTrayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4, new FoodProperties.Builder().nutrition(6).saturationModifier(0.9F).build()));
+    public static final RegistrySupplier<Block> LASAGNE_BLOCK = registerWithoutItem("lasagne_block", () -> new CEffectFoodBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3, CandlelightFoods.LASAGNE));
+    public static final RegistrySupplier<Block> BEEF_WELLINGTON_BLOCK = registerWithoutItem("beef_wellington_block", () -> new CEffectFoodBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 2, CandlelightFoods.BEEF_WELLINGTON));
+    public static final RegistrySupplier<Block> PORK_RIBS_BLOCK = registerWithoutItem("pork_ribs_block", () -> new CEffectFoodBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 2, CandlelightFoods.PORK_RIBS));
+    public static final RegistrySupplier<Block> TOMATO_MOZZARELLA_BLOCK = registerWithoutItem("tomato_mozzarella_block", () -> new EffectFoodTrayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4, new FoodProperties.Builder().nutrition(6).saturationModifier(0.7F).build()));
     public static final RegistrySupplier<Item> PORK_RIBS = registerItem("pork_ribs", () -> new EffectFoodBlockItem(PORK_RIBS_BLOCK.get(), getSettings().food(CandlelightFoods.PORK_RIBS), 2));
-    public static final RegistrySupplier<Block> LASAGNE_BLOCK = registerWithoutItem("lasagne_block", () -> new EffectFoodBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3, CandlelightFoods.LASAGNE));
     public static final RegistrySupplier<Item> LASAGNE = registerItem("lasagne", () -> new EffectFoodBlockItem(LASAGNE_BLOCK.get(), getSettings().food(CandlelightFoods.LASAGNE), 3));
-    public static final RegistrySupplier<Block> BEEF_WELLINGTON_BLOCK = registerWithoutItem("beef_wellington_block", () -> new EffectFoodBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 2, CandlelightFoods.BEEF_WELLINGTON));
     public static final RegistrySupplier<Item> BEEF_WELLINGTON = registerItem("beef_wellington", () -> new EffectFoodBlockItem(BEEF_WELLINGTON_BLOCK.get(), getSettings().food(CandlelightFoods.BEEF_WELLINGTON), 2));
-
-
     public static final RegistrySupplier<Item> CLOCHE = registerItem("cloche", () -> new Item(getSettings()));
     public static final RegistrySupplier<Item> NAPKIN = registerItem("napkin", () -> new Item(getSettings()));
     public static final RegistrySupplier<Item> MOZZARELLA = registerItem("mozzarella", () -> new Item(getSettings().food(Foods.BREAD)));
@@ -118,9 +117,7 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> GLASS = registerItem("glass", () -> new BlockItem(GLASS_BLOCK.get(), getSettings()));
     public static final RegistrySupplier<Block> WINE_GLASS_BLOCK = registerWithoutItem("wine_glass", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).noTerrainParticles(), 4));
     public static final RegistrySupplier<Item> WINE_GLASS = registerItem("wine_glass", () -> new BlockItem(WINE_GLASS_BLOCK.get(), getSettings()));
-    public static final RegistrySupplier<Block> FRESH_GARDEN_SALAD_BLOCK = registerWithoutItem("fresh_garden_salad_block", () -> new EffectFoodTrayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4, new FoodProperties.Builder().nutrition(6).saturationModifier(0.9F).build()));
     public static final RegistrySupplier<Item> FRESH_GARDEN_SALAD = registerItem("fresh_garden_salad", () -> new EffectBlockItem(FRESH_GARDEN_SALAD_BLOCK.get(), getFoodItemSettings(6, 0.9f, MobEffectRegistry.FARMERS_BLESSING.get(), 3600)));
-    public static final RegistrySupplier<Block> TOMATO_MOZZARELLA_BLOCK = registerWithoutItem("tomato_mozzarella_block", () -> new EffectFoodTrayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4, new FoodProperties.Builder().nutrition(6).saturationModifier(0.7F).build()));
     public static final RegistrySupplier<Item> TOMATO_MOZZARELLA_SALAD = registerItem("tomato_mozzarella_salad", () -> new EffectBlockItem(TOMATO_MOZZARELLA_BLOCK.get(), getFoodItemSettings(5, 0.7f, MobEffectRegistry.FEAST.get(), 4800)));
     public static final RegistrySupplier<Block> TABLE_SIGN = registerWithItem("table_sign", () -> new BoardBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT)));
     public static final RegistrySupplier<Block> PAINTING = registerWithItem("painting", () -> new SmallPaintingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission()));
