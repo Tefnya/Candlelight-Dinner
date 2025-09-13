@@ -21,7 +21,7 @@ import net.satisfy.candlelight.core.registry.ObjectRegistry;
 
 public class TypewriterRenderer implements BlockEntityRenderer<TypewriterEntity> {
     private static final ResourceLocation IRON_TEXTURE = ResourceLocation.fromNamespaceAndPath("candlelight", "textures/entity/typewriter_iron.png");
-    private static final ResourceLocation COPPER_TEXTURE = ResourceLocation.fromNamespaceAndPath("candlelight", "textures/entity/typewriter_gold.png");
+    private static final ResourceLocation GOLD_TEXTURE = ResourceLocation.fromNamespaceAndPath("candlelight", "textures/entity/typewriter_gold.png");
     private final ModelPart typewriter;
     private final ModelPart space;
     private final ModelPart enter;
@@ -133,8 +133,8 @@ public class TypewriterRenderer implements BlockEntityRenderer<TypewriterEntity>
     private ResourceLocation getTexture(BlockState state) {
         if (state.is(ObjectRegistry.TYPEWRITER_IRON.get())) {
             return IRON_TEXTURE;
-        } else if (state.is(ObjectRegistry.TYPEWRITER_COPPER.get())) {
-            return COPPER_TEXTURE;
+        } else if (state.is(ObjectRegistry.TYPEWRITER_GOLD.get())) {
+            return GOLD_TEXTURE;
         }
         return IRON_TEXTURE;
     }

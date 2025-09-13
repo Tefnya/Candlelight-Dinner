@@ -12,11 +12,11 @@
       },
       "trigger": "minecraft:placed_block"
     },
-    "typewriter_copper": {
+    "typewriter_gold": {
       "conditions": {
         "location": [
           {
-            "block": "candlelight:typewriter_copper",
+            "block": "candlelight:typewriter_gold",
             "condition": "minecraft:block_state_property"
           }
         ]
@@ -32,7 +32,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "id": "candlelight:typewriter_copper"
+      "id": "candlelight:typewriter_gold"
     },
     "show_toast": true,
     "title": {
@@ -42,7 +42,7 @@
   "requirements": [
     [
       "typewriter_iron",
-      "typewriter_copper"
+      "typewriter_gold"
     ]
   ],
   "sends_telemetry_event": true

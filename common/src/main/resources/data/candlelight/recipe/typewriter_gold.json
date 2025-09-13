@@ -2,22 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " # ",
-    "iRi",
-    "iii"
+    "iRU",
+    "UUU"
   ],
   "key": {
     "#": {
       "item": "minecraft:redstone"
     },
     "i": {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:gold_ingot"
     },
     "R": {
       "item": "minecraft:repeater"
+    },
+    "U": {
+      "tag": "minecraft:planks"
     }
   },
   "result": {
-    "id": "candlelight:typewriter_copper",
+    "id": "candlelight:typewriter_gold",
     "count": 1
   }
 }

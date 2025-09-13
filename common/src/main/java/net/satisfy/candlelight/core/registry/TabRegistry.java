@@ -68,7 +68,7 @@ public class TabRegistry {
                 output.accept(ObjectRegistry.ROSE.get());
                 output.accept(ObjectRegistry.CHOCOLATE_BOX.get());
                 output.accept(ObjectRegistry.TYPEWRITER_IRON.get());
-                output.accept(ObjectRegistry.TYPEWRITER_COPPER.get());
+                output.accept(ObjectRegistry.TYPEWRITER_GOLD.get());
                 output.accept(ObjectRegistry.TABLE_SIGN.get());
                 output.accept(ObjectRegistry.NOTE_PAPER.get());
                 output.accept(ObjectRegistry.NOTE_PAPER_WRITEABLE.get());

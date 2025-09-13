@@ -1,3 +1,16 @@
+[2.1.2]
+
+**Fixed**
+
+**Added**
+
+**Changed**
+* Typewriter item texture now matches the new model and functionality
+* Typewriter recipe now uses planks to better reflect its new appearance
+* Typewriter Copper has been renamed to Typewriter Gold
+
+***
+
 [2.1.1]
 
 **Fixed**
