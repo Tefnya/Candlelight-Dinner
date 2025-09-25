@@ -15,7 +15,7 @@ import java.util.List;
 public class CompletionistBannerEntity extends BlockEntity {
 
     public CompletionistBannerEntity(BlockPos blockPos, BlockState state) {
-        super(EntityTypeRegistry.CANDLELIGHT_BANNER.get(), blockPos, state);
+        super(EntityTypeRegistry.CANDLELIGHT_BANNER_ENTITY.get(), blockPos, state);
     }
 
     public static void tick(Level level, BlockPos pos) {

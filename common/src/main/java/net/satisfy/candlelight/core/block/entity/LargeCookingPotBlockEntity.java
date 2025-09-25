@@ -1,5 +1,6 @@
 package net.satisfy.candlelight.core.block.entity;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -8,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,10 +37,7 @@ import net.satisfy.farm_and_charm.core.world.ImplementedInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class LargeCookingPotBlockEntity extends BlockEntity implements BlockEntityTicker<LargeCookingPotBlockEntity>, ImplementedInventory, MenuProvider, Container {
     private static final int FIRST_INGREDIENT_SLOT = 0;
@@ -160,15 +159,9 @@ public class LargeCookingPotBlockEntity extends BlockEntity implements BlockEnti
     private ItemStack generateOutputItem(Recipe<?> recipe, RegistryAccess access) {
         ItemStack outputStack = recipe.getResultItem(access).copy();
         if (outputStack.getItem() instanceof EffectFood) {
-            recipe.getIngredients().forEach(ingredient -> {
-                for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
-                    ItemStack stack = getItem(slot);
-                    if (ingredient.test(stack)) {
-                        EffectFoodHelper.getEffects(stack).forEach(effect -> EffectFoodHelper.addEffect(outputStack, effect));
-                        break;
-                    }
-                }
-            });
+            for (MobEffectInstance inst : EffectFoodHelper.collectMergedSortedEffects(this, FIRST_INGREDIENT_SLOT, LAST_INGREDIENT_SLOT)) {
+                EffectFoodHelper.addEffect(outputStack, new Pair<>(inst, 1.0f));
+            }
         }
         return outputStack;
     }

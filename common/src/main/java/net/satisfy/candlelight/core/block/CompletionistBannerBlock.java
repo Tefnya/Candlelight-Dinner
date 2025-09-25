@@ -113,7 +113,7 @@ public class CompletionistBannerBlock extends BaseEntityBlock {
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, EntityTypeRegistry.CANDLELIGHT_BANNER.get(), (level1, pos, state1, entity) -> CompletionistBannerEntity.tick(level1, pos));
+        return level.isClientSide ? null : createTickerHelper(type, EntityTypeRegistry.CANDLELIGHT_BANNER_ENTITY.get(), (level1, pos, state1, entity) -> CompletionistBannerEntity.tick(level1, pos));
     }
 
     @Override

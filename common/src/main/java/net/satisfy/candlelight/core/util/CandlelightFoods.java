@@ -16,5 +16,4 @@ public class CandlelightFoods {
     public static final FoodProperties BEEF_WITH_MUSHROOM_IN_WINE_AND_POTATOES = (new FoodProperties.Builder()).nutrition(10).saturationModifier(0.7F).build();
     public static final FoodProperties LASAGNE = (new FoodProperties.Builder()).nutrition(10).saturationModifier(0.7F).build();
     public static final FoodProperties BEEF_WELLINGTON = (new FoodProperties.Builder()).nutrition(10).saturationModifier(0.7F).build();
-
 }

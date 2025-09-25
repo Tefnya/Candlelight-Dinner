@@ -1,8 +1,7 @@
 [2.1.2]
 
 **Fixed**
-
-**Added**
+* `LargeCookingPot` now writes all ingredient effects onto output items (includes base potion effects and custom potion effects)
 
 **Changed**
 * Typewriter item texture now matches the new model and functionality
