@@ -1,3 +1,10 @@
+[2.1.3]
+
+**Fixed** 
+* correct CookingPan BE type to match CookingPanBlockEntity
+
+***
+
 [2.1.2]
 
 **Fixed**

@@ -24,12 +24,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.candlelight.core.block.CookingPanBlock;
+import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import net.satisfy.farm_and_charm.client.gui.handler.RoasterGuiHandler;
 import net.satisfy.farm_and_charm.core.item.food.EffectFood;
 import net.satisfy.farm_and_charm.core.item.food.EffectFoodHelper;
 import net.satisfy.farm_and_charm.core.recipe.RecipeUnlockManager;
 import net.satisfy.farm_and_charm.core.recipe.RoasterRecipe;
-import net.satisfy.farm_and_charm.core.registry.EntityTypeRegistry;
 import net.satisfy.farm_and_charm.core.registry.RecipeTypeRegistry;
 import net.satisfy.farm_and_charm.core.registry.TagRegistry;
 import net.satisfy.farm_and_charm.core.world.ImplementedInventory;
@@ -72,7 +72,7 @@ public class CookingPanBlockEntity extends BlockEntity implements BlockEntityTic
     };
 
     public CookingPanBlockEntity(BlockPos pos, BlockState state) {
-        super(EntityTypeRegistry.ROASTER_BLOCK_ENTITY.get(), pos, state);
+        super(EntityTypeRegistry.COOKING_PAN_BLOCK_ENTITY.get(), pos, state);
     }
 
     public int @NotNull [] getSlotsForFace(Direction side) {
