@@ -3,9 +3,12 @@
 **Fixed**
 * Letter GUI background not rendering due to missing shader/texture bind
 * Ensured Letter GUI opens correctly on NeoForge
+* `ClosedLetterItem` restores that payload when opened, giving back the original written note
 
 **Changed**
 * Moved `FlammableBlockRegistry.init()` into commonSetup enqueueWork to ensure safe registration
+
+***
 
 [2.1.3]
 
