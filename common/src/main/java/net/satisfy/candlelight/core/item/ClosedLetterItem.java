@@ -39,28 +39,22 @@ public class ClosedLetterItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        ItemStack output = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
+        ItemStack in = player.getItemInHand(hand);
 
-        if (stack.has(DataComponents.CUSTOM_DATA)) {
-            CustomData data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-            CompoundTag tag = data.copyTag().copy();
-            tag.remove("letter_title");
-            tag.remove("letter_sender");
-            output.set(DataComponents.CUSTOM_DATA, data);
-        }
+        if (!level.isClientSide()) {
+            CompoundTag sealed = in.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+            CompoundTag payload = sealed.contains("sealed_payload") ? sealed.getCompound("sealed_payload") : new CompoundTag();
 
-        if (this == ObjectRegistry.LOVE_LETTER_CLOSED.get() && level.isClientSide()) {
-            for (int i = 0; i < 20; i++) {
-                double dx = player.getX() + (level.random.nextDouble() - 0.5) * 0.6;
-                double dy = player.getY() + 1.0 + level.random.nextDouble() * 0.3;
-                double dz = player.getZ() + (level.random.nextDouble() - 0.5) * 0.6;
-                level.addParticle(ParticleTypes.HEART, dx, dy, dz, 0, 0.05, 0);
+            ItemStack out = new ItemStack(ObjectRegistry.NOTE_PAPER_WRITTEN.get());
+            out.set(DataComponents.CUSTOM_DATA, CustomData.of(payload.copy()));
+
+            if (this == ObjectRegistry.LOVE_LETTER_CLOSED.get()) {
+                ((net.minecraft.server.level.ServerLevel) level).sendParticles(ParticleTypes.HEART, player.getX(), player.getY() + 1.0, player.getZ(), 20, 0.3, 0.2, 0.3, 0.05);
             }
+
+            player.setItemInHand(hand, out);
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
 
-        player.setItemInHand(hand, output);
-        player.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
-    }
-}
+        return InteractionResultHolder.sidedSuccess(in, level.isClientSide());
+    }}

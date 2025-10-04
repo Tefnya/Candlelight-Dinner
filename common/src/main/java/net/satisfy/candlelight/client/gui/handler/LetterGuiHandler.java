@@ -51,31 +51,29 @@ public class LetterGuiHandler extends AbstractContainerMenu {
     public void broadcastChanges() {
         super.broadcastChanges();
 
-        Item inputItem = this.inventory.getItem(0).getItem();
-        Item secondItem = this.inventory.getItem(1).getItem();
+        Item a = this.inventory.getItem(0).getItem();
+        Item b = this.inventory.getItem(1).getItem();
 
-        if ((inputItem == ObjectRegistry.LETTER_OPEN.get() || inputItem == ObjectRegistry.LOVE_LETTER_OPEN.get()) && secondItem == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
-            ItemStack stack = inputItem == ObjectRegistry.LETTER_OPEN.get()
-                    ? new ItemStack(ObjectRegistry.LETTER_CLOSED.get())
-                    : new ItemStack(ObjectRegistry.LOVE_LETTER_CLOSED.get());
-
-            CustomData data = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-            CompoundTag tag = data.copyTag();
-            tag.put("letter_title", StringTag.valueOf(name));
-            tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
-            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
+        if (((a == ObjectRegistry.LETTER_OPEN.get()) || (a == ObjectRegistry.LOVE_LETTER_OPEN.get())) && b == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
+            ItemStack stack = a == ObjectRegistry.LETTER_OPEN.get() ? new ItemStack(ObjectRegistry.LETTER_CLOSED.get()) : new ItemStack(ObjectRegistry.LOVE_LETTER_CLOSED.get());
+            CustomData noteData = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            CompoundTag payload = noteData.copyTag();
+            CompoundTag sealed = new CompoundTag();
+            sealed.put("sealed_payload", payload);
+            sealed.put("letter_title", StringTag.valueOf(name));
+            sealed.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(sealed));
             this.inventory.setItem(2, stack);
-
-        } else if (secondItem == ObjectRegistry.LETTER_OPEN.get() && inputItem == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
+        } else if (b == ObjectRegistry.LETTER_OPEN.get() && a == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
             ItemStack stack = new ItemStack(ObjectRegistry.LETTER_CLOSED.get());
-
-            CustomData data = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-            CompoundTag tag = data.copyTag();
-            tag.put("letter_title", StringTag.valueOf(name));
-            tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
-            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
+            CustomData noteData = this.inventory.getItem(0).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            CompoundTag payload = noteData.copyTag();
+            CompoundTag sealed = new CompoundTag();
+            sealed.put("sealed_payload", payload);
+            sealed.put("letter_title", StringTag.valueOf(name));
+            sealed.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(sealed));
             this.inventory.setItem(2, stack);
-
         } else {
             this.inventory.setItem(2, ItemStack.EMPTY);
         }
