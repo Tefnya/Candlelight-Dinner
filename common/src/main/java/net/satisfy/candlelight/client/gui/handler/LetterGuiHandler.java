@@ -33,19 +33,16 @@ public class LetterGuiHandler extends AbstractContainerMenu {
         this.player = playerInventory.player;
         inventory.startOpen(this.player);
 
-        int m;
-        int l;
+        this.addSlot(new Slot(inventory, 0, 33, 13));
+        this.addSlot(new Slot(inventory, 1, 33, 50));
+        this.addSlot(new OutputSlot(inventory, 2, 110, 48, this));
 
-        this.addSlot(new Slot(inventory, 0, 80 + 18 - 100 + 30 + 5, 15 - 2));
-        this.addSlot(new Slot(inventory, 1, 80 + 18 - 100 + 30 + 5, 15 + 18 + 25 - 8));
-
-        this.addSlot(new OutputSlot(inventory, 2, 64 + 18 + 50 - 30 + 8, 18 + 2 * 18 - 10 + 4, this));
-        for (m = 0; m < 3; ++m) {
-            for (l = 0; l < 9; ++l) {
+        for (int m = 0; m < 3; ++m) {
+            for (int l = 0; l < 9; ++l) {
                 this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
             }
         }
-        for (m = 0; m < 9; ++m) {
+        for (int m = 0; m < 9; ++m) {
             this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
         }
     }
@@ -64,11 +61,9 @@ public class LetterGuiHandler extends AbstractContainerMenu {
 
             CustomData data = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
             CompoundTag tag = data.copyTag();
-
             tag.put("letter_title", StringTag.valueOf(name));
             tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
             stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
-
             this.inventory.setItem(2, stack);
 
         } else if (secondItem == ObjectRegistry.LETTER_OPEN.get() && inputItem == ObjectRegistry.NOTE_PAPER_WRITTEN.get()) {
@@ -76,7 +71,6 @@ public class LetterGuiHandler extends AbstractContainerMenu {
 
             CustomData data = this.inventory.getItem(1).getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
             CompoundTag tag = data.copyTag();
-
             tag.put("letter_title", StringTag.valueOf(name));
             tag.put("letter_sender", StringTag.valueOf(this.player.getName().getString()));
             stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
@@ -130,10 +124,8 @@ public class LetterGuiHandler extends AbstractContainerMenu {
             } else {
                 slot.setChanged();
             }
-
             return copy;
         }
-
         return ItemStack.EMPTY;
     }
 

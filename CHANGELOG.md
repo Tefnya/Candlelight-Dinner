@@ -1,3 +1,12 @@
+[2.1.4]
+
+**Fixed**
+* Letter GUI background not rendering due to missing shader/texture bind
+* Ensured Letter GUI opens correctly on NeoForge
+
+**Changed**
+* Moved `FlammableBlockRegistry.init()` into commonSetup enqueueWork to ensure safe registration
+
 [2.1.3]
 
 **Fixed** 
