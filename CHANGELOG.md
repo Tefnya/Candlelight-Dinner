@@ -1,3 +1,11 @@
+[2.1.5]
+
+**Fixed**
+* Typewriter being offset when placed down
+* TableSet not rendering any Food placed on it
+
+***
+
 [2.1.4]
 
 **Fixed**

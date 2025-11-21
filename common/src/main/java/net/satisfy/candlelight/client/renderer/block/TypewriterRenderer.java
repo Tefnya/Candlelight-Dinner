@@ -71,6 +71,7 @@ public class TypewriterRenderer implements BlockEntityRenderer<TypewriterEntity>
         poseStack.pushPose();
 
         Direction facing = state.getValue(TypewriterBlock.FACING);
+
         float rotY = switch (facing) {
             case EAST -> 270f;
             case SOUTH -> 0f;
@@ -78,9 +79,31 @@ public class TypewriterRenderer implements BlockEntityRenderer<TypewriterEntity>
             default -> 180f;
         };
 
+        float offsetX;
+        float offsetZ;
+
+        switch (facing) {
+            case SOUTH -> {
+                offsetX = 0.5f;
+                offsetZ = -0.5f;
+            }
+            case EAST -> {
+                offsetX = -0.5f;
+                offsetZ = -0.5f;
+            }
+            case WEST -> {
+                offsetX = 0.5f;
+                offsetZ = 0.5f;
+            }
+            default -> {
+                offsetX = -0.5f;
+                offsetZ = 0.5f;
+            }
+        }
+
         poseStack.mulPose(Axis.XP.rotationDegrees(180f));
         poseStack.mulPose(Axis.YP.rotationDegrees(rotY));
-        poseStack.translate(-0.5, -1.5, 0.5);
+        poseStack.translate(offsetX, -1.5f, offsetZ);
 
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(getTexture(state)));
 
