@@ -17,7 +17,6 @@ import net.satisfy.candlelight.core.block.entity.SideBoardBlockEntity;
 import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
 import net.satisfy.candlelight.core.block.entity.TableSetBlockEntity;
 import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import net.satisfy.farm_and_charm.core.block.entity.EffectFoodBlockEntity;
 
 import java.util.HashSet;
@@ -43,7 +42,7 @@ public class EntityTypeRegistry {
     public static final RegistrySupplier<BlockEntityType<EffectFoodBlockEntity>> EFFECT_FOOD_BLOCK_ENTITY = registerBlockEntity("effect_food_block", () -> BlockEntityType.Builder.of(EffectFoodBlockEntity::new, LASAGNE_BLOCK.get(), TOMATO_MOZZARELLA_BLOCK.get(), PORK_RIBS_BLOCK.get(), FRESH_GARDEN_SALAD_BLOCK.get(), BEEF_WELLINGTON_BLOCK.get()).build(null));
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String path, final Supplier<T> type) {
-        return BLOCK_ENTITY_TYPES.register(CandlelightIdentifier.identifier(path), type);
+        return BLOCK_ENTITY_TYPES.register(Candlelight.identifier(path), type);
     }
 
     public static void init() {

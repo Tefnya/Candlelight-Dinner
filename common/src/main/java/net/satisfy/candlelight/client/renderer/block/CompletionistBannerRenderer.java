@@ -16,13 +16,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.CompletionistBannerBlock;
 import net.satisfy.candlelight.core.block.CompletionistWallBannerBlock;
 import net.satisfy.candlelight.core.block.entity.CompletionistBannerEntity;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class CompletionistBannerRenderer implements BlockEntityRenderer<CompletionistBannerEntity> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("banner"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Candlelight.identifier("banner"), "main");
 
     public static final String FLAG = "flag";
     private static final String POLE = "pole";

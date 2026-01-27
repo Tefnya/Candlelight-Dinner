@@ -25,10 +25,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.entity.CompletionistBannerEntity;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -125,7 +125,7 @@ public class CompletionistBannerBlock extends BaseEntityBlock {
     }
 
     public ResourceLocation getRenderTexture() {
-        return CandlelightIdentifier.identifier("textures/banner/candlelight_banner.png");
+        return Candlelight.identifier("textures/banner/candlelight_banner.png");
     }
 
     @Override

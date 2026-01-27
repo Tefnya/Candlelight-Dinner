@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class ShelfBlock extends StorageBlock {
-
     private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
         VoxelShape shape = Shapes.empty();
         shape = Shapes.joinUnoptimized(shape, Shapes.box(0, 0.1875, 0.625, 1, 0.3125, 1), BooleanOp.OR);
@@ -70,10 +69,7 @@ public class ShelfBlock extends StorageBlock {
 
     @Override
     public boolean canInsertStack(ItemStack stack) {
-        if (!(stack.getItem() instanceof BlockItem)) {
-            stack.getItem();
-        }
-        return true;
+        return stack.getItem() instanceof BlockItem;
     }
 
     @Override

@@ -18,8 +18,8 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class SignedPaperGui extends Screen {
             return FormattedText.EMPTY;
         }
     };
-    public static final ResourceLocation BOOK_TEXTURE = CandlelightIdentifier.identifier("textures/gui/note_paper_gui.png");
+    public static final ResourceLocation BOOK_TEXTURE = Candlelight.identifier("textures/gui/note_paper_gui.png");
     private final Contents contents;
     private int pageIndex;
     private List<FormattedCharSequence> cachedPage;

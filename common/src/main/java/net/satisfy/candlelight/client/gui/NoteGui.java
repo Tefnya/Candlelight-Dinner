@@ -28,7 +28,7 @@ import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
+import net.satisfy.candlelight.Candlelight;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -40,7 +40,7 @@ import java.util.function.IntFunction;
 
 @SuppressWarnings("unused")
 public abstract class NoteGui extends Screen {
-    public static final ResourceLocation NOTE_TEXTURE = CandlelightIdentifier.identifier("textures/gui/note_paper_gui.png");
+    public static final ResourceLocation NOTE_TEXTURE = Candlelight.identifier("textures/gui/note_paper_gui.png");
     private static final Component EDIT_TITLE_TEXT = Component.literal("Enter Note Title");
     private static final Component FINALIZE_WARNING_TEXT = Component.translatable("book.finalizeWarning");
     private static final FormattedCharSequence BLACK_CURSOR_TEXT;

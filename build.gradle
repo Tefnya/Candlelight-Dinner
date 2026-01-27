@@ -30,6 +30,9 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        flatDir {
+            dirs rootProject.file("local-mods")
+        }
         exclusiveContent {
             forRepository {
                 maven {
@@ -49,11 +52,6 @@ allprojects {
                 includeGroup "maven.modrinth"
             }
         }
-
-		maven {
-			name = "tsuyumaven"
-			url = "https://maven.tsuyumori.dev/snapshots"
-		}
         maven {
             name = "Jared's maven"
             url = "https://maven.blamejared.com/"

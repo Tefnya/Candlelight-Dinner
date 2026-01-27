@@ -29,9 +29,9 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
 import net.satisfy.candlelight.core.registry.StorageTypeRegistry;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -43,7 +43,7 @@ public class JewelryBoxBlock extends StorageBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     private static final VoxelShape SHAPE = Block.box(5, 0, 5, 11, 5, 11);
-    public static final TagKey<Item> RINGS = TagKey.create(Registries.ITEM, CandlelightIdentifier.identifier("rings"));
+    public static final TagKey<Item> RINGS = TagKey.create(Registries.ITEM, Candlelight.identifier("rings"));
 
     public JewelryBoxBlock(Properties settings) {
         super(settings);
@@ -146,6 +146,6 @@ public class JewelryBoxBlock extends StorageBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
     }
 }

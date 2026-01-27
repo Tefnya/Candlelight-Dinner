@@ -8,11 +8,11 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
+import net.satisfy.candlelight.Candlelight;
 import org.jetbrains.annotations.NotNull;
 
 public class DressChestplateModel<T extends Entity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("dress"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Candlelight.identifier("dress"), "main");
     private final ModelPart body;
     private final ModelPart left_arm;
     private final ModelPart right_arm;

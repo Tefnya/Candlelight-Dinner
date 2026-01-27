@@ -7,7 +7,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.satisfy.candlelight.Candlelight;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class SoundEventRegistry {
 
@@ -24,7 +23,7 @@ public class SoundEventRegistry {
     public static void init() {}
 
     private static RegistrySupplier<SoundEvent> create(String name) {
-        ResourceLocation id = CandlelightIdentifier.identifier(name);
+        ResourceLocation id = Candlelight.identifier(name);
         return SOUND_EVENTS.register(id, () -> SoundEvent.createVariableRangeEvent(id));
     }
 }

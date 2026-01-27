@@ -41,11 +41,11 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
 import net.satisfy.candlelight.core.block.entity.TableSetBlockEntity;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 import net.satisfy.candlelight.core.registry.StorageTypeRegistry;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -54,14 +54,14 @@ import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class TableSetBlock extends StorageBlock {
-    public static final EnumProperty<PlateType> PLATE_TYPE = EnumProperty.create("plate_tye", PlateType.class);
+    public static final EnumProperty<PlateType> PLATE_TYPE = EnumProperty.create("plate_type", PlateType.class);
     public static final BooleanProperty WINE_GLASS = BooleanProperty.create("wine_glass");
     public static final BooleanProperty GLASS = BooleanProperty.create("glass");
     public static final BooleanProperty CLOCHE = BooleanProperty.create("cloche");
     public static final BooleanProperty NAPKIN = BooleanProperty.create("napkin");
     public static final BooleanProperty GLASS_DRINK = BooleanProperty.create("glass_drink");
     public static final BooleanProperty WINE_GLASS_DRINK = BooleanProperty.create("wine_glass_drink");
-    private static final TagKey<Item> ALL_EFFECTS = TagKey.create(Registries.ITEM, CandlelightIdentifier.identifier("all_effects"));
+    private static final TagKey<Item> ALL_EFFECTS = TagKey.create(Registries.ITEM, Candlelight.identifier("all_effects"));
 
     public TableSetBlock(Properties settings) {
         super(settings);
@@ -275,7 +275,7 @@ public class TableSetBlock extends StorageBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
     }
 
     @Override

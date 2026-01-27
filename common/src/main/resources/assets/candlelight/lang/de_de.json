@@ -239,5 +239,9 @@
   "sound.candlelight.dinner_bell_ring": "Dinner Bell Rings",
   "sound.candlelight.typewriter": "Typewriter clatters",
   "tooltip.farm_and_charm.bamboo_stove": "Use with Caution!",
-  "tooltip.candlelight.letter.line": "Für %s von %s"
+  "tooltip.candlelight.letter.line": "Für %s von %s",
+  "effect.candlelight.refreshed": "Erfrischt",
+  "effect.candlelight.well_served": "Gut bedient",
+  "effect.candlelight.refreshed.description": "Deine nächsten Ernten verbrauchen keine Haltbarkeit und können zusätzliche Drops geben.",
+  "effect.candlelight.well_served.description": "Solange dieser Effekt aktiv ist, wirst du nicht richtig hungrig."
 }

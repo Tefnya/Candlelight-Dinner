@@ -8,10 +8,10 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
+import net.satisfy.candlelight.Candlelight;
 
 public class DinnerBellModel<T extends Entity> extends EntityModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(CandlelightIdentifier.identifier("dinner_bell"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Candlelight.identifier("dinner_bell"), "main");
     private final ModelPart dinner_bell_base;
     private final ModelPart dinner_bell_button;
 

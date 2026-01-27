@@ -10,14 +10,14 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.client.gui.handler.LetterGuiHandler;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class LetterGui extends AbstractContainerScreen<LetterGuiHandler> {
-    private static final ResourceLocation TEXTURE = CandlelightIdentifier.identifier("textures/gui/letter_gui.png");
+    private static final ResourceLocation TEXTURE = Candlelight.identifier("textures/gui/letter_gui.png");
     private EditBox nameField;
 
     public LetterGui(LetterGuiHandler handler, Inventory inventory, Component title) {

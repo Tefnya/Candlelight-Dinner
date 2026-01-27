@@ -2,14 +2,14 @@ package net.satisfy.candlelight.core.registry;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
+import net.satisfy.candlelight.Candlelight;
 
 import java.util.Set;
 
 public class StorageTypeRegistry {
-    public static final ResourceLocation SHELF = CandlelightIdentifier.identifier("shelf");
-    public static final ResourceLocation TABLE_SET = CandlelightIdentifier.identifier("table_set");
-    public static final ResourceLocation JEWELRY_BOX = CandlelightIdentifier.identifier("jewelry_box");
+    public static final ResourceLocation SHELF = Candlelight.identifier("shelf");
+    public static final ResourceLocation TABLE_SET = Candlelight.identifier("table_set");
+    public static final ResourceLocation JEWELRY_BOX = Candlelight.identifier("jewelry_box");
 
     public static Set<Block> registerBlocks(Set<Block> blocks) {
         blocks.add(ObjectRegistry.OAK_SHELF.get());

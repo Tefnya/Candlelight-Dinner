@@ -25,14 +25,12 @@ import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.block.*;
 import net.satisfy.candlelight.core.item.*;
 import net.satisfy.candlelight.core.util.CandlelightFoods;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 import net.satisfy.farm_and_charm.core.block.*;
 import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectFoodBlockItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectFoodItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectItem;
 import net.satisfy.farm_and_charm.core.registry.ArmorMaterialRegistry;
-import net.satisfy.farm_and_charm.core.registry.MobEffectRegistry;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 
 import java.util.function.Consumer;
@@ -70,25 +68,25 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> NAPKIN = registerItem("napkin", () -> new Item(getSettings()));
     public static final RegistrySupplier<Item> MOZZARELLA = registerItem("mozzarella", () -> new Item(getSettings().food(Foods.BREAD)));
     public static final RegistrySupplier<Item> KHINKALI = registerItem("khinkali", () -> new Item(getSettings().food(Foods.GOLDEN_CARROT)));
-    public static final RegistrySupplier<Item> BEETROOT_SALAD = registerItem("beetroot_salad", () -> new EffectItem(getFoodItemSettings(5, 0.6f, MobEffectRegistry.SUSTENANCE.get(), 2400), 2400, true));
-    public static final RegistrySupplier<Item> CHICKEN_TERIYAKI = registerItem("chicken_teriyaki", () -> new EffectItem(getFoodItemSettings(8, 0.8f, MobEffectRegistry.SATIATION.get(), 6000), 6000, true));
-    public static final RegistrySupplier<Item> SALAD = registerItem("salad", () -> new EffectItem(getFoodItemSettings(5, 0.7f, MobEffectRegistry.SUSTENANCE.get(), 3600), 3600, true));
-    public static final RegistrySupplier<Item> BEEF_TARTARE = registerItem("beef_tartare", () -> new EffectItem(getFoodItemSettings(8, 0.9f, MobEffectRegistry.SATIATION.get(), 3000), 3000, true));
-    public static final RegistrySupplier<Item> PASTA_WITH_LETTUCE = registerItem("pasta_with_lettuce", () -> new EffectItem(getFoodItemSettings(8, 0.9f, MobEffectRegistry.SATIATION.get(), 3600), 3600, true));
-    public static final RegistrySupplier<Item> OMELET = registerItem("omelet", () -> new EffectItem(getFoodItemSettings(8, 0.4f, MobEffectRegistry.SWEETS.get(), 4800), 4800, true));
-    public static final RegistrySupplier<Item> HARVEST_PLATE = registerItem("harvest_plate", () -> new EffectItem(getFoodItemSettings(7, 0.8f, MobEffectRegistry.FARMERS_BLESSING.get(), 4800), 4800, true));
-    public static final RegistrySupplier<Item> CHOCOLATE_MOUSSE = registerItem("chocolate_mousse", () -> new EffectItem(getFoodItemSettings(4, 0.3f, MobEffectRegistry.SWEETS.get(), 2400), 2400, true));
+    public static final RegistrySupplier<Item> BEETROOT_SALAD = registerItem("beetroot_salad", () -> new EffectItem(getFoodItemSettings(5, 0.6f, MobEffectRegistry.REFRESHED.get(), 2400), 2400, true));
+    public static final RegistrySupplier<Item> CHICKEN_TERIYAKI = registerItem("chicken_teriyaki", () -> new EffectItem(getFoodItemSettings(8, 0.8f, MobEffectRegistry.WELL_SERVED.get(), 6000), 6000, true));
+    public static final RegistrySupplier<Item> SALAD = registerItem("salad", () -> new EffectItem(getFoodItemSettings(5, 0.7f, MobEffectRegistry.REFRESHED.get(), 3600), 3600, true));
+    public static final RegistrySupplier<Item> BEEF_TARTARE = registerItem("beef_tartare", () -> new EffectItem(getFoodItemSettings(8, 0.9f, MobEffectRegistry.WELL_SERVED.get(), 3000), 3000, true));
+    public static final RegistrySupplier<Item> PASTA_WITH_LETTUCE = registerItem("pasta_with_lettuce", () -> new EffectItem(getFoodItemSettings(8, 0.9f, MobEffectRegistry.REFRESHED.get(), 3600), 3600, true));
+    public static final RegistrySupplier<Item> OMELET = registerItem("omelet", () -> new EffectItem(getFoodItemSettings(8, 0.4f, MobEffectRegistry.WELL_SERVED.get(), 4800), 4800, true));
+    public static final RegistrySupplier<Item> HARVEST_PLATE = registerItem("harvest_plate", () -> new EffectItem(getFoodItemSettings(7, 0.8f, MobEffectRegistry.REFRESHED.get(), 4800), 4800, true));
+    public static final RegistrySupplier<Item> CHOCOLATE_MOUSSE = registerItem("chocolate_mousse", () -> new EffectItem(getFoodItemSettings(4, 0.3f, MobEffectRegistry.WELL_SERVED.get(), 2400), 2400, true));
     public static final RegistrySupplier<Item> GOLD_RING = registerItem("gold_ring", () -> new RingItem(ArmorMaterialRegistry.JEWELRY, ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.EPIC)));
-    public static final RegistrySupplier<Item> COOKING_HAT = registerItem("cooking_hat", () -> new CandlelightHatItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/cooking_hat.png")), ArmorItem.Type.HELMET, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/cooking_hat.png")));
-    public static final RegistrySupplier<Item> CHEFS_JACKET = registerItem("chefs_jacket", () -> new CandlelightChestItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/cook.png")), ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/cook.png")));
-    public static final RegistrySupplier<Item> CHEFS_PANTS = registerItem("chefs_pants", () -> new CandlelightLegsItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/cook.png")), ArmorItem.Type.LEGGINGS, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/cook.png")));
-    public static final RegistrySupplier<Item> CHEFS_BOOTS = registerItem("chefs_boots", () -> new CandlelightBootsItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/cook.png")), ArmorItem.Type.BOOTS, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/cook.png")));
-    public static final RegistrySupplier<Item> FLOWER_CROWN = registerItem("flower_crown", () -> new CandlelightHatItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/flower_crown.png")), ArmorItem.Type.HELMET, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/flower_crown.png")));
-    public static final RegistrySupplier<Item> DRESS = registerItem("dress", () -> new DyeableCandlelightArmorItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/dress.png")), ArmorItem.Type.CHESTPLATE, 16744576, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/dress.png")));
-    public static final RegistrySupplier<Item> SHIRT = registerItem("shirt", () -> new CandlelightChestItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/shirt.png")), ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/shirt.png")));
-    public static final RegistrySupplier<Item> FORMAL_SHIRT = registerItem("formal_shirt", () -> new CandlelightChestItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/formal_shirt.png")), ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/formal_shirt.png")));
-    public static final RegistrySupplier<Item> TROUSERS_AND_VEST = registerItem("trousers_and_vest", () -> new DyeableCandlelightArmorItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/suit.png")), ArmorItem.Type.LEGGINGS, 0x333399, getSettings().rarity(Rarity.UNCOMMON), CandlelightIdentifier.identifier("textures/models/armor/suit.png")));
-    public static final RegistrySupplier<Item> NECKTIE = registerItem("necktie", () -> new CandlelightHatItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, CandlelightIdentifier.identifier("textures/models/armor/tie.png")), ArmorItem.Type.HELMET, getSettings().rarity(Rarity.COMMON), CandlelightIdentifier.identifier("textures/models/armor/tie.png")));
+    public static final RegistrySupplier<Item> COOKING_HAT = registerItem("cooking_hat", () -> new CandlelightHatItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/cooking_hat.png")), ArmorItem.Type.HELMET, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/cooking_hat.png")));
+    public static final RegistrySupplier<Item> CHEFS_JACKET = registerItem("chefs_jacket", () -> new CandlelightChestItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/cook.png")), ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/cook.png")));
+    public static final RegistrySupplier<Item> CHEFS_PANTS = registerItem("chefs_pants", () -> new CandlelightLegsItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/cook.png")), ArmorItem.Type.LEGGINGS, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/cook.png")));
+    public static final RegistrySupplier<Item> CHEFS_BOOTS = registerItem("chefs_boots", () -> new CandlelightBootsItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/cook.png")), ArmorItem.Type.BOOTS, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/cook.png")));
+    public static final RegistrySupplier<Item> FLOWER_CROWN = registerItem("flower_crown", () -> new CandlelightHatItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/flower_crown.png")), ArmorItem.Type.HELMET, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/flower_crown.png")));
+    public static final RegistrySupplier<Item> DRESS = registerItem("dress", () -> new DyeableCandlelightArmorItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/dress.png")), ArmorItem.Type.CHESTPLATE, 16744576, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/dress.png")));
+    public static final RegistrySupplier<Item> SHIRT = registerItem("shirt", () -> new CandlelightChestItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/shirt.png")), ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/shirt.png")));
+    public static final RegistrySupplier<Item> FORMAL_SHIRT = registerItem("formal_shirt", () -> new CandlelightChestItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/formal_shirt.png")), ArmorItem.Type.CHESTPLATE, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/formal_shirt.png")));
+    public static final RegistrySupplier<Item> TROUSERS_AND_VEST = registerItem("trousers_and_vest", () -> new DyeableCandlelightArmorItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/suit.png")), ArmorItem.Type.LEGGINGS, 0x333399, getSettings().rarity(Rarity.UNCOMMON), Candlelight.identifier("textures/models/armor/suit.png")));
+    public static final RegistrySupplier<Item> NECKTIE = registerItem("necktie", () -> new CandlelightHatItem(ArmorMaterialRegistry.withTextureNoOverlay(ArmorMaterialRegistry.CLOTH, Candlelight.identifier("textures/models/armor/tie.png")), ArmorItem.Type.HELMET, getSettings().rarity(Rarity.COMMON), Candlelight.identifier("textures/models/armor/tie.png")));
     public static final RegistrySupplier<Item> NOTE_PAPER_WRITEABLE = registerItem("note_paper_writeable", () -> new WriteablePaperItem(getSettings().stacksTo(1)));
     public static final RegistrySupplier<Item> NOTE_PAPER_WRITTEN = registerItem("note_paper_written", () -> new WrittenPaperItem(getSettingsWithoutTab()));
     public static final RegistrySupplier<Item> LETTER_OPEN = registerItem("letter_open", () -> new LetterItem(getSettings()));
@@ -117,8 +115,8 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> GLASS = registerItem("glass", () -> new BlockItem(GLASS_BLOCK.get(), getSettings()));
     public static final RegistrySupplier<Block> WINE_GLASS_BLOCK = registerWithoutItem("wine_glass", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).noTerrainParticles(), 4));
     public static final RegistrySupplier<Item> WINE_GLASS = registerItem("wine_glass", () -> new BlockItem(WINE_GLASS_BLOCK.get(), getSettings()));
-    public static final RegistrySupplier<Item> FRESH_GARDEN_SALAD = registerItem("fresh_garden_salad", () -> new EffectBlockItem(FRESH_GARDEN_SALAD_BLOCK.get(), getFoodItemSettings(6, 0.9f, MobEffectRegistry.FARMERS_BLESSING.get(), 3600)));
-    public static final RegistrySupplier<Item> TOMATO_MOZZARELLA_SALAD = registerItem("tomato_mozzarella_salad", () -> new EffectBlockItem(TOMATO_MOZZARELLA_BLOCK.get(), getFoodItemSettings(5, 0.7f, MobEffectRegistry.FEAST.get(), 4800)));
+    public static final RegistrySupplier<Item> FRESH_GARDEN_SALAD = registerItem("fresh_garden_salad", () -> new EffectBlockItem(FRESH_GARDEN_SALAD_BLOCK.get(), getFoodItemSettings(6, 0.9f, MobEffectRegistry.WELL_SERVED.get(), 3600)));
+    public static final RegistrySupplier<Item> TOMATO_MOZZARELLA_SALAD = registerItem("tomato_mozzarella_salad", () -> new EffectBlockItem(TOMATO_MOZZARELLA_BLOCK.get(), getFoodItemSettings(5, 0.7f, MobEffectRegistry.WELL_SERVED.get(), 4800)));
     public static final RegistrySupplier<Block> TABLE_SIGN = registerWithItem("table_sign", () -> new BoardBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT)));
     public static final RegistrySupplier<Block> PAINTING = registerWithItem("painting", () -> new SmallPaintingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission()));
     public static final RegistrySupplier<Block> HEARTH = registerWithItem("hearth", () -> new WallDecorationBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission()));
@@ -283,14 +281,14 @@ public class ObjectRegistry {
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block) {
-        return GeneralUtil.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, CandlelightIdentifier.identifier(name), block);
+        return GeneralUtil.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, Candlelight.identifier(name), block);
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
-        return GeneralUtil.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, CandlelightIdentifier.identifier(path), block);
+        return GeneralUtil.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, Candlelight.identifier(path), block);
     }
 
     public static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
-        return GeneralUtil.registerItem(ITEMS, ITEM_REGISTRAR, CandlelightIdentifier.identifier(path), itemSupplier);
+        return GeneralUtil.registerItem(ITEMS, ITEM_REGISTRAR, Candlelight.identifier(path), itemSupplier);
     }
 }

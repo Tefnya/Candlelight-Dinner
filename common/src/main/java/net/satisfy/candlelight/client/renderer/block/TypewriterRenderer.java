@@ -3,8 +3,10 @@ package net.satisfy.candlelight.client.renderer.block;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -14,14 +16,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.client.model.TypewriterModel;
 import net.satisfy.candlelight.core.block.TypewriterBlock;
 import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
 import net.satisfy.candlelight.core.registry.ObjectRegistry;
 
 public class TypewriterRenderer implements BlockEntityRenderer<TypewriterEntity> {
-    private static final ResourceLocation IRON_TEXTURE = ResourceLocation.fromNamespaceAndPath("candlelight", "textures/entity/typewriter_iron.png");
-    private static final ResourceLocation GOLD_TEXTURE = ResourceLocation.fromNamespaceAndPath("candlelight", "textures/entity/typewriter_gold.png");
+    private static final ResourceLocation IRON_TEXTURE = Candlelight.identifier("textures/entity/typewriter_iron.png");
+    private static final ResourceLocation GOLD_TEXTURE = Candlelight.identifier("textures/entity/typewriter_gold.png");
     private final ModelPart typewriter;
     private final ModelPart space;
     private final ModelPart enter;
@@ -35,27 +38,53 @@ public class TypewriterRenderer implements BlockEntityRenderer<TypewriterEntity>
         this.typewriter = root.getChild("typewriter");
         ModelPart keyboard = this.typewriter.getChild("keyboard");
         ModelPart sp;
-        try { sp = keyboard.getChild("space"); } catch (Exception e) { sp = keyboard.getChild("spacebar"); }
+        try {
+            sp = keyboard.getChild("space");
+        } catch (Exception e) {
+            sp = keyboard.getChild("spacebar");
+        }
         this.space = sp;
         ModelPart en;
-        try { en = keyboard.getChild("enter"); } catch (Exception e) { en = keyboard.getChild("return"); }
+        try {
+            en = keyboard.getChild("enter");
+        } catch (Exception e) {
+            en = keyboard.getChild("return");
+        }
         this.enter = en;
         ModelPart rl;
-        try { rl = this.typewriter.getChild("roller"); } catch (Exception e) { rl = this.typewriter.getChild("carriage"); }
+        try {
+            rl = this.typewriter.getChild("roller");
+        } catch (Exception e) {
+            rl = this.typewriter.getChild("carriage");
+        }
         this.roller = rl;
         ModelPart pp;
-        try { pp = this.typewriter.getChild("paper"); } catch (Exception e) { pp = this.typewriter.getChild("sheet"); }
+        try {
+            pp = this.typewriter.getChild("paper");
+        } catch (Exception e) {
+            pp = this.typewriter.getChild("sheet");
+        }
         this.paper = pp;
         ModelPart pw;
-        try { pw = this.typewriter.getChild("paper_written"); } catch (Exception e) { pw = this.typewriter.getChild("sheet_written"); }
+        try {
+            pw = this.typewriter.getChild("paper_written");
+        } catch (Exception e) {
+            pw = this.typewriter.getChild("sheet_written");
+        }
         this.paperWritten = pw;
         List<ModelPart> keys = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
-            try { keys.add(keyboard.getChild("button_" + i)); } catch (Exception ignored) {}
+            try {
+                keys.add(keyboard.getChild("button_" + i));
+            } catch (Exception ignored) {
+            }
         }
         if (keys.isEmpty()) {
             for (int i = 0; i < 8; i++) {
-                try { keys.add(keyboard.getChild("key" + i)); } catch (Exception ignored) {}
+                try {
+                    keys.add(keyboard.getChild("key" + i));
+                } catch (Exception ignored) {
+                }
             }
         }
         this.keyParts = keys;

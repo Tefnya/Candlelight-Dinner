@@ -13,7 +13,6 @@ import net.satisfy.farm_and_charm.core.block.entity.EffectFoodBlockEntity;
 import net.satisfy.farm_and_charm.core.item.food.EffectFoodHelper;
 
 public class CEffectFoodBlock extends EffectFoodBlock {
-
     public CEffectFoodBlock(Properties properties, int maxBites, FoodProperties food) {
         super(properties, maxBites, food);
     }

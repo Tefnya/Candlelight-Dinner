@@ -9,12 +9,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.client.model.DinnerBellModel;
 import net.satisfy.candlelight.core.block.entity.DinnerBellBlockEntity;
-import net.satisfy.candlelight.core.util.CandlelightIdentifier;
 
 public class DinnerBellRenderer implements BlockEntityRenderer<DinnerBellBlockEntity> {
-    private static final ResourceLocation BELL_TEXTURE = CandlelightIdentifier.identifier( "textures/entity/dinner_bell.png");
+    private static final ResourceLocation BELL_TEXTURE = Candlelight.identifier("textures/entity/dinner_bell.png");
 
     private final ModelPart dinner_bell_base;
     private final ModelPart dinner_bell_button;

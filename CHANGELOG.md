@@ -1,3 +1,17 @@
+[2.1.6]
+
+**Requires Farm & Charm 1.1.15+**
+
+**Added**
+* Added two new food effects: Refreshed and Well Served
+* Refreshed grants bonus harvest drops for a limited number of crops
+* Well Served prevents hunger from dropping below a minimum level
+
+**Changed**
+* Removed BakeryIdentifier utility and moved identifier helper directly into the Bakery class
+
+*** 
+
 [2.1.5]
 
 **Fixed**
