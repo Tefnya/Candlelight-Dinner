@@ -1,3 +1,10 @@
+[2.1.7]
+
+**Fixed**
+* A typo in the table_set blockstate that caused excessive log spam due to invalid model references
+
+*** 
+
 [2.1.6]
 
 **Requires Farm & Charm 1.1.15+**

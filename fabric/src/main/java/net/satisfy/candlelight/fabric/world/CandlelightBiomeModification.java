@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.biome.v1.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.satisfy.candlelight.Candlelight;
 import net.satisfy.candlelight.core.world.feature.CandlelightPlacedFeature;
 
 import java.util.function.Predicate;
@@ -12,13 +13,13 @@ import java.util.function.Predicate;
 public class CandlelightBiomeModification {
 
     public static void init() {
-        BiomeModification world = BiomeModifications.create(CandlelightIdentifier.identifier("world_features"));
+        BiomeModification world = BiomeModifications.create(Candlelight.identifier("world_features"));
         Predicate<BiomeSelectionContext> spawnsRose = getCandlelightSelector();
         world.add(ModificationPhase.ADDITIONS, spawnsRose, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CandlelightPlacedFeature.ROSE_PATCH_CHANCE_KEY));
     }
 
     private static Predicate<BiomeSelectionContext> getCandlelightSelector() {
-        return BiomeSelectors.tag(TagKey.create(Registries.BIOME, CandlelightIdentifier.identifier("spawns_rose")));
+        return BiomeSelectors.tag(TagKey.create(Registries.BIOME, Candlelight.identifier("spawns_rose")));
     }
 
 

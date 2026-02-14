@@ -2,7 +2,7 @@
   "multipart": [
     {
       "when": {
-        "plate_tye": "plate",
+        "plate_type": "plate",
         "facing": "north"
       },
       "apply": {
@@ -11,7 +11,7 @@
     },
     {
       "when": {
-        "plate_tye": "plate",
+        "plate_type": "plate",
         "facing": "south"
       },
       "apply": {
@@ -21,7 +21,7 @@
     },
     {
       "when": {
-        "plate_tye": "plate",
+        "plate_type": "plate",
         "facing": "west"
       },
       "apply": {
@@ -31,7 +31,7 @@
     },
     {
       "when": {
-        "plate_tye": "plate",
+        "plate_type": "plate",
         "facing": "east"
       },
       "apply": {
@@ -41,7 +41,7 @@
     },
     {
       "when": {
-        "plate_tye": "bowl",
+        "plate_type": "bowl",
         "facing": "north"
       },
       "apply": {
@@ -50,7 +50,7 @@
     },
     {
       "when": {
-        "plate_tye": "bowl",
+        "plate_type": "bowl",
         "facing": "south"
       },
       "apply": {
@@ -60,7 +60,7 @@
     },
     {
       "when": {
-        "plate_tye": "bowl",
+        "plate_type": "bowl",
         "facing": "west"
       },
       "apply": {
@@ -70,7 +70,7 @@
     },
     {
       "when": {
-        "plate_tye": "bowl",
+        "plate_type": "bowl",
         "facing": "east"
       },
       "apply": {
