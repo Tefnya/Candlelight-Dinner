@@ -1,25 +1,129 @@
-<p align="center"><img src="https://imgur.com/RRfGT1P.png" width="1200"></p>
+![Candlelight](https://lets-do.ch/assets/mod-logos/candlelight.png)
 
-<div style="text-align: center;">
+<br>
 
-<p>Ever dreamed of the perfect dinner in Minecraft? Your dreams are just a crafting station away.</p>
+<p align="center">
+  <strong>Elegant Evenings & Refined Feasts</strong>
+</p>
 
-<br> 
+<p align="center">
+  <em>The sophisticated extension to Farm & Charm</em>
+</p>
 
-<p>Explore a wide array of kitchen hardware, savor delectable foods, and adorn your surroundings with exquisite decorations. From elegant table settings to mouthwatering dishes, Candlelight makes all these experiences possible.</p>
+<br>
+
+<p align="center">
+  <em>"Set the table. Light the candles."</em>
+</p>
+
+<br>
+
+Ever dreamed of the perfect dinner in Minecraft? Candlelight provides everything you need to create refined meals, elegant tables and memorable evenings.
+
+<br>
+
+This version offers improved compatibility with [Let's Do] Farm & Charm, featuring additional items, refined recipes and expanded mechanics.
+
+<br>
+
+## A New Way to Dine
+
+<br>
+
+- Large meals cooked in a Frying Pan or Cooking Pot  
+- Multi-stage food system allowing you to eat meals piece by piece  
+- Placeable dishes and plates that grant additional hunger and saturation bonuses  
+- The option to both place and consume your creations  
+
+<br>
+
+Fine dining takes time.
+
+<br>
+
+## Cooking with Effects
+
+<br>
+
+- Infuse meals with Potion effects  
+- Transfer powerful bonuses into your dishes  
+- Experiment with ingredients for unique culinary results  
+
+<br>
+
+Flavor meets function.
+
+<br>
+
+## Atmosphere & Details
+
+<br>
+
+- Typewriter and envelopes for elegant storytelling  
+- Decorative dinnerware and table settings  
+- A cosmetic armor set made purely for style  
+- Additional immersive decor elements  
+
+<br>
+
+<p align="center">
+  <strong>Prepare the feast.</strong>
+</p>
+
+<p align="center">
+  <strong>Light the candles.</strong>
+</p>
+
+<p align="center">
+  <strong>Enjoy the evening.</strong>
+</p>
+
+<br>
+
+<p align="center">
+  Enjoy your new meals and bon appétit!
+</p>
+
+<br>
+
+<p align="center">
+  <em>Requires [Let's Do] Farm & Charm</em>
+</p>
+
+<br>
+
+<p align="center">
+  <em>Dedicated to MissLilitu</em>
+</p>
+
+<br>
+
+<div align="center">
+
+# The Let’s Do Collection
+
+<br>
+
+<a href="https://lets-do.ch/mods/">
+  <img src="https://github.com/Let-s-Do-Collection/Let-s-Do-Collection/raw/main/LOGO.png?raw=true" width="350" alt="The Let’s Do Collection">
+</a>
+
+<br>
+
+# Support & Community
 
 </div>
 
-<h1 align="center">Available for  <br></h1>
-<p align="center"><img src="https://imgur.com/gREqi3m.png" width="240" height="120"></p>
+<br>
 
+<p align="center">
+  Let’s Do grows through its community.
+</p>
 
-<h1 align="center">Be Part of Our Journey<br></h1>
-<p align="center"><a title="discord" href="https://discord.gg/Vqu6wYZwdZ"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://1000logos.net/wp-content/uploads/2021/06/Discord-logo-2015.png" alt="" width="" height="140" /></a>
-<a title="patreon" href="https://www.patreon.com/user?u=78595058"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/patreon_logo_icon_170869.png" alt="" width="" height="140" /></a></p>
+<br>
 
-
-
-
-
-
+<p align="center">
+  <a href="https://github.com/Let-s-Do-Collection/Let-s-Do-Collection">GitHub</a> •
+  <a href="https://discord.gg/Jb2bgpYr">Discord</a> •
+  <a href="https://www.patreon.com/c/u78595058">Patreon</a>
+</p>
