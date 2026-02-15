@@ -1,4 +1,4 @@
-![Candlelight](https://lets-do.ch/assets/mod-logos/candlelight.png)
+![Candlelight](https://lets-do.ch/assets/mod-logos/candlelight.webp)
 
 <br>
 
