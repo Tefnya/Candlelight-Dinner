@@ -119,7 +119,7 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> TOMATO_MOZZARELLA_SALAD = registerItem("tomato_mozzarella_salad", () -> new EffectBlockItem(TOMATO_MOZZARELLA_BLOCK.get(), getFoodItemSettings(5, 0.7f, MobEffectRegistry.WELL_SERVED.get(), 4800)));
     public static final RegistrySupplier<Block> TABLE_SIGN = registerWithItem("table_sign", () -> new BoardBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT)));
     public static final RegistrySupplier<Block> PAINTING = registerWithItem("painting", () -> new SmallPaintingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission()));
-    public static final RegistrySupplier<Block> HEARTH = registerWithItem("hearth", () -> new WallDecorationBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission()));
+    public static final RegistrySupplier<Block> HEART = registerWithItem("heart", () -> new WallDecorationBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT).noCollission()));
     public static final RegistrySupplier<Block> ROSE = registerWithItem("rose", () -> new BonemealableFlowerBlock(MobEffects.HEAL, 1, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
     public static final RegistrySupplier<Block> POTTED_ROSE = registerWithoutItem("potted_rose", () -> new FlowerPotBlock(ROSE.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_POPPY)));
     public static final RegistrySupplier<Block> JEWELRY_BOX = registerWithItem("jewelry_box", () -> new JewelryBoxBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FLOWER_POT)));

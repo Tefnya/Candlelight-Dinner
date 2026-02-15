@@ -64,7 +64,7 @@ public class TabRegistry {
                 output.accept(ObjectRegistry.GOLD_RING.get());
                 output.accept(ObjectRegistry.JEWELRY_BOX.get());
                 output.accept(ObjectRegistry.PAINTING.get());
-                output.accept(ObjectRegistry.HEARTH.get());
+                output.accept(ObjectRegistry.HEART.get());
                 output.accept(ObjectRegistry.ROSE.get());
                 output.accept(ObjectRegistry.CHOCOLATE_BOX.get());
                 output.accept(ObjectRegistry.TYPEWRITER_IRON.get());

@@ -2,7 +2,14 @@
 
 **Fixed**
 * Containers such as bottles, bowls and buckets not being returned after cooking
-* Clothing being HUGE when placed inside AlpineWhispers / Meadows wardrobe
+* Clothing being huge when placed inside AlpineWhispers / Meadows wardrobe
+
+**Changed**
+* Slightly adjusted Heart texture
+* Renamed "Hearth" to "Heart"
+
+**Added**
+* You can now write on the Heart Block
 
 ***
 

@@ -7,16 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.satisfy.candlelight.Candlelight;
-import net.satisfy.candlelight.core.block.entity.CStoveBlockEntity;
-import net.satisfy.candlelight.core.block.entity.CabinetBlockEntity;
-import net.satisfy.candlelight.core.block.entity.CompletionistBannerEntity;
-import net.satisfy.candlelight.core.block.entity.CookingPanBlockEntity;
-import net.satisfy.candlelight.core.block.entity.DinnerBellBlockEntity;
-import net.satisfy.candlelight.core.block.entity.LargeCookingPotBlockEntity;
-import net.satisfy.candlelight.core.block.entity.SideBoardBlockEntity;
-import net.satisfy.candlelight.core.block.entity.StorageBlockEntity;
-import net.satisfy.candlelight.core.block.entity.TableSetBlockEntity;
-import net.satisfy.candlelight.core.block.entity.TypewriterEntity;
+import net.satisfy.candlelight.core.block.entity.*;
 import net.satisfy.farm_and_charm.core.block.entity.EffectFoodBlockEntity;
 
 import java.util.HashSet;
@@ -40,6 +31,7 @@ public class EntityTypeRegistry {
     public static final RegistrySupplier<BlockEntityType<CompletionistBannerEntity>> CANDLELIGHT_BANNER_ENTITY = registerBlockEntity("candlelight_banner_entity", () -> BlockEntityType.Builder.of(CompletionistBannerEntity::new, CANDLELIGHT_BANNER.get(), CANDLELIGHT_WALL_BANNER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<TableSetBlockEntity>> TABLE_SET_BLOCK_ENTITY = registerBlockEntity("table_set", () -> BlockEntityType.Builder.of(TableSetBlockEntity::new, TABLE_SET.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<EffectFoodBlockEntity>> EFFECT_FOOD_BLOCK_ENTITY = registerBlockEntity("effect_food_block", () -> BlockEntityType.Builder.of(EffectFoodBlockEntity::new, LASAGNE_BLOCK.get(), TOMATO_MOZZARELLA_BLOCK.get(), PORK_RIBS_BLOCK.get(), FRESH_GARDEN_SALAD_BLOCK.get(), BEEF_WELLINGTON_BLOCK.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<WallDecorationBlockEntity>> WALL_DECORATION = registerBlockEntity("wall_decoration", () -> BlockEntityType.Builder.of(WallDecorationBlockEntity::new, HEART.get()).build(null));
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(final String path, final Supplier<T> type) {
         return BLOCK_ENTITY_TYPES.register(Candlelight.identifier(path), type);

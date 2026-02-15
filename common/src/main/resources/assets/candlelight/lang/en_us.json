@@ -108,7 +108,7 @@
   "block.candlelight.granite_counter": "Granite Counter",
   "block.candlelight.granite_kitchen_sink": "Granite Sink",
   "block.candlelight.granite_stove": "Granite Stove",
-  "block.candlelight.hearth": "Hearth",
+  "block.candlelight.heart": "Heart",
   "block.candlelight.jewelry_box": "Jewelry Box",
   "block.candlelight.jungle_big_table": "Jungle Big Table",
   "block.candlelight.jungle_cabinet": "Jungle Cabinet",
@@ -242,6 +242,8 @@
   "tooltip.candlelight.letter.line": "for %s from %s",
   "effect.candlelight.refreshed": "Refreshed",
   "effect.candlelight.well_served": "Well Served",
+  "gui.candlelight.wall_decoration.edit": "Edit Heart Lettering",
+  "gui.candlelight.wall_decoration.done" : "Done",
   "sound.candlelight.cabinet_close": "Cabinet closes",
   "effect.candlelight.refreshed.description": "Your next harvests do not consume durability and may yield extra drops.",
   "effect.candlelight.well_served.description": "You will not become truly hungry while this effect is active."

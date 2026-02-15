@@ -109,7 +109,7 @@
   "block.candlelight.granite_counter": "Granite Counter",
   "block.candlelight.granite_kitchen_sink": "Spüle aus Granit",
   "block.candlelight.granite_stove": "Ofen aus Granit",
-  "block.candlelight.hearth": "Herz",
+  "block.candlelight.heart": "Herz",
   "block.candlelight.jewelry_box": "Schmuckschatulle",
   "block.candlelight.jungle_big_table": "Grosser Tropenholzschrank",
   "block.candlelight.jungle_cabinet": "Tropenholzschrank",
@@ -243,5 +243,8 @@
   "effect.candlelight.refreshed": "Erfrischt",
   "effect.candlelight.well_served": "Gut bedient",
   "effect.candlelight.refreshed.description": "Deine nächsten Ernten verbrauchen keine Haltbarkeit und können zusätzliche Drops geben.",
-  "effect.candlelight.well_served.description": "Solange dieser Effekt aktiv ist, wirst du nicht richtig hungrig."
+  "effect.candlelight.well_served.description": "Solange dieser Effekt aktiv ist, wirst du nicht richtig hungrig.",
+  "gui.candlelight.wall_decoration.edit": "Herzbeschriftung bearbeiten",
+  "gui.candlelight.wall_decoration.done": "Fertig",
+  "sound.candlelight.cabinet_close": "Schrank schliesst"
 }

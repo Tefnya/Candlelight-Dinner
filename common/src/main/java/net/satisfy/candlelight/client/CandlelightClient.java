@@ -6,11 +6,14 @@ import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.satisfy.candlelight.client.gui.LetterGui;
+import net.satisfy.candlelight.client.gui.WallDecorationEditGui;
 import net.satisfy.candlelight.client.model.*;
 import net.satisfy.candlelight.client.renderer.block.*;
+import net.satisfy.candlelight.core.block.entity.WallDecorationBlockEntity;
 import net.satisfy.candlelight.core.registry.EntityTypeRegistry;
 import net.satisfy.candlelight.core.registry.ScreenHandlerTypeRegistry;
 import net.satisfy.candlelight.core.registry.StorageTypeRegistry;
@@ -40,6 +43,7 @@ public class CandlelightClient {
         BlockEntityRendererRegistry.register(EntityTypeRegistry.STORAGE_BLOCK_ENTITY.get(), context -> new StorageBlockEntityRenderer());
         BlockEntityRendererRegistry.register(EntityTypeRegistry.DINNER_BELL_BLOCK_ENTITY.get(), DinnerBellRenderer::new);
         BlockEntityRendererRegistry.register(EntityTypeRegistry.TYPE_WRITER_BLOCK_ENTITY.get(), TypewriterRenderer::new);
+        BlockEntityRendererRegistry.register(EntityTypeRegistry.WALL_DECORATION.get(), context -> new WallDecorationBlockRenderer());
 
         MenuRegistry.registerScreenFactory(ScreenHandlerTypeRegistry.LETTER_SCREEN_HANDLER.get(), LetterGui::new);
 
@@ -47,6 +51,10 @@ public class CandlelightClient {
 
         CandlelightUtil.registerColorArmor(DRESS.get(), 16744576);
         CandlelightUtil.registerColorArmor(TROUSERS_AND_VEST.get(), 0x333399);
+    }
+
+    public static void openWallDecorationScreen(WallDecorationBlockEntity entity) {
+        Minecraft.getInstance().setScreen(new WallDecorationEditGui(entity));
     }
 
     public static void registerStorageType(ResourceLocation location, StorageTypeRenderer renderer) {

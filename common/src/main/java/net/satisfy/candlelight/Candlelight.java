@@ -8,7 +8,6 @@ import net.satisfy.candlelight.core.registry.*;
 public class Candlelight {
     public static final String MOD_ID = "candlelight";
 
-
     public static ResourceLocation identifier(String name) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
@@ -21,7 +20,7 @@ public class Candlelight {
         EntityTypeRegistry.init();
         CommonEvents.init();
         TabRegistry.init();
-        CandlelightMessages.registerC2SPackets();
+        CandlelightMessages.init();
     }
 
     public static void commonInit() {
