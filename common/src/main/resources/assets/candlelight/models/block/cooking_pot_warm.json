@@ -7,7 +7,6 @@
 		"2": "candlelight:block/cooking_pot_inner_side",
 		"3": "candlelight:block/cooking_pot_inner_bottom",
 		"4": "candlelight:block/cooking_pot_parts",
-		"8": "farm_and_charm:block/grating_top",
 		"particle": "candlelight:block/cooking_pot_side_0"
 	},
 	"elements": [
@@ -20,7 +19,7 @@
 				"east": {"uv": [12, 2, 13, 14], "texture": "#0"},
 				"south": {"uv": [3, 2, 13, 14], "texture": "#2"},
 				"west": {"uv": [3, 2, 4, 14], "texture": "#0"},
-				"up": {"uv": [3, 13, 13, 12], "texture": "#1"},
+				"up": {"uv": [3, 13, 13, 14], "texture": "#1"},
 				"down": {"uv": [3, 12, 13, 13], "texture": "#1"}
 			}
 		},
@@ -62,7 +61,7 @@
 		},
 		{
 			"from": [4, 0, 4],
-			"to": [12, 1, 12],
+			"to": [12, 2, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 4]},
 			"faces": {
 				"up": {"uv": [4, 4, 12, 12], "texture": "#3"},
@@ -92,86 +91,6 @@
 				"up": {"uv": [2, 8, 4, 14], "texture": "#4"},
 				"down": {"uv": [2, 8, 4, 14], "texture": "#4"}
 			}
-		},
-		{
-			"name": "grate_top",
-			"from": [0, -1, 0],
-			"to": [16, 0, 16],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#8"},
-				"east": {"uv": [0, 0, 16, 1], "texture": "#8"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#8"},
-				"west": {"uv": [0, 0, 16, 1], "texture": "#8"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#8"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#8"}
-			}
-		},
-		{
-			"name": "grate_leg",
-			"from": [0, -16, 15],
-			"to": [1, -1, 16],
-			"faces": {
-				"north": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"east": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"south": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"west": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"up": {"uv": [0, 0, 1, 1], "texture": "#8"},
-				"down": {"uv": [0, 0, 1, 1], "texture": "#8"}
-			}
-		},
-		{
-			"name": "grate_leg",
-			"from": [0, -16, 0],
-			"to": [1, -1, 1],
-			"faces": {
-				"north": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"east": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"south": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"west": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"up": {"uv": [0, 0, 1, 1], "texture": "#8"},
-				"down": {"uv": [0, 0, 1, 1], "texture": "#8"}
-			}
-		},
-		{
-			"name": "grate_leg",
-			"from": [15, -16, 0],
-			"to": [16, -1, 1],
-			"faces": {
-				"north": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"east": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"south": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"west": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"up": {"uv": [0, 0, 1, 1], "texture": "#8"},
-				"down": {"uv": [0, 0, 1, 1], "texture": "#8"}
-			}
-		},
-		{
-			"name": "grate_leg",
-			"from": [15, -16, 15],
-			"to": [16, -1, 16],
-			"faces": {
-				"north": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"east": {"uv": [0, 1, 1, 16], "texture": "#8"},
-				"south": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"west": {"uv": [15, 1, 16, 16], "texture": "#8"},
-				"up": {"uv": [0, 0, 1, 1], "texture": "#8"},
-				"down": {"uv": [0, 0, 1, 1], "texture": "#8"}
-			}
-		}
-	],
-	"groups": [
-		0,
-		1,
-		2,
-		3,
-		4,
-		5,
-		6,
-		{
-			"name": "support",
-			"origin": [0, 0, 0],
-			"color": 0,
-			"children": [7, 8, 9, 10, 11]
 		}
 	]
 }

@@ -5,8 +5,9 @@
 		"0": "candlelight:block/cooking_pot_side_0",
 		"1": "candlelight:block/cooking_pot_bottom",
 		"2": "candlelight:block/cooking_pot_inner_side",
-		"3": "candlelight:block/cooking_pot_inner_bottom",
 		"4": "candlelight:block/cooking_pot_parts",
+		"5": "farm_and_charm:block/cooking_pot_soup",
+		"6": "candlelight:block/cooking_pot_side_1",
 		"8": "farm_and_charm:block/grating_top",
 		"particle": "candlelight:block/cooking_pot_side_0"
 	},
@@ -16,11 +17,11 @@
 			"to": [13, 12, 4],
 			"rotation": {"angle": 0, "axis": "y", "origin": [3, 0, 3]},
 			"faces": {
-				"north": {"uv": [3, 2, 13, 14], "texture": "#0"},
+				"north": {"uv": [3, 2, 13, 14], "texture": "#6"},
 				"east": {"uv": [12, 2, 13, 14], "texture": "#0"},
 				"south": {"uv": [3, 2, 13, 14], "texture": "#2"},
 				"west": {"uv": [3, 2, 4, 14], "texture": "#0"},
-				"up": {"uv": [3, 13, 13, 12], "texture": "#1"},
+				"up": {"uv": [3, 4, 13, 3], "texture": "#6"},
 				"down": {"uv": [3, 12, 13, 13], "texture": "#1"}
 			}
 		},
@@ -62,10 +63,10 @@
 		},
 		{
 			"from": [4, 0, 4],
-			"to": [12, 1, 12],
+			"to": [12, 11, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 4]},
 			"faces": {
-				"up": {"uv": [4, 4, 12, 12], "texture": "#3"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#5"},
 				"down": {"uv": [4, 4, 12, 12], "texture": "#1"}
 			}
 		},

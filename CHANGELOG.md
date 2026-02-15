@@ -1,3 +1,10 @@
+[2.1.8]
+
+**Fixed**
+* Containers such as bottles, bowls and buckets not being returned after cooking
+
+***
+
 [2.1.7]
 
 **Fixed**
