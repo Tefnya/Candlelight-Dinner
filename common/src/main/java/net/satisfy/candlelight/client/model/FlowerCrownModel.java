@@ -2,46 +2,55 @@ package net.satisfy.candlelight.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.world.entity.LivingEntity;
 import net.satisfy.candlelight.Candlelight;
+import org.jetbrains.annotations.NotNull;
 
-public class FlowerCrownModel<T extends Entity> extends EntityModel<T> {
+public class FlowerCrownModel<T extends LivingEntity> extends HumanoidModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Candlelight.identifier("flower_crown"), "main");
-    private final ModelPart flower_crown;
 
     public FlowerCrownModel(ModelPart root) {
-        this.flower_crown = root.getChild("flower_crown");
+        super(root);
+        setAllVisible(false);
+        head.visible = true;
     }
 
     @SuppressWarnings("unused")
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition root = meshDefinition.getRoot();
 
-        PartDefinition flower_crown = partdefinition.addOrReplaceChild("flower_crown", CubeListBuilder.create().texOffs(0, 5).addBox(-4.0F, -8.75F, -4.0F, 8.0F, 4.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 12.75F, 0.0F));
+        PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create()
+                .texOffs(0, 5).addBox(-4.0F, -8.75F, -4.0F, 8.0F, 4.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 12.75F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 32, 32);
+        head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+
+        root.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
+        root.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.offset(-5.0F, 2.0F, 0.0F));
+        root.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.offset(5.0F, 2.0F, 0.0F));
+        root.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-1.9F, 12.0F, 0.0F));
+        root.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(1.9F, 12.0F, 0.0F));
+
+        return LayerDefinition.create(meshDefinition, 32, 32);
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
-        poseStack.pushPose();
-        poseStack.scale(1.05F, 1.05F, 1.05F);
-        flower_crown.render(poseStack, buffer, packedLight, packedOverlay);
-        poseStack.popPose();
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, int packedColor) {
+        setAllVisible(false);
+        head.visible = true;
+        super.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, packedColor);
     }
 
-    @Override
-    public void setupAnim(T entity, float f, float g, float h, float i, float j) {
-
-    }
-
-    public void copyHead(ModelPart model) {
-        flower_crown.copyFrom(model);
+    public void copyHead(ModelPart headModel) {
+        head.copyFrom(headModel);
     }
 }

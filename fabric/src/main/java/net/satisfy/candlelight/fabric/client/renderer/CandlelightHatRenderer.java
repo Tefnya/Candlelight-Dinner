@@ -17,17 +17,14 @@ public class CandlelightHatRenderer implements ArmorRenderer {
     public void render(PoseStack matrices, MultiBufferSource vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
         if (slot != EquipmentSlot.HEAD) return;
         if (!(stack.getItem() instanceof CandlelightHatItem hat)) return;
-        Model hatModel = ArmorRegistry.getHatModel(hat, contextModel.head);
-        if (hatModel != null) {
-            hatModel.renderToBuffer(matrices, vertexConsumers.getBuffer(hatModel.renderType(hat.getHatTexture())), light, OverlayTexture.NO_OVERLAY);
-        }
-        Model crownModel = ArmorRegistry.getCrownModel(hat, contextModel.head);
-        if (crownModel != null) {
-            crownModel.renderToBuffer(matrices, vertexConsumers.getBuffer(crownModel.renderType(hat.getHatTexture())), light, OverlayTexture.NO_OVERLAY);
-        }
-        Model tieModel = ArmorRegistry.getTieModel(hat, contextModel.head, contextModel.body);
-        if (tieModel != null) {
-            tieModel.renderToBuffer(matrices, vertexConsumers.getBuffer(tieModel.renderType(hat.getHatTexture())), light, OverlayTexture.NO_OVERLAY);
-        }
+
+        Model hatModel = ArmorRegistry.getHatModel(hat, contextModel.head, contextModel);
+        if (hatModel != null) hatModel.renderToBuffer(matrices, vertexConsumers.getBuffer(hatModel.renderType(hat.getHatTexture())), light, OverlayTexture.NO_OVERLAY);
+
+        Model crownModel = ArmorRegistry.getCrownModel(hat, contextModel.head, contextModel);
+        if (crownModel != null) crownModel.renderToBuffer(matrices, vertexConsumers.getBuffer(crownModel.renderType(hat.getHatTexture())), light, OverlayTexture.NO_OVERLAY);
+
+        Model tieModel = ArmorRegistry.getTieModel(hat, contextModel.head, contextModel.body, contextModel);
+        if (tieModel != null) tieModel.renderToBuffer(matrices, vertexConsumers.getBuffer(tieModel.renderType(hat.getHatTexture())), light, OverlayTexture.NO_OVERLAY);
     }
 }

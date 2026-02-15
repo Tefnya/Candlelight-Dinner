@@ -2,6 +2,7 @@
 
 **Fixed**
 * Containers such as bottles, bowls and buckets not being returned after cooking
+* Clothing being HUGE when placed inside AlpineWhispers / Meadows wardrobe
 
 ***
 

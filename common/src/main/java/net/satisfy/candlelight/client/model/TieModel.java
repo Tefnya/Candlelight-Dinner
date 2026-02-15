@@ -2,48 +2,55 @@ package net.satisfy.candlelight.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.world.entity.LivingEntity;
 import net.satisfy.candlelight.Candlelight;
+import org.jetbrains.annotations.NotNull;
 
-public class TieModel<T extends Entity> extends EntityModel<T> {
+public class TieModel<T extends LivingEntity> extends HumanoidModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Candlelight.identifier("tie"), "main");
-    private final ModelPart body;
 
     public TieModel(ModelPart root) {
-        this.body = root.getChild("body");
+        super(root);
+        setAllVisible(false);
+        body.visible = true;
     }
 
     @SuppressWarnings("unused")
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition root = meshDefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
+        head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
 
-        return LayerDefinition.create(meshdefinition, 32, 32);
+        root.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.offset(-5.0F, 2.0F, 0.0F));
+        root.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.offset(5.0F, 2.0F, 0.0F));
+        root.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-1.9F, 12.0F, 0.0F));
+        root.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(1.9F, 12.0F, 0.0F));
+
+        root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.ZERO);
+
+        return LayerDefinition.create(meshDefinition, 32, 32);
     }
 
-
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int alpha) {
-        poseStack.pushPose();
-        poseStack.scale(1.024F, 1.024F, 1.024F);
-        body.render(poseStack, buffer, packedLight, packedOverlay);
-        poseStack.popPose();
-    }
-
-    @Override
-    public void setupAnim(T entity, float f, float g, float h, float i, float j) {
-
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, int packedColor) {
+        setAllVisible(false);
+        body.visible = true;
+        super.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, packedColor);
     }
 
     @SuppressWarnings("unused")
-    public void copyHead(ModelPart model, ModelPart baseBody) {
-        this.body.copyFrom(baseBody);
+    public void copyHead(ModelPart headModel, ModelPart baseBody) {
+        body.copyFrom(baseBody);
     }
 }

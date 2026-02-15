@@ -16,15 +16,13 @@ public class CandlelightHatExtensions implements IClientItemExtensions {
     @Override
     public @NotNull Model getGenericArmorModel(@NotNull LivingEntity entity, @NotNull ItemStack stack, @NotNull EquipmentSlot slot, @NotNull HumanoidModel<?> original) {
         if (slot != EquipmentSlot.HEAD) return original;
+
         Item item = stack.getItem();
-        if (item == ObjectRegistry.FLOWER_CROWN.get()) {
-            Model m = ArmorRegistry.getCrownModel(item, original.head);
-            return m != null ? m : original;
-        }
-        if (item instanceof CandlelightHatItem) {
-            Model m = ArmorRegistry.getHatModel(item, original.head);
-            return m != null ? m : original;
-        }
+
+        if (item == ObjectRegistry.FLOWER_CROWN.get()) return ArmorRegistry.getCrownModel(item, original.head, original);
+
+        if (item instanceof CandlelightHatItem) return ArmorRegistry.getHatModel(item, original.head, original);
+
         return original;
     }
 }
