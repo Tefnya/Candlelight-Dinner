@@ -169,7 +169,7 @@
   "block.candlelight.table_set": "Столовый набор",
   "block.candlelight.table_sign": "Настольная табличка",
   "block.candlelight.tomato_mozzarella_block": "Салат Капрезе",
-  "block.candlelight.typewriter_gold": "Медная пишущая машинка",
+  "block.candlelight.typewriter_gold": "Золотая пишущая машинка",
   "block.candlelight.typewriter_iron": "Железная пишущая машинка",
   "block.candlelight.warped_big_table": "Искажённый широкий стол",
   "block.candlelight.warped_cabinet": "Искажённый шкаф",
@@ -237,5 +237,14 @@
   "sound.candlelight.cabinet_open": "Шкаф открывается",
   "sound.candlelight.cooking_pot_hit": "Клац!",
   "sound.candlelight.dinner_bell_ring": "Динь",
-  "sound.candlelight.typewriter": "Стук пишущей машинки"
+  "sound.candlelight.typewriter": "Стук пишущей машинки",
+  "tooltip.farm_and_charm.bamboo_stove": "Использовать с осторожностью!",
+  "tooltip.candlelight.letter.line": "для %s от %s",
+  "effect.candlelight.refreshed": "Освежающий",
+  "effect.candlelight.well_served": "Отличная подача",
+  "gui.candlelight.wall_decoration.edit": "Редактировать надпись на сердце",
+  "gui.candlelight.wall_decoration.done" : "Готово",
+  "sound.candlelight.cabinet_close": "Шкаф закрывается",
+  "effect.candlelight.refreshed.description": "Сбор урожая не расходует прочность и может содержать дополнительные ресурсы.",
+  "effect.candlelight.well_served.description": "Вы не станете по-настоящему голодны во время действия эффекта."
 }
